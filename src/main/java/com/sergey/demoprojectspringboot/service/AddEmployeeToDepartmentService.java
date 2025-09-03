@@ -22,7 +22,7 @@ public class AddEmployeeToDepartmentService {
         Employee savedEmployee = employeeCoreService.createEmployee(request);
         Optional<Department> updated = departmentCoreService.addEmployeeByDepartmentName(departmentName,savedEmployee);
         if (updated.isEmpty()){
-            return "Department does not exist";
+            return "Department not found";
         }
         Department updatedDepartment = updated.get();
         List<ResponceEmployeeDTO> employees = new ArrayList<>();
