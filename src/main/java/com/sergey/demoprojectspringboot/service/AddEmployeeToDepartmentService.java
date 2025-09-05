@@ -15,20 +15,25 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class AddEmployeeToDepartmentService {
-    private EmployeeCoreService employeeCoreService;
-    private DepartmentCoreService departmentCoreService;
+    private FindEmployeeService employeeFindService;
+    private FindDepartmentService departmentFindService;
 
-    public String add(String departmentName, RequestAddEmployeeDTO request){
-        Employee savedEmployee = employeeCoreService.createEmployee(request);
-        Optional<Department> updated = departmentCoreService.addEmployeeByDepartmentName(departmentName,savedEmployee);
-        if (updated.isEmpty()){
-            return "Department not found";
+    public String addEmployeeToDepartment(String departmentName, Integer employeeId) {
+        Optional<Employee> employeeList = employeeFindService.findEntityId(employeeId);
+        if(employeeList.isEmpty()){
+            return "Employee Not Found";
         }
-        Department updatedDepartment = updated.get();
-        List<ResponceEmployeeDTO> employees = new ArrayList<>();
-        for (Employee e : updatedDepartment.getEmployees()){
-            employees.add(new ResponceEmployeeDTO(e.getId(),e.getName(),e.getSurname()));
+        Optional<Department> departmentList = departmentFindService.findEntityDepartmentByName(departmentName);
+        if(departmentList.isEmpty()){
+            return "Department Not Found";
         }
-        return new ResponceDepartmentDTO(updatedDepartment.getName(),employees).toString();
+        Department department = departmentList.get();
+        department.getEmployees().add(employeeList.get());
+
+        List<ResponceEmployeeDTO> responceEmployeeDTOList = new ArrayList<>();
+        for(Employee employee : department.getEmployees()){
+            responceEmployeeDTOList.add(new ResponceEmployeeDTO(employee.getId(),employee.getName(),employee.getSurname()));
+        }
+        return new ResponceDepartmentDTO(department.getName(),responceEmployeeDTOList).toString();
     }
 }

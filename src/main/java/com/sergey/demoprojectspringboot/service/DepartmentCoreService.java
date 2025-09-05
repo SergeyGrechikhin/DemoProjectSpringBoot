@@ -23,16 +23,6 @@ public class DepartmentCoreService {
         return departmentRepository.addEmployee(departmentName, employee);
     }
 
-    public List<Department> getAllDepartments() {
-        return departmentRepository.findAll();
-    }
 
-    public Optional<Department> findById(Integer id) {
-        return departmentRepository.findById(id);
-    }
-
-    public Optional<Department> findByName(String name) {
-        return departmentRepository.findByName(name);
-    }
 
 }
