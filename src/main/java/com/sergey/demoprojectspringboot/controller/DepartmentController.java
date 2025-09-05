@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DepartmentController {
     private FindDepartmentService findDepartmentService;
 
-    @GetMapping
-    public String findAll(){
-        return findDepartmentService.findAllDepartments();
-    }
+
 
 
 }
