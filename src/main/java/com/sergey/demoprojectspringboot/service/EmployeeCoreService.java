@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class EmployeeCoreService {
     private EmployeeRepository employeeRepository;
     public Employee createEmployee(RequestAddEmployeeDTO request){
-        Employee employee = new Employee(request.getName(),request.getSurname());
-        return employeeRepository.add(employee);
+        //Employee employee = new Employee(request.getName(),request.getSurname());
+        return employeeRepository.add(new Employee(request.getName(), request.getSurname()));
     }
 }

@@ -18,7 +18,7 @@ public class FindDepartmentService {
 
     private DepartmentRepositoryInterface departmentRepository;
 
-    public String findall(){
+    public String findAll(){
         List<Department> list = departmentRepository.findAll();
         if(list.isEmpty()){
             return "Department not found";
