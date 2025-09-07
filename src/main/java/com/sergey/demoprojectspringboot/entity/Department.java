@@ -10,9 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Department {
 
-
-    private String name;
     private Integer id;
+    private String name;
     private List<Employee> employees;
 
     public Department(String name) {

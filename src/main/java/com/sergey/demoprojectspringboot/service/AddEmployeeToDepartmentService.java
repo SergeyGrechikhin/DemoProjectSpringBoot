@@ -1,39 +1,41 @@
 package com.sergey.demoprojectspringboot.service;
 
-import com.sergey.demoprojectspringboot.dto.RequestAddEmployeeDTO;
+
 import com.sergey.demoprojectspringboot.dto.ResponceDepartmentDTO;
-import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.Employee;
-import com.sergey.demoprojectspringboot.repository.EmployeeRepository;
+import com.sergey.demoprojectspringboot.entity.GlobalResponce;
+import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryInterface;
+
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class AddEmployeeToDepartmentService {
     private FindEmployeeService employeeFindService;
     private FindDepartmentService departmentFindService;
+    private DepartmentRepositoryInterface departmentRepository;
 
-    public String addEmployeeToDepartment(String departmentName, Integer employeeId) {
-        Optional<Employee> employeeList = employeeFindService.findEntityId(employeeId);
-        if(employeeList.isEmpty()){
-            return "Employee Not Found";
+    public GlobalResponce<ResponceDepartmentDTO> addEmployeeToDepartment(String departmentName, Integer employeeId) {
+        Optional<Employee> employeeOptional = employeeFindService.findByIdForService(employeeId);
+        if (employeeOptional.isEmpty()) {
+            return new GlobalResponce<>(HttpStatus.BAD_REQUEST, null);
         }
-        Optional<Department> departmentList = departmentFindService.findEntityDepartmentByName(departmentName);
-        if(departmentList.isEmpty()){
-            return "Department Not Found";
+        Optional<Department> departmentOptional = departmentFindService.findDepartmentByNameForService(departmentName);
+        if (departmentOptional.isEmpty()) {
+            return new GlobalResponce<>(HttpStatus.BAD_REQUEST, null);
         }
-        Department department = departmentList.get();
-        department.getEmployees().add(employeeList.get());
-
-        List<ResponceEmployeeDTO> responceEmployeeDTOList = new ArrayList<>();
-        for(Employee employee : department.getEmployees()){
-            responceEmployeeDTOList.add(new ResponceEmployeeDTO(employee.getId(),employee.getName(),employee.getSurname()));
+        Optional<Department> updateDepartmentOptional = departmentRepository.addEmployee(departmentName, employeeOptional.get());
+        if (updateDepartmentOptional.isEmpty()) {
+            return new GlobalResponce<>(HttpStatus.BAD_REQUEST, null);
         }
-        return new ResponceDepartmentDTO(department.getName(),responceEmployeeDTOList).toString();
+        return new GlobalResponce<>(HttpStatus.OK, ResponceDepartmentDTO.toDto(updateDepartmentOptional.get()));
     }
 }
+
+
+

@@ -36,7 +36,9 @@ public class DepartmentRepository implements DepartmentRepositoryInterface {
 
     @Override
     public Optional<Department> findByName(String name) {
-        return Optional.ofNullable(database.get(name));
+        Optional<Department> departmentOptional = database.values().stream().filter(department -> department.getName().equalsIgnoreCase(name)).findFirst();
+
+        return departmentOptional;
     }
 
     @Override
