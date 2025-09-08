@@ -11,5 +11,6 @@ import org.springframework.http.HttpStatus;
 public class GlobalResponce <T> {
     private HttpStatus status;
     private T object;
+    private String message;
 
 }

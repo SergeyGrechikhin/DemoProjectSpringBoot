@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class RequestAddEmployeeDTO {
     private String name;
     private String surname;
+    private String email;
 }

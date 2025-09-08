@@ -12,9 +12,10 @@ public class ResponceEmployeeDTO {
     private Integer id;
     private String name;
     private String surname;
+    private String email;
 
     public static ResponceEmployeeDTO toDTO(Employee employee){
-        return new ResponceEmployeeDTO(employee.getId(),employee.getName(),employee.getSurname());
+        return new ResponceEmployeeDTO(employee.getId(),employee.getName(),employee.getSurname(),employee.getEmail());
     }
 }
 

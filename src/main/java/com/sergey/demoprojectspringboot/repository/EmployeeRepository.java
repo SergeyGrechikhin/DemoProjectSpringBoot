@@ -18,10 +18,15 @@ public class EmployeeRepository implements EmployeeRepositoryInterface{
 
     @Override
     public Employee add(Employee employee) {
+
         employee.setId(++employeeId);
         database.put(employeeId, employee);
         return employee;
     }
+
+
+
+
 
     @Override
     public List<Employee> findAll() {
@@ -52,5 +57,17 @@ public class EmployeeRepository implements EmployeeRepositoryInterface{
     public Optional<Employee> deleteById(Integer id) {
         Employee employeeForDelete = database.remove(id);
         return Optional.ofNullable(employeeForDelete);
+    }
+
+    @Override
+    public Optional<Employee> findByEmail(String email) {
+        Optional<Employee> employeeOptional = database.values().stream().filter(e -> e.getEmail().equalsIgnoreCase(email)).findFirst();
+        return employeeOptional;
+    }
+
+    @Override
+    public Employee saveForUpdate(Employee employee) {
+        database.put(employeeId, employee);
+        return employee;
     }
 }

@@ -23,17 +23,17 @@ public class AddEmployeeToDepartmentService {
     public GlobalResponce<ResponceDepartmentDTO> addEmployeeToDepartment(String departmentName, Integer employeeId) {
         Optional<Employee> employeeOptional = employeeFindService.findByIdForService(employeeId);
         if (employeeOptional.isEmpty()) {
-            return new GlobalResponce<>(HttpStatus.BAD_REQUEST, null);
+            return new GlobalResponce<>(HttpStatus.BAD_REQUEST, null,"Employee not found");
         }
         Optional<Department> departmentOptional = departmentFindService.findDepartmentByNameForService(departmentName);
         if (departmentOptional.isEmpty()) {
-            return new GlobalResponce<>(HttpStatus.BAD_REQUEST, null);
+            return new GlobalResponce<>(HttpStatus.BAD_REQUEST, null,"Department not found");
         }
         Optional<Department> updateDepartmentOptional = departmentRepository.addEmployee(departmentName, employeeOptional.get());
         if (updateDepartmentOptional.isEmpty()) {
-            return new GlobalResponce<>(HttpStatus.BAD_REQUEST, null);
+            return new GlobalResponce<>(HttpStatus.BAD_REQUEST, null,"Department not found");
         }
-        return new GlobalResponce<>(HttpStatus.OK, ResponceDepartmentDTO.toDto(updateDepartmentOptional.get()));
+        return new GlobalResponce<>(HttpStatus.OK, ResponceDepartmentDTO.toDto(updateDepartmentOptional.get()),"Department updated successfully");
     }
 }
 

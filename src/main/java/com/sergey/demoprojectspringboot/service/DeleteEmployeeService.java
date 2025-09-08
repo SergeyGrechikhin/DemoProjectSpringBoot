@@ -19,13 +19,13 @@ public class DeleteEmployeeService {
     public GlobalResponce<ResponceEmployeeDTO> deleteEmployeeById(Integer id) {
         Optional<Employee> employeeOptional = employeeRepository.findById(id);
         if (employeeOptional.isEmpty()) {
-            return new GlobalResponce<>(HttpStatus.NOT_FOUND, null);
+            return new GlobalResponce<>(HttpStatus.NOT_FOUND, null,"Employee not found");
         }
 
         Employee employee = employeeOptional.get();
         employeeRepository.deleteById(id);
 
-        return new GlobalResponce<>(HttpStatus.OK, ResponceEmployeeDTO.toDTO(employee));
+        return new GlobalResponce<>(HttpStatus.OK, ResponceEmployeeDTO.toDTO(employee),"Employee deleted successfully");
 
     }
 }

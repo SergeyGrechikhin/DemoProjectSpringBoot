@@ -20,10 +20,10 @@ public class AddDepartmentService {
     public GlobalResponce<ResponceDepartmentDTO> create(RequestCreateDepartmentDTO request) {
         Optional<Department> isNameTry = departmentRepository.findByName(request.getName());
         if (isNameTry.isPresent()) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT,null);
+            return new GlobalResponce<>(HttpStatus.CONFLICT,null,"Name from Department already exists");
         }
         Department department = departmentRepository.add(new Department(request.getName()));
-        return new GlobalResponce<>(HttpStatus.CREATED, ResponceDepartmentDTO.toDto(department));
+        return new GlobalResponce<>(HttpStatus.CREATED, ResponceDepartmentDTO.toDto(department),"Department created successfully");
     }
 
 

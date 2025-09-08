@@ -20,5 +20,9 @@ public interface EmployeeRepositoryInterface {
 
     Optional<Employee> deleteById(Integer id);
 
+    Optional<Employee> findByEmail(String email);
+
+    Employee saveForUpdate(Employee employee);
+
 
 }

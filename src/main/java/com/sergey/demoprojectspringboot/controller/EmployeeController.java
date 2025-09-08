@@ -7,7 +7,6 @@ import com.sergey.demoprojectspringboot.entity.GlobalResponce;
 import com.sergey.demoprojectspringboot.service.*;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +19,7 @@ public class EmployeeController {
    private final AddEmployeeService addEmployeeService;
    private final FindEmployeeService findEmployeeService;
    private final DeleteEmployeeService deleteEmployeeService;
+   private final UpdateEmployeeService updateEmployeeService;
 
    @PostMapping
     public ResponseEntity<ResponceEmployeeDTO> add(@RequestBody RequestAddEmployeeDTO request){
@@ -56,6 +56,26 @@ public class EmployeeController {
        GlobalResponce<ResponceEmployeeDTO> responce = deleteEmployeeService.deleteEmployeeById(IdForDelete);
        return new ResponseEntity<>(responce.getObject(), responce.getStatus());
    }
+
+   @PostMapping("/updateName/{id}/{name}")
+    public ResponseEntity<ResponceEmployeeDTO> updateName(@PathVariable Integer id, @PathVariable String name){
+       GlobalResponce<ResponceEmployeeDTO> responce = updateEmployeeService.updateEmployeeNameById(id, name);
+       return new ResponseEntity(responce.getObject(), responce.getStatus());
+   }
+
+   @PostMapping("/updateSurname/{id}/{surname}")
+    public ResponseEntity<ResponceEmployeeDTO> updateSurname(@PathVariable Integer id, @PathVariable String surname){
+       GlobalResponce<ResponceEmployeeDTO> responce = updateEmployeeService.updateEmployeeSurnameById(id, surname);
+       return new ResponseEntity(responce.getObject(), responce.getStatus());
+   }
+
+    @PostMapping("/updateEmail/{id}/{email}")
+    public ResponseEntity<ResponceEmployeeDTO> updateEmail(@PathVariable Integer id, @PathVariable String email){
+       GlobalResponce<ResponceEmployeeDTO> responce = updateEmployeeService.updateEmployeeEmailById(id,email);
+       return new ResponseEntity(responce.getObject(), responce.getStatus());
+    }
+
+
 
 
 }

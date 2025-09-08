@@ -18,13 +18,13 @@ public class DeleteDepartmentService {
         Optional<Department> departmentOptional = departmentRepository.findById(id);
 
         if (departmentOptional.isEmpty()) {
-            return new GlobalResponce<>(HttpStatus.NOT_FOUND, null);
+            return new GlobalResponce<>(HttpStatus.NOT_FOUND, null,"Department not found");
         }
 
         Department department = departmentOptional.get();
         departmentRepository.deleteById(id);
 
-        return new GlobalResponce<>(HttpStatus.OK, ResponceDepartmentDTO.toDto(department));
+        return new GlobalResponce<>(HttpStatus.OK, ResponceDepartmentDTO.toDto(department),"Department deleted successfully");
 
     }
 }
