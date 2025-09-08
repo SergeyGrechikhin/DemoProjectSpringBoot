@@ -44,7 +44,7 @@ public class FindEmployeeService {
     }
 
     public GlobalResponce<List<ResponceEmployeeDTO>> findBySurname(String surname) {
-        List<Employee> employeesOptionalList = employeeRepository.findByName(surname);
+        List<Employee> employeesOptionalList = employeeRepository.findBySurname(surname);
         List<ResponceEmployeeDTO> responceEmployeeDTOList = employeesOptionalList.stream().filter(employee -> employee.getSurname().equalsIgnoreCase(surname)).map(employee -> new ResponceEmployeeDTO(employee.getId(), employee.getName(), employee.getSurname())).toList();
         if(employeesOptionalList.isEmpty()){
             return new GlobalResponce<>(HttpStatus.NO_CONTENT,null);

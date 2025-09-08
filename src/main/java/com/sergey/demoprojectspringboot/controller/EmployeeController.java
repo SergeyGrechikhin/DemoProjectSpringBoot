@@ -47,7 +47,7 @@ public class EmployeeController {
 
    @GetMapping("/by-surname/{surname}")
     public ResponseEntity<List<ResponceEmployeeDTO>> findBySurname(@PathVariable String surname){
-       GlobalResponce<List<ResponceEmployeeDTO>> responce = findEmployeeService.findByName(surname);
+       GlobalResponce<List<ResponceEmployeeDTO>> responce = findEmployeeService.findBySurname(surname);
        return new ResponseEntity<>(responce.getObject(), responce.getStatus());
    }
 
