@@ -30,7 +30,8 @@ public class EmployeeRepository implements EmployeeRepositoryInterface{
 
     @Override
     public Optional<Employee> findById(Integer id) {
-        return Optional.ofNullable(database.get(id));
+        Optional<Employee> employeeOptional = database.values().stream().filter(d -> d.getId().equals(id)).findFirst();
+        return employeeOptional;
     }
 
     @Override

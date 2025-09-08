@@ -10,12 +10,18 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class AddDepartmentService {
     private DepartmentRepositoryInterface departmentRepository;
 
     public GlobalResponce<ResponceDepartmentDTO> create(RequestCreateDepartmentDTO request) {
+        Optional<Department> isNameTry = departmentRepository.findByName(request.getName());
+        if (isNameTry.isPresent()) {
+            return new GlobalResponce<>(HttpStatus.CONFLICT,null);
+        }
         Department department = departmentRepository.add(new Department(request.getName()));
         return new GlobalResponce<>(HttpStatus.CREATED, ResponceDepartmentDTO.toDto(department));
     }

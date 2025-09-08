@@ -19,6 +19,7 @@ import java.util.List;
 public class EmployeeController {
    private final AddEmployeeService addEmployeeService;
    private final FindEmployeeService findEmployeeService;
+   private final DeleteEmployeeService deleteEmployeeService;
 
    @PostMapping
     public ResponseEntity<ResponceEmployeeDTO> add(@RequestBody RequestAddEmployeeDTO request){
@@ -47,6 +48,12 @@ public class EmployeeController {
    @GetMapping("/by-surname/{surname}")
     public ResponseEntity<List<ResponceEmployeeDTO>> findBySurname(@PathVariable String surname){
        GlobalResponce<List<ResponceEmployeeDTO>> responce = findEmployeeService.findByName(surname);
+       return new ResponseEntity<>(responce.getObject(), responce.getStatus());
+   }
+
+   @DeleteMapping("/employeeForDelete/{IdForDelete}")
+    public ResponseEntity<ResponceEmployeeDTO> deleteById(@PathVariable Integer IdForDelete){
+       GlobalResponce<ResponceEmployeeDTO> responce = deleteEmployeeService.deleteEmployeeById(IdForDelete);
        return new ResponseEntity<>(responce.getObject(), responce.getStatus());
    }
 

@@ -6,13 +6,12 @@ import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.GlobalResponce;
 import com.sergey.demoprojectspringboot.service.AddEmployeeToDepartmentService;
 import com.sergey.demoprojectspringboot.service.AddDepartmentService;
+import com.sergey.demoprojectspringboot.service.DeleteDepartmentService;
 import com.sergey.demoprojectspringboot.service.FindDepartmentService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,6 +21,7 @@ public class DepartmentController {
     private final FindDepartmentService findDepartmentService;
     private final AddDepartmentService addDepartmentService;
     private final AddEmployeeToDepartmentService addEmployeeToDepartmentService;
+    private final DeleteDepartmentService deleteDepartmentServiceService;
 
     //http://localhost:8080/departments
     @PostMapping
@@ -57,6 +57,12 @@ public class DepartmentController {
     @GetMapping("/employeesFromDepartment/{name}")
     public ResponseEntity<List<ResponceEmployeeDTO>> findEmployeesByDepartmentName(@PathVariable String name){
         GlobalResponce<List<ResponceEmployeeDTO>> responce = findDepartmentService.getEmployeesFromDepartment(name);
+        return new ResponseEntity(responce.getObject(), responce.getStatus());
+    }
+
+    @DeleteMapping("/departmentForDelete/{idForDelete}")
+    public ResponseEntity<ResponceDepartmentDTO> deleteById(@PathVariable Integer idForDelete){
+        GlobalResponce<ResponceDepartmentDTO> responce = deleteDepartmentServiceService.deleteDepartment(idForDelete);
         return new ResponseEntity(responce.getObject(), responce.getStatus());
     }
 }
