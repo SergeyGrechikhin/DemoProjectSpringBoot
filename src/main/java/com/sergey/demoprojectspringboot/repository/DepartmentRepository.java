@@ -57,4 +57,10 @@ public class DepartmentRepository implements DepartmentRepositoryInterface {
         department.getEmployees().add(employee);
         return Optional.of(department);
     }
+
+    @Override
+    public Department saveForUpdate(Department department) {
+        database.put(departmentId, department);
+        return department;
+    }
 }

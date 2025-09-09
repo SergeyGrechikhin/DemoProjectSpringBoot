@@ -18,7 +18,6 @@ public class EmployeeRepository implements EmployeeRepositoryInterface{
 
     @Override
     public Employee add(Employee employee) {
-
         employee.setId(++employeeId);
         database.put(employeeId, employee);
         return employee;

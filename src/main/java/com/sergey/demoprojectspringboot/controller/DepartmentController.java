@@ -4,10 +4,7 @@ import com.sergey.demoprojectspringboot.dto.RequestCreateDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.ResponceDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.GlobalResponce;
-import com.sergey.demoprojectspringboot.service.AddEmployeeToDepartmentService;
-import com.sergey.demoprojectspringboot.service.AddDepartmentService;
-import com.sergey.demoprojectspringboot.service.DeleteDepartmentService;
-import com.sergey.demoprojectspringboot.service.FindDepartmentService;
+import com.sergey.demoprojectspringboot.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +19,7 @@ public class DepartmentController {
     private final AddDepartmentService addDepartmentService;
     private final AddEmployeeToDepartmentService addEmployeeToDepartmentService;
     private final DeleteDepartmentService deleteDepartmentServiceService;
+    private final UpdateDepartmentService updateDepartmentService;
 
     //http://localhost:8080/departments
     @PostMapping
@@ -60,9 +58,15 @@ public class DepartmentController {
         return new ResponseEntity(responce.getObject(), responce.getStatus());
     }
 
-    @DeleteMapping("/departmentForDelete/{idForDelete}")
+    @DeleteMapping("/{idForDelete}")
     public ResponseEntity<ResponceDepartmentDTO> deleteById(@PathVariable Integer idForDelete){
         GlobalResponce<ResponceDepartmentDTO> responce = deleteDepartmentServiceService.deleteDepartment(idForDelete);
+        return new ResponseEntity(responce.getObject(), responce.getStatus());
+    }
+
+    @PutMapping("/name/{name}/{id}")
+    public ResponseEntity<ResponceDepartmentDTO> updateName(@PathVariable String name, @PathVariable Integer id){
+        GlobalResponce<ResponceDepartmentDTO> responce = updateDepartmentService.updateDepartmentNameById(name,id);
         return new ResponseEntity(responce.getObject(), responce.getStatus());
     }
 }

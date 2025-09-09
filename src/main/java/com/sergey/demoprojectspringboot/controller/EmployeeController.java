@@ -39,37 +39,37 @@ public class EmployeeController {
        return new ResponseEntity(response.getObject(), response.getStatus());
    }
 
-   @GetMapping("/by-name/{name}")
+   @GetMapping("/name/{name}")
     public ResponseEntity<List<ResponceEmployeeDTO>> findByName(@PathVariable String name){
        GlobalResponce<List<ResponceEmployeeDTO>> responce = findEmployeeService.findByName(name);
        return new ResponseEntity<>(responce.getObject(), responce.getStatus());
    }
 
-   @GetMapping("/by-surname/{surname}")
+   @GetMapping("/surname/{surname}")
     public ResponseEntity<List<ResponceEmployeeDTO>> findBySurname(@PathVariable String surname){
        GlobalResponce<List<ResponceEmployeeDTO>> responce = findEmployeeService.findBySurname(surname);
        return new ResponseEntity<>(responce.getObject(), responce.getStatus());
    }
 
-   @DeleteMapping("/employeeForDelete/{IdForDelete}")
+   @DeleteMapping("/{IdForDelete}")
     public ResponseEntity<ResponceEmployeeDTO> deleteById(@PathVariable Integer IdForDelete){
        GlobalResponce<ResponceEmployeeDTO> responce = deleteEmployeeService.deleteEmployeeById(IdForDelete);
        return new ResponseEntity<>(responce.getObject(), responce.getStatus());
    }
 
-   @PostMapping("/updateName/{id}/{name}")
+   @PutMapping ("/updateName/{id}/{name}")
     public ResponseEntity<ResponceEmployeeDTO> updateName(@PathVariable Integer id, @PathVariable String name){
        GlobalResponce<ResponceEmployeeDTO> responce = updateEmployeeService.updateEmployeeNameById(id, name);
        return new ResponseEntity(responce.getObject(), responce.getStatus());
    }
 
-   @PostMapping("/updateSurname/{id}/{surname}")
+   @PutMapping ("/updateSurname/{id}/{surname}")
     public ResponseEntity<ResponceEmployeeDTO> updateSurname(@PathVariable Integer id, @PathVariable String surname){
        GlobalResponce<ResponceEmployeeDTO> responce = updateEmployeeService.updateEmployeeSurnameById(id, surname);
        return new ResponseEntity(responce.getObject(), responce.getStatus());
    }
 
-    @PostMapping("/updateEmail/{id}/{email}")
+    @PutMapping ("/updateEmail/{id}/{email}")
     public ResponseEntity<ResponceEmployeeDTO> updateEmail(@PathVariable Integer id, @PathVariable String email){
        GlobalResponce<ResponceEmployeeDTO> responce = updateEmployeeService.updateEmployeeEmailById(id,email);
        return new ResponseEntity(responce.getObject(), responce.getStatus());

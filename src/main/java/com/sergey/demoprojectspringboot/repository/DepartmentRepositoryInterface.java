@@ -19,5 +19,7 @@ public interface DepartmentRepositoryInterface {
 
     Optional<Department> addEmployee(String departmentName, Employee employee);
 
+    Department saveForUpdate(Department department);
+
 
 }
