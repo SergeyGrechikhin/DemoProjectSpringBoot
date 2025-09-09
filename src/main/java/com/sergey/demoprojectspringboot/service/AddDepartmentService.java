@@ -22,6 +22,10 @@ public class AddDepartmentService {
         if (isNameTry.isPresent()) {
             return new GlobalResponce<>(HttpStatus.CONFLICT,null,"Name from Department already exists");
         }
+        if(request.getName() == null || request.getName().equals("") || request.getName().isEmpty()){
+            return new GlobalResponce<>(HttpStatus.CONFLICT,null," Name cannot be empty");
+        }
+
         Department department = departmentRepository.add(new Department(request.getName()));
         return new GlobalResponce<>(HttpStatus.CREATED, ResponceDepartmentDTO.toDto(department),"Department created successfully");
     }

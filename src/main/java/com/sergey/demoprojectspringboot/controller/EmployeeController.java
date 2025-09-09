@@ -5,6 +5,7 @@ import com.sergey.demoprojectspringboot.dto.RequestAddEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.GlobalResponce;
 import com.sergey.demoprojectspringboot.service.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
