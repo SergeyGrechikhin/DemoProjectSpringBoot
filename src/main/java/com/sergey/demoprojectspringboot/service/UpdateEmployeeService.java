@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
@@ -20,6 +21,9 @@ public class UpdateEmployeeService {
         Optional<Employee> employeeForUpdate = employeeRepository.findById(id);
         if (employeeForUpdate.isEmpty()) {
             return new GlobalResponce<>(HttpStatus.NOT_FOUND, null, "Employee not found");
+        }
+        if (!LATIN_PATTERN.matcher(name).matches()) {
+            return new GlobalResponce<>(HttpStatus.CONFLICT, null, "Name is invalid");
         }
         Employee employee = employeeForUpdate.get();
         employee.setName(name);
@@ -33,6 +37,9 @@ public class UpdateEmployeeService {
         Optional<Employee> employeeForUpdate = employeeRepository.findById(id);
         if (employeeForUpdate.isEmpty()) {
             return new GlobalResponce<>(HttpStatus.NOT_FOUND, null, "Employee not found");
+        }
+        if (!LATIN_PATTERN.matcher(surname).matches()) {
+            return new GlobalResponce<>(HttpStatus.CONFLICT, null, "Surname is invalid");
         }
         Employee employee = employeeForUpdate.get();
         employee.setSurname(surname);
@@ -77,4 +84,6 @@ public class UpdateEmployeeService {
     private boolean isEmailAlreadyExist(String email) {
        return employeeRepository.findByEmail(email).isEmpty();
     }
+
+    private static final Pattern LATIN_PATTERN = Pattern.compile("^[A-Za-z._!-]+$");
 }

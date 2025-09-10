@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
@@ -32,6 +33,12 @@ public class AddEmployeeService {
         if (request.getEmail() == null || request.getEmail().isEmpty() || request.getName().equals("")) {
             return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Email is empty");
         }
+        if (!LATIN_PATTERN.matcher(request.getSurname()).matches()) {
+            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Surname is invalid");
+        }
+        if(!LATIN_PATTERN.matcher(request.getName()).matches()) {
+            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Name is invalid");
+        }
         String email = request.getEmail().trim();
         int atCount = email.length() - email.replace("@", "").length();
         if (atCount != 1) {
@@ -52,6 +59,7 @@ public class AddEmployeeService {
         return new GlobalResponce<>(HttpStatus.CREATED, ResponceEmployeeDTO.toDTO(employee), "Employee created successfully");
 
     }
+    private static final Pattern LATIN_PATTERN = Pattern.compile("^[A-Za-z._!-]+$");
 }
 
 

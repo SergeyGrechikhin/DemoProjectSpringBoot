@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
@@ -24,6 +25,10 @@ public class UpdateDepartmentService {
         if(!isNameAlreadyExist(name)) {
             return new GlobalResponce<>(HttpStatus.CONFLICT,null,"Department name already exist");
         }
+        if (!LATIN_PATTERN.matcher(name).matches()) {
+            return new GlobalResponce<>(HttpStatus.CONFLICT,null,"Name is invalid");
+        }
+
         Department department = departmentOptional.get();
         department.setName(name);
 
@@ -35,4 +40,6 @@ public class UpdateDepartmentService {
     private boolean isNameAlreadyExist(String name) {
         return departmentRepository.findByName(name).isEmpty();
     }
+
+    private static final Pattern LATIN_PATTERN = Pattern.compile("^[A-Za-z._!-]+$");
 }
