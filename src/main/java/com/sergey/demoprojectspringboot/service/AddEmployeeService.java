@@ -17,6 +17,7 @@ public class AddEmployeeService {
     private EmployeeRepository employeeRepository;
 
 
+
     public GlobalResponce<ResponceEmployeeDTO> createEmployee(RequestAddEmployeeDTO request) {
         Optional<Employee> isEmailTry = employeeRepository.findByEmail(request.getEmail());
         if (isEmailTry.isPresent()) {
@@ -45,12 +46,15 @@ public class AddEmployeeService {
 
         }
 
+
         Employee employee = employeeRepository.add(new Employee(request.getName(), request.getSurname(), request.getEmail()));
 
         return new GlobalResponce<>(HttpStatus.CREATED, ResponceEmployeeDTO.toDTO(employee), "Employee created successfully");
 
     }
 }
+
+
 
 
 

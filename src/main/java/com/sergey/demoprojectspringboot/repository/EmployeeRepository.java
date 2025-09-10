@@ -66,7 +66,7 @@ public class EmployeeRepository implements EmployeeRepositoryInterface{
 
     @Override
     public Employee saveForUpdate(Employee employee) {
-        database.put(employeeId, employee);
+        database.put(employee.getId(), employee);
         return employee;
     }
 }

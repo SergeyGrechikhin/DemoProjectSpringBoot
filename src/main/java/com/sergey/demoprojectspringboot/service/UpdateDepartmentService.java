@@ -21,11 +21,18 @@ public class UpdateDepartmentService {
         if(departmentOptional.isEmpty()) {
             return new GlobalResponce<>(HttpStatus.NOT_FOUND,null,"Department not found");
         }
+        if(!isNameAlreadyExist(name)) {
+            return new GlobalResponce<>(HttpStatus.CONFLICT,null,"Department name already exist");
+        }
         Department department = departmentOptional.get();
         department.setName(name);
 
         departmentRepository.saveForUpdate(department);
 
         return new GlobalResponce<>(HttpStatus.OK,ResponceDepartmentDTO.toDto(department),"Department updated successfully");
+    }
+
+    private boolean isNameAlreadyExist(String name) {
+        return departmentRepository.findByName(name).isEmpty();
     }
 }

@@ -60,7 +60,7 @@ public class DepartmentRepository implements DepartmentRepositoryInterface {
 
     @Override
     public Department saveForUpdate(Department department) {
-        database.put(departmentId, department);
+        database.put(department.getId(), department);
         return department;
     }
 }
