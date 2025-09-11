@@ -66,7 +66,5 @@ public class FindEmployeeService {
         return employeeRepository.findById(id);
     }
 
-    public List<Employee> getAllForService() {
-        return employeeRepository.findAll();
-    }
+
 }

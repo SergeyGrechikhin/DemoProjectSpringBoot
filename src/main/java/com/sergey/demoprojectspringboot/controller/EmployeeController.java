@@ -52,6 +52,12 @@ public class EmployeeController {
        return new ResponseEntity<>(responce.getObject(), responce.getStatus());
    }
 
+   @GetMapping("/email/{email}")
+       public ResponseEntity<ResponceEmployeeDTO> findByEmail(@PathVariable String email){
+       GlobalResponce<ResponceEmployeeDTO> response = findEmployeeService.findByEmail(email);
+       return new ResponseEntity(response.getObject(), response.getStatus());
+   }
+
    @DeleteMapping("/{IdForDelete}")
     public ResponseEntity<ResponceEmployeeDTO> deleteById(@PathVariable Integer IdForDelete){
        GlobalResponce<ResponceEmployeeDTO> responce = deleteEmployeeService.deleteEmployeeById(IdForDelete);

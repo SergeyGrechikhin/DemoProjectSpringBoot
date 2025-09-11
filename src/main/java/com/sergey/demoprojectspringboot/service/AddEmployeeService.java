@@ -16,6 +16,8 @@ import java.util.regex.Pattern;
 @AllArgsConstructor
 public class AddEmployeeService {
     private EmployeeRepository employeeRepository;
+    private ValidationService validationService;
+
 
 
 
@@ -33,24 +35,15 @@ public class AddEmployeeService {
         if (request.getEmail() == null || request.getEmail().isEmpty() || request.getName().equals("")) {
             return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Email is empty");
         }
-        if (!LATIN_PATTERN.matcher(request.getSurname()).matches()) {
+        if (!validationService.LATIN_PATTERN.matcher(request.getSurname()).matches()) {
             return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Surname is invalid");
         }
-        if(!LATIN_PATTERN.matcher(request.getName()).matches()) {
+        if(!validationService.LATIN_PATTERN.matcher(request.getName()).matches()) {
             return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Name is invalid");
         }
-        String email = request.getEmail().trim();
-        int atCount = email.length() - email.replace("@", "").length();
-        if (atCount != 1) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Email must contain only one symbol '@'");
-        }
-        String[] parts = email.split("@");
-        if (parts[0].isEmpty()) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Email must have symbol before '@'");
-        }
-        if (parts[1].isEmpty() || !parts[1].contains(".")) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Email must have  '.' after '@'");
 
+        if (!validationService.EMAIL_PATTERN.matcher(request.getEmail()).matches()) {
+            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Email is invalid");
         }
 
 
@@ -59,7 +52,9 @@ public class AddEmployeeService {
         return new GlobalResponce<>(HttpStatus.CREATED, ResponceEmployeeDTO.toDTO(employee), "Employee created successfully");
 
     }
-    private static final Pattern LATIN_PATTERN = Pattern.compile("^[A-Za-z._!-]+$");
+
+
+
 }
 
 

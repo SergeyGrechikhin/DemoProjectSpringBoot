@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 @AllArgsConstructor
 public class AddDepartmentService {
     private DepartmentRepositoryInterface departmentRepository;
+    private ValidationService validationService;
 
     public GlobalResponce<ResponceDepartmentDTO> create(RequestCreateDepartmentDTO request) {
         Optional<Department> isNameTry = departmentRepository.findByName(request.getName());
@@ -26,7 +27,7 @@ public class AddDepartmentService {
         if(request.getName() == null || request.getName().equals("") || request.getName().isEmpty()){
             return new GlobalResponce<>(HttpStatus.CONFLICT,null," Name cannot be empty");
         }
-        if(!LATIN_PATTERN.matcher(request.getName()).matches()){
+        if(!validationService.LATIN_PATTERN.matcher(request.getName()).matches()){
             return new GlobalResponce<>(HttpStatus.CONFLICT,null,"Name is not a properly formatted name");
 
         }
@@ -35,7 +36,7 @@ public class AddDepartmentService {
         return new GlobalResponce<>(HttpStatus.CREATED, ResponceDepartmentDTO.toDto(department),"Department created successfully");
     }
 
-    private static final Pattern LATIN_PATTERN = Pattern.compile("^[A-Za-z._!-]+$");
+
 
 
 

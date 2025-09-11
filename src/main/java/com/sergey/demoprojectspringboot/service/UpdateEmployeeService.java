@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 @AllArgsConstructor
 public class UpdateEmployeeService {
     private EmployeeRepositoryInterface employeeRepository;
+    private ValidationService validationService;
 
 
     public GlobalResponce<ResponceEmployeeDTO> updateEmployeeNameById(Integer id, String name) {
@@ -22,7 +23,7 @@ public class UpdateEmployeeService {
         if (employeeForUpdate.isEmpty()) {
             return new GlobalResponce<>(HttpStatus.NOT_FOUND, null, "Employee not found");
         }
-        if (!LATIN_PATTERN.matcher(name).matches()) {
+        if (!validationService.LATIN_PATTERN.matcher(name).matches()) {
             return new GlobalResponce<>(HttpStatus.CONFLICT, null, "Name is invalid");
         }
         Employee employee = employeeForUpdate.get();
@@ -38,7 +39,7 @@ public class UpdateEmployeeService {
         if (employeeForUpdate.isEmpty()) {
             return new GlobalResponce<>(HttpStatus.NOT_FOUND, null, "Employee not found");
         }
-        if (!LATIN_PATTERN.matcher(surname).matches()) {
+        if (!validationService.LATIN_PATTERN.matcher(surname).matches()) {
             return new GlobalResponce<>(HttpStatus.CONFLICT, null, "Surname is invalid");
         }
         Employee employee = employeeForUpdate.get();
@@ -59,19 +60,11 @@ public class UpdateEmployeeService {
         if (employeeForUpdate.isEmpty()) {
             return new GlobalResponce<>(HttpStatus.NOT_FOUND, null, "Employee not found");
         }
-        String emailCheck = email.trim();
-        int atCount = email.length() - email.replace("@", "").length();
-        if (atCount != 1) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Email must contain only one symbol '@'");
-        }
-        String[] parts = email.split("@");
-        if (parts[0].isEmpty()) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Email must have symbol before '@'");
-        }
-        if (parts[1].isEmpty() || !parts[1].contains(".")) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Email must have  '.' after '@'");
 
+        if (!validationService.EMAIL_PATTERN.matcher(email).matches()) {
+            return new GlobalResponce<>(HttpStatus.CONFLICT, null, "Email is invalid");
         }
+
 
         Employee employee = employeeForUpdate.get();
         employee.setEmail(email);
@@ -85,5 +78,5 @@ public class UpdateEmployeeService {
        return employeeRepository.findByEmail(email).isEmpty();
     }
 
-    private static final Pattern LATIN_PATTERN = Pattern.compile("^[A-Za-z._!-]+$");
+
 }

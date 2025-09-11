@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 public class UpdateDepartmentService {
 
     private DepartmentRepositoryInterface departmentRepository;
+    private ValidationService validationService;
 
     public GlobalResponce<ResponceDepartmentDTO> updateDepartmentNameById(String name,Integer id){
         Optional<Department> departmentOptional = departmentRepository.findById(id);
@@ -25,7 +26,7 @@ public class UpdateDepartmentService {
         if(!isNameAlreadyExist(name)) {
             return new GlobalResponce<>(HttpStatus.CONFLICT,null,"Department name already exist");
         }
-        if (!LATIN_PATTERN.matcher(name).matches()) {
+        if (!validationService.LATIN_PATTERN.matcher(name).matches()) {
             return new GlobalResponce<>(HttpStatus.CONFLICT,null,"Name is invalid");
         }
 
@@ -41,5 +42,5 @@ public class UpdateDepartmentService {
         return departmentRepository.findByName(name).isEmpty();
     }
 
-    private static final Pattern LATIN_PATTERN = Pattern.compile("^[A-Za-z._!-]+$");
+
 }
