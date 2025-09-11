@@ -2,28 +2,39 @@ package com.sergey.demoprojectspringboot.service;
 
 import com.sergey.demoprojectspringboot.dto.RequestAddEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
+import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.entity.GlobalResponce;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepository;
+import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.regex.Pattern;
+
 
 @Service
 @AllArgsConstructor
 public class AddEmployeeService {
-    private EmployeeRepository employeeRepository;
+    private EmployeeRepositoryDataBase employeeRepository;
     private ValidationService validationService;
+    private FindDepartmentService findDepartmentService;
+    private AddEmployeeToDepartmentService addEmployeeToDepartmentService;
 
 
 
 
+@Transactional
     public GlobalResponce<ResponceEmployeeDTO> createEmployee(RequestAddEmployeeDTO request) {
-        Optional<Employee> isEmailTry = employeeRepository.findByEmail(request.getEmail());
-        if (isEmailTry.isPresent()) {
+        Optional<Employee> emailOptional = employeeRepository.findByEmail(request.getEmail());
+        Optional<Department> departmentOptional = findDepartmentService.findDepartmentByName(request.getDepartmentName());
+        if(departmentOptional.isEmpty()){
+            return new GlobalResponce<>(HttpStatus.NOT_FOUND,null,"Department Not Found");
+        }
+        if (emailOptional.isPresent()) {
             return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Employee with this email already exists");
         }
         if (request.getName() == null || request.getName().isEmpty() || request.getName().equals("")) {
@@ -46,12 +57,24 @@ public class AddEmployeeService {
             return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Email is invalid");
         }
 
+      /*  Employee employee = new Employee(request.getName(),  request.getSurname(), request.getEmail());
 
-        Employee employee = employeeRepository.add(new Employee(request.getName(), request.getSurname(), request.getEmail()));
+        addEmployeeToDepartmentService.addEmployeeToDepartment(departmentOptional.get(), employee);
+
+        employeeRepository.save(employee); */
+      Department department = departmentOptional.get();
+      Employee employee = new Employee(request.getName(), request.getSurname(), request.getEmail());
+      addEmployeeToDepartmentService.addEmployeeToDepartment(department, employee);
+      employee = employeeRepository.save(employee);
+      department.getEmployees().add(employee);
+
+
 
         return new GlobalResponce<>(HttpStatus.CREATED, ResponceEmployeeDTO.toDTO(employee), "Employee created successfully");
 
     }
+
+
 
 
 

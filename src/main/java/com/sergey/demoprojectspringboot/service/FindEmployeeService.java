@@ -3,8 +3,10 @@ package com.sergey.demoprojectspringboot.service;
 import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.entity.GlobalResponce;
-import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryInterface;
+import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
+
 import lombok.AllArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +16,9 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+
 public class FindEmployeeService {
-    private EmployeeRepositoryInterface employeeRepository;
+    private EmployeeRepositoryDataBase employeeRepository;
 
     public GlobalResponce<List<ResponceEmployeeDTO>> findAll() {
         List<Employee> employees = employeeRepository.findAll();
@@ -35,7 +38,7 @@ public class FindEmployeeService {
     }
 
     public GlobalResponce<List<ResponceEmployeeDTO>> findByName(String name) {
-        List<Employee> employeesOptionalList = employeeRepository.findByName(name);
+        List<Employee> employeesOptionalList = employeeRepository.findByNameContainingIgnoreCase(name);
         List<ResponceEmployeeDTO> responceEmployeeDTOList = employeesOptionalList.stream().filter(employee -> employee.getName().equalsIgnoreCase(name)).map(employee -> new ResponceEmployeeDTO(employee.getId(), employee.getName(), employee.getSurname(),employee.getEmail())).toList();
         if(employeesOptionalList.isEmpty()){
             return new GlobalResponce<>(HttpStatus.NO_CONTENT,null,"Employee not found");

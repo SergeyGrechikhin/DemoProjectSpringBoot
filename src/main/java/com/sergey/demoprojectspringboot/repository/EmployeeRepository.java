@@ -1,11 +1,11 @@
 package com.sergey.demoprojectspringboot.repository;
 
 import com.sergey.demoprojectspringboot.entity.Employee;
-import org.springframework.stereotype.Repository;
+
 
 import java.util.*;
 
-@Repository
+
 public class EmployeeRepository implements EmployeeRepositoryInterface{
 
     private Map<Integer, Employee> database;

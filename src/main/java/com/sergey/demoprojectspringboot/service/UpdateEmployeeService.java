@@ -3,8 +3,10 @@ package com.sergey.demoprojectspringboot.service;
 import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.entity.GlobalResponce;
+import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryInterface;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +15,9 @@ import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
+
 public class UpdateEmployeeService {
-    private EmployeeRepositoryInterface employeeRepository;
+    private EmployeeRepositoryDataBase employeeRepository;
     private ValidationService validationService;
 
 
@@ -29,7 +32,7 @@ public class UpdateEmployeeService {
         Employee employee = employeeForUpdate.get();
         employee.setName(name);
 
-        employeeRepository.saveForUpdate(employee);
+        employeeRepository.save(employee);
 
         return new GlobalResponce<>(HttpStatus.OK, ResponceEmployeeDTO.toDTO(employee), "Employee updated successfully");
     }
@@ -45,7 +48,7 @@ public class UpdateEmployeeService {
         Employee employee = employeeForUpdate.get();
         employee.setSurname(surname);
 
-        employeeRepository.saveForUpdate(employee);
+        employeeRepository.save(employee);
 
         return new GlobalResponce<>(HttpStatus.OK, ResponceEmployeeDTO.toDTO(employee), "Employee updated successfully");
     }
@@ -53,7 +56,7 @@ public class UpdateEmployeeService {
     public GlobalResponce<ResponceEmployeeDTO> updateEmployeeEmailById(Integer id, String email) {
         Optional<Employee> employeeForUpdate = employeeRepository.findById(id);
 
-        if(!isEmailAlreadyExist(email)){
+        if (!isEmailAlreadyExist(email)) {
             return new GlobalResponce<>(HttpStatus.CONFLICT, null, "Email already exist");
         }
 
@@ -69,13 +72,13 @@ public class UpdateEmployeeService {
         Employee employee = employeeForUpdate.get();
         employee.setEmail(email);
 
-        employeeRepository.saveForUpdate(employee);
+        employeeRepository.save(employee);
 
         return new GlobalResponce<>(HttpStatus.OK, ResponceEmployeeDTO.toDTO(employee), "Employee updated successfully");
     }
 
     private boolean isEmailAlreadyExist(String email) {
-       return employeeRepository.findByEmail(email).isEmpty();
+        return employeeRepository.findByEmail(email).isEmpty();
     }
 
 

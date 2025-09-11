@@ -2,21 +2,21 @@ package com.sergey.demoprojectspringboot.service;
 
 import com.sergey.demoprojectspringboot.dto.RequestCreateDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.ResponceDepartmentDTO;
-import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.GlobalResponce;
-import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryInterface;
+import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
+
 public class AddDepartmentService {
-    private DepartmentRepositoryInterface departmentRepository;
+    private DepartmentRepositoryDataBase departmentRepository;
     private ValidationService validationService;
 
     public GlobalResponce<ResponceDepartmentDTO> create(RequestCreateDepartmentDTO request) {
@@ -32,7 +32,7 @@ public class AddDepartmentService {
 
         }
 
-        Department department = departmentRepository.add(new Department(request.getName()));
+        Department department = departmentRepository.save(new Department(request.getName()));
         return new GlobalResponce<>(HttpStatus.CREATED, ResponceDepartmentDTO.toDto(department),"Department created successfully");
     }
 

@@ -1,20 +1,21 @@
 package com.sergey.demoprojectspringboot.service;
 
 import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
-import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.entity.GlobalResponce;
-import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryInterface;
+import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 @Service
 @AllArgsConstructor
+
 public class DeleteEmployeeService {
 
-    private EmployeeRepositoryInterface employeeRepository;
+    private EmployeeRepositoryDataBase employeeRepository;
 
     public GlobalResponce<ResponceEmployeeDTO> deleteEmployeeById(Integer id) {
         Optional<Employee> employeeOptional = employeeRepository.findById(id);
@@ -23,7 +24,7 @@ public class DeleteEmployeeService {
         }
 
         Employee employee = employeeOptional.get();
-        employeeRepository.deleteById(id);
+        employeeRepository.delete(employee);
 
         return new GlobalResponce<>(HttpStatus.OK, ResponceEmployeeDTO.toDTO(employee),"Employee deleted successfully");
 

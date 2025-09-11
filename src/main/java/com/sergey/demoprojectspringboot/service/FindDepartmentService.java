@@ -3,23 +3,23 @@ package com.sergey.demoprojectspringboot.service;
 import com.sergey.demoprojectspringboot.dto.ResponceDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
-import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.entity.GlobalResponce;
-import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryInterface;
+import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+
 public class FindDepartmentService {
 
-    private DepartmentRepositoryInterface departmentRepository;
-    private FindEmployeeService findEmployeeService;
+    private DepartmentRepositoryDataBase departmentRepository;
+
 
     public GlobalResponce<List<ResponceDepartmentDTO>> findAll() {
         List<Department> list = departmentRepository.findAll();
@@ -56,7 +56,11 @@ public class FindDepartmentService {
         return new GlobalResponce<>(HttpStatus.OK, responceEmployeeDTOList, "Employees found successfully");
     }
 
-    public Optional<Department> findDepartmentByNameForService(String name) {
+    public Optional<Department> findDepartmentByIdForService(Integer id) {
+        return departmentRepository.findById(id);
+    }
+
+    public Optional<Department> findDepartmentByName(String name) {
         return departmentRepository.findByName(name);
     }
 

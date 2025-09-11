@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Repository
+
 public class DepartmentRepository implements DepartmentRepositoryInterface {
 
     private Map<Integer, Department> database;

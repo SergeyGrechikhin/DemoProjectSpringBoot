@@ -3,6 +3,8 @@ package com.sergey.demoprojectspringboot.controller;
 import com.sergey.demoprojectspringboot.dto.RequestCreateDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.ResponceDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
+import com.sergey.demoprojectspringboot.entity.Department;
+import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.entity.GlobalResponce;
 import com.sergey.demoprojectspringboot.service.*;
 import lombok.AllArgsConstructor;
@@ -10,12 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/departments")
 @AllArgsConstructor
 public class DepartmentController {
     private final FindDepartmentService findDepartmentService;
+    private final FindEmployeeService findEmployeeService;
     private final AddDepartmentService addDepartmentService;
     private final AddEmployeeToDepartmentService addEmployeeToDepartmentService;
     private final DeleteDepartmentService deleteDepartmentServiceService;
@@ -28,9 +32,11 @@ public class DepartmentController {
         return new ResponseEntity(globalResponce.getObject(),globalResponce.getStatus());
     }
 
-    @GetMapping("/set/{name}/{employeeId}")
-    public ResponseEntity<ResponceDepartmentDTO> addEmployeeToDepartment(@PathVariable String name, @PathVariable Integer employeeId){
-        GlobalResponce<ResponceDepartmentDTO> addEmployeeToDepartmentResponse = addEmployeeToDepartmentService.addEmployeeToDepartment(name,employeeId);
+   @GetMapping("/set/{departmentId}/{employeeId}")
+    public ResponseEntity<ResponceEmployeeDTO> addEmployeeToDepartment(@PathVariable Integer departmentId, @PathVariable Integer employeeId){
+       // Optional<Employee> employeeOptional = findEmployeeService.findByIdForService(departmentid);
+       // Optional<Department> departmentOptional= findDepartmentService.findDepartmentByIdForService(departmentid);
+        GlobalResponce<ResponceEmployeeDTO> addEmployeeToDepartmentResponse = addEmployeeToDepartmentService.addEmployeeToAnotherDepartment(departmentId,employeeId);
         return new ResponseEntity(addEmployeeToDepartmentResponse.getObject(),addEmployeeToDepartmentResponse.getStatus());
     }
 

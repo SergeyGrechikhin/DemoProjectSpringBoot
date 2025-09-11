@@ -3,8 +3,10 @@ package com.sergey.demoprojectspringboot.service;
 import com.sergey.demoprojectspringboot.dto.ResponceDepartmentDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.GlobalResponce;
+import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;
 import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryInterface;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,10 @@ import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
+
 public class UpdateDepartmentService {
 
-    private DepartmentRepositoryInterface departmentRepository;
+    private DepartmentRepositoryDataBase departmentRepository;
     private ValidationService validationService;
 
     public GlobalResponce<ResponceDepartmentDTO> updateDepartmentNameById(String name,Integer id){
@@ -33,7 +36,7 @@ public class UpdateDepartmentService {
         Department department = departmentOptional.get();
         department.setName(name);
 
-        departmentRepository.saveForUpdate(department);
+        departmentRepository.save(department);
 
         return new GlobalResponce<>(HttpStatus.OK,ResponceDepartmentDTO.toDto(department),"Department updated successfully");
     }
