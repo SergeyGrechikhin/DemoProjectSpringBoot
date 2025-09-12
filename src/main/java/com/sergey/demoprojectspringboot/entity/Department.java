@@ -27,8 +27,8 @@ public class Department {
     }
 
     public void addEmployee(Employee employee) {
-        employees.add(employee);  // добавляем задачу в коллекцию
-        employee.setDepartment(this);  // связываем задачу с этим человеком
+        employees.add(employee);
+        employee.setDepartment(this);
     }
 
 }

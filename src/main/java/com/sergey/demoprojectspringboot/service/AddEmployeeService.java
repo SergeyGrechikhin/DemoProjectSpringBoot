@@ -25,14 +25,12 @@ public class AddEmployeeService {
     private AddEmployeeToDepartmentService addEmployeeToDepartmentService;
 
 
-
-
-@Transactional
+    @Transactional
     public GlobalResponce<ResponceEmployeeDTO> createEmployee(RequestAddEmployeeDTO request) {
         Optional<Employee> emailOptional = employeeRepository.findByEmail(request.getEmail());
         Optional<Department> departmentOptional = findDepartmentService.findDepartmentByName(request.getDepartmentName());
-        if(departmentOptional.isEmpty()){
-            return new GlobalResponce<>(HttpStatus.NOT_FOUND,null,"Department Not Found");
+        if (departmentOptional.isEmpty()) {
+            return new GlobalResponce<>(HttpStatus.NOT_FOUND, null, "Department Not Found");
         }
         if (emailOptional.isPresent()) {
             return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Employee with this email already exists");
@@ -49,7 +47,7 @@ public class AddEmployeeService {
         if (!validationService.LATIN_PATTERN.matcher(request.getSurname()).matches()) {
             return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Surname is invalid");
         }
-        if(!validationService.LATIN_PATTERN.matcher(request.getName()).matches()) {
+        if (!validationService.LATIN_PATTERN.matcher(request.getName()).matches()) {
             return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Name is invalid");
         }
 
@@ -57,25 +55,23 @@ public class AddEmployeeService {
             return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Email is invalid");
         }
 
-      /*  Employee employee = new Employee(request.getName(),  request.getSurname(), request.getEmail());
 
-        addEmployeeToDepartmentService.addEmployeeToDepartment(departmentOptional.get(), employee);
+        Department department = departmentOptional.get();
 
-        employeeRepository.save(employee); */
-      Department department = departmentOptional.get();
-      Employee employee = new Employee(request.getName(), request.getSurname(), request.getEmail());
-      addEmployeeToDepartmentService.addEmployeeToDepartment(department, employee);
-      employee = employeeRepository.save(employee);
-      department.getEmployees().add(employee);
+        Employee employee = new Employee(request.getName(), request.getSurname(), request.getEmail());
 
+        addEmployeeToDepartmentService.addEmployeeToDepartment(department, employee);
+
+        employee = employeeRepository.save(employee);
+
+       // department.getEmployees().add(employee); Один из вариантов добавление
+
+        department.addEmployee(employee); //Метод с помощью хелпера
 
 
         return new GlobalResponce<>(HttpStatus.CREATED, ResponceEmployeeDTO.toDTO(employee), "Employee created successfully");
 
     }
-
-
-
 
 
 }
