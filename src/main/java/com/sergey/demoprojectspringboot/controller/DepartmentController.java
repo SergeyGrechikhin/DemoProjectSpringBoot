@@ -8,6 +8,7 @@ import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.entity.GlobalResponce;
 import com.sergey.demoprojectspringboot.service.*;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,51 +29,48 @@ public class DepartmentController {
     //http://localhost:8080/departments
     @PostMapping
     public ResponseEntity<ResponceDepartmentDTO> add(@RequestBody RequestCreateDepartmentDTO request){
-        GlobalResponce<ResponceDepartmentDTO> globalResponce = addDepartmentService.create(request) ;
-        return new ResponseEntity(globalResponce.getObject(),globalResponce.getStatus());
+        return new ResponseEntity<>(addDepartmentService.create(request), HttpStatus.CREATED);
     }
 
    @GetMapping("/set/{departmentId}/{employeeId}")
     public ResponseEntity<ResponceEmployeeDTO> addEmployeeToDepartment(@PathVariable Integer departmentId, @PathVariable Integer employeeId){
-       // Optional<Employee> employeeOptional = findEmployeeService.findByIdForService(departmentid);
-       // Optional<Department> departmentOptional= findDepartmentService.findDepartmentByIdForService(departmentid);
-        GlobalResponce<ResponceEmployeeDTO> addEmployeeToDepartmentResponse = addEmployeeToDepartmentService.addEmployeeToAnotherDepartment(departmentId,employeeId);
-        return new ResponseEntity(addEmployeeToDepartmentResponse.getObject(),addEmployeeToDepartmentResponse.getStatus());
+
+        return new ResponseEntity<>(addEmployeeToDepartmentService.addEmployeeToAnotherDepartment(departmentId,employeeId),HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<ResponceDepartmentDTO>> findAll(){
-        GlobalResponce<List<ResponceDepartmentDTO>> response = findDepartmentService.findAll();
-        return new ResponseEntity<>(response.getObject(), response.getStatus());
+
+        return new ResponseEntity<>(findDepartmentService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ResponceDepartmentDTO> findById(@PathVariable Integer id){
-        GlobalResponce<ResponceDepartmentDTO> response = findDepartmentService.findById(id);
-        return new ResponseEntity(response.getObject(),response.getStatus());
+
+        return new ResponseEntity<>(findDepartmentService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/byName/{name}")
     public ResponseEntity<ResponceDepartmentDTO> findByName(@PathVariable String name){
-        GlobalResponce<ResponceDepartmentDTO> response = findDepartmentService.findByName(name);
-        return new ResponseEntity(response.getObject(), response.getStatus());
+
+        return new ResponseEntity<>(findDepartmentService.findByName(name),HttpStatus.OK);
     }
 
     @GetMapping("/employeesFromDepartment/{name}")
     public ResponseEntity<List<ResponceEmployeeDTO>> findEmployeesByDepartmentName(@PathVariable String name){
-        GlobalResponce<List<ResponceEmployeeDTO>> responce = findDepartmentService.getEmployeesFromDepartment(name);
-        return new ResponseEntity(responce.getObject(), responce.getStatus());
+
+        return new ResponseEntity<>(findDepartmentService.getEmployeesFromDepartment(name),HttpStatus.OK);
     }
 
     @DeleteMapping("/{idForDelete}")
     public ResponseEntity<ResponceDepartmentDTO> deleteById(@PathVariable Integer idForDelete){
-        GlobalResponce<ResponceDepartmentDTO> responce = deleteDepartmentServiceService.deleteDepartment(idForDelete);
-        return new ResponseEntity(responce.getObject(), responce.getStatus());
+
+        return new ResponseEntity<>(deleteDepartmentServiceService.deleteDepartment(idForDelete),HttpStatus.OK);
     }
 
     @PutMapping("/name/{name}/{id}")
     public ResponseEntity<ResponceDepartmentDTO> updateName(@PathVariable String name, @PathVariable Integer id){
-        GlobalResponce<ResponceDepartmentDTO> responce = updateDepartmentService.updateDepartmentNameById(name,id);
-        return new ResponseEntity(responce.getObject(), responce.getStatus());
+
+        return new ResponseEntity<>(updateDepartmentService.updateDepartmentNameById(name,id),HttpStatus.OK);
     }
 }

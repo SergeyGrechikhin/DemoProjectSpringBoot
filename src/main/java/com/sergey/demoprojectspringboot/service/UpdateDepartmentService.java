@@ -3,12 +3,15 @@ package com.sergey.demoprojectspringboot.service;
 import com.sergey.demoprojectspringboot.dto.ResponceDepartmentDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.GlobalResponce;
+import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
+import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;
 import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryInterface;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -21,16 +24,13 @@ public class UpdateDepartmentService {
     private DepartmentRepositoryDataBase departmentRepository;
     private ValidationService validationService;
 
-    public GlobalResponce<ResponceDepartmentDTO> updateDepartmentNameById(String name,Integer id){
+    public ResponceDepartmentDTO updateDepartmentNameById(String name,Integer id){
         Optional<Department> departmentOptional = departmentRepository.findById(id);
         if(departmentOptional.isEmpty()) {
-            return new GlobalResponce<>(HttpStatus.NOT_FOUND,null,"Department not found");
+            throw new NotFoundException("Department not found");
         }
         if(!isNameAlreadyExist(name)) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT,null,"Department name already exist");
-        }
-        if (!validationService.LATIN_PATTERN.matcher(name).matches()) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT,null,"Name is invalid");
+            throw new AlreadyExistException("Department name already exist");
         }
 
         Department department = departmentOptional.get();
@@ -38,7 +38,7 @@ public class UpdateDepartmentService {
 
         departmentRepository.save(department);
 
-        return new GlobalResponce<>(HttpStatus.OK,ResponceDepartmentDTO.toDto(department),"Department updated successfully");
+        return ResponceDepartmentDTO.toDto(department);
     }
 
     private boolean isNameAlreadyExist(String name) {

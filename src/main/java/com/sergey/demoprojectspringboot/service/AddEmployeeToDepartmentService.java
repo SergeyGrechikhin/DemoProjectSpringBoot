@@ -6,12 +6,14 @@ import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.entity.GlobalResponce;
+import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;
 
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +28,10 @@ public class AddEmployeeToDepartmentService {
     private FindDepartmentService departmentFindService;
     private EmployeeRepositoryDataBase employeeRepositoryDataBase;
 
-    public GlobalResponce<ResponceEmployeeDTO> addEmployeeToDepartment(Department department, Employee employee) {
+    public ResponceEmployeeDTO addEmployeeToDepartment(Department department, Employee employee) {
         Optional<Department> departmentOptional = departmentFindService.findDepartmentByIdForService(department.getId());
         if (departmentOptional.isEmpty()) {
-            return new GlobalResponce<>(HttpStatus.BAD_REQUEST, null, "Department not found");
+            throw new NotFoundException("Department Not Found");
         }
         Department departmentForInvite = departmentOptional.get();
 
@@ -39,19 +41,19 @@ public class AddEmployeeToDepartmentService {
 
         Employee employeeSave = employeeRepositoryDataBase.save(employee);
 
-        return new GlobalResponce<>(HttpStatus.OK, ResponceEmployeeDTO.toDTO(employeeSave), "Employee saved successfully");
+        return ResponceEmployeeDTO.toDTO(employeeSave);
 
     }
 
-    public GlobalResponce<ResponceEmployeeDTO> addEmployeeToAnotherDepartment(Integer departmentId, Integer employeeId) {
+    public ResponceEmployeeDTO addEmployeeToAnotherDepartment(Integer departmentId, Integer employeeId) {
         Optional<Employee> employeeForUpdate = employeeFindService.findByIdForService(employeeId);
         Optional<Department> departmentOptional = departmentFindService.findDepartmentByIdForService(departmentId);
 
         if (employeeForUpdate.isEmpty()) {
-            return new GlobalResponce<>(HttpStatus.NOT_FOUND, null, "Employee not found");
+            throw  new NotFoundException(" Employee " + " with " + employeeId + " Not Found ");
         }
         if (departmentOptional.isEmpty()) {
-            return new GlobalResponce<>(HttpStatus.NOT_FOUND, null, "Department not found");
+            throw  new NotFoundException(" Department " + " with " + departmentId + " Not Found ");
         }
 
         Employee employee = employeeForUpdate.get();
@@ -60,7 +62,7 @@ public class AddEmployeeToDepartmentService {
 
         employeeRepositoryDataBase.save(employee);
 
-        return new GlobalResponce<>(HttpStatus.OK, ResponceEmployeeDTO.toDTO(employee), "Employee updated successfully");
+        return ResponceEmployeeDTO.toDTO(employee);
     }
 
 

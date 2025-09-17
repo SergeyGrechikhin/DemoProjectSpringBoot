@@ -5,6 +5,7 @@ import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.entity.GlobalResponce;
+import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepository;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import jakarta.transaction.Transactional;
@@ -26,35 +27,12 @@ public class AddEmployeeService {
 
 
     @Transactional
-    public GlobalResponce<ResponceEmployeeDTO> createEmployee(RequestAddEmployeeDTO request) {
+    public ResponceEmployeeDTO createEmployee(RequestAddEmployeeDTO request) {
         Optional<Employee> emailOptional = employeeRepository.findByEmail(request.getEmail());
         Optional<Department> departmentOptional = findDepartmentService.findDepartmentByName(request.getDepartmentName());
-        if (departmentOptional.isEmpty()) {
-            return new GlobalResponce<>(HttpStatus.NOT_FOUND, null, "Department Not Found");
-        }
         if (emailOptional.isPresent()) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Employee with this email already exists");
+            throw  new AlreadyExistException("Email Already Exist");
         }
-        if (request.getName() == null || request.getName().isEmpty() || request.getName().equals("")) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Employee name is empty");
-        }
-        if (request.getSurname() == null || request.getSurname().isEmpty() || request.getName().equals("")) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Surname is empty");
-        }
-        if (request.getEmail() == null || request.getEmail().isEmpty() || request.getName().equals("")) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Email is empty");
-        }
-        if (!validationService.LATIN_PATTERN.matcher(request.getSurname()).matches()) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Surname is invalid");
-        }
-        if (!validationService.LATIN_PATTERN.matcher(request.getName()).matches()) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Name is invalid");
-        }
-
-        if (!validationService.EMAIL_PATTERN.matcher(request.getEmail()).matches()) {
-            return new GlobalResponce<>(HttpStatus.CONFLICT, null, " Email is invalid");
-        }
-
 
         Department department = departmentOptional.get();
 
@@ -69,7 +47,7 @@ public class AddEmployeeService {
         department.addEmployee(employee); //Метод с помощью хелпера
 
 
-        return new GlobalResponce<>(HttpStatus.CREATED, ResponceEmployeeDTO.toDTO(employee), "Employee created successfully");
+        return ResponceEmployeeDTO.toDTO(employee);
 
     }
 
