@@ -4,16 +4,12 @@ import com.sergey.demoprojectspringboot.dto.RequestAddEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.Employee;
-import com.sergey.demoprojectspringboot.entity.GlobalResponce;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
-import com.sergey.demoprojectspringboot.repository.EmployeeRepository;
+import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 
@@ -21,7 +17,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AddEmployeeService {
     private EmployeeRepositoryDataBase employeeRepository;
-    private ValidationService validationService;
+
     private FindDepartmentService findDepartmentService;
     private AddEmployeeToDepartmentService addEmployeeToDepartmentService;
 
@@ -30,8 +26,9 @@ public class AddEmployeeService {
     public ResponceEmployeeDTO createEmployee(RequestAddEmployeeDTO request) {
         Optional<Employee> emailOptional = employeeRepository.findByEmail(request.getEmail());
         Optional<Department> departmentOptional = findDepartmentService.findDepartmentByName(request.getDepartmentName());
+
         if (emailOptional.isPresent()) {
-            throw  new AlreadyExistException("Email Already Exist");
+            throw  new AlreadyExistException(" Email Already Exist ");
         }
 
         Department department = departmentOptional.get();

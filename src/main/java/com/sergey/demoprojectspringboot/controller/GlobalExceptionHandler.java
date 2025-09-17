@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
                 constraintViolation -> {
                     String currentField = constraintViolation.getPropertyPath().toString();
                     String currentMessage = constraintViolation.getMessage();
-                    responseMessage.append("В поле: " + currentField + " : " + currentMessage);
+                    responseMessage.append("Field : " + currentField + " : " + currentMessage);
                     responseMessage.append("\n");
                 }
         );

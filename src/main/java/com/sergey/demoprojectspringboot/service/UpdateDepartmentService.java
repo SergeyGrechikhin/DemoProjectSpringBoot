@@ -2,19 +2,14 @@ package com.sergey.demoprojectspringboot.service;
 
 import com.sergey.demoprojectspringboot.dto.ResponceDepartmentDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
-import com.sergey.demoprojectspringboot.entity.GlobalResponce;
+
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;
-import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryInterface;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.util.Optional;
-import java.util.regex.Pattern;
+
 
 @Service
 @AllArgsConstructor
@@ -22,15 +17,15 @@ import java.util.regex.Pattern;
 public class UpdateDepartmentService {
 
     private DepartmentRepositoryDataBase departmentRepository;
-    private ValidationService validationService;
+
 
     public ResponceDepartmentDTO updateDepartmentNameById(String name,Integer id){
         Optional<Department> departmentOptional = departmentRepository.findById(id);
         if(departmentOptional.isEmpty()) {
-            throw new NotFoundException("Department not found");
+            throw new NotFoundException(" Department with this " + id + "id" + " not found ");
         }
         if(!isNameAlreadyExist(name)) {
-            throw new AlreadyExistException("Department name already exist");
+            throw new AlreadyExistException("Department with this name " + name + " already exist");
         }
 
         Department department = departmentOptional.get();

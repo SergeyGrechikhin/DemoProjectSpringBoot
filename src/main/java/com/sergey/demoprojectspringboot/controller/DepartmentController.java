@@ -3,17 +3,13 @@ package com.sergey.demoprojectspringboot.controller;
 import com.sergey.demoprojectspringboot.dto.RequestCreateDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.ResponceDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
-import com.sergey.demoprojectspringboot.entity.Department;
-import com.sergey.demoprojectspringboot.entity.Employee;
-import com.sergey.demoprojectspringboot.entity.GlobalResponce;
 import com.sergey.demoprojectspringboot.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/departments")

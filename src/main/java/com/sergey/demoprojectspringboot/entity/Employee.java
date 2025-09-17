@@ -18,17 +18,17 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotBlank
+    @NotBlank(message = "The name field cannot be empty")
     @Size(min = 2, max = 25)
-    @Pattern(regexp = "^[A-Za-z._!-]+$", message = "Name can contain latin characters only")
+    @Pattern(regexp = "^[A-Za-z._!-]+$", message = "Use only Latin letters")
     private String name;
-    @NotBlank
+    @NotBlank(message = "The surname field cannot be empty" )
     @Size(min = 2, max = 25)
-    @Pattern(regexp = "^[A-Za-z._!-]+$", message = "Name can contain latin characters only")
+    @Pattern(regexp = "^[A-Za-z._!-]+$", message = "Use only Latin letters")
     private String surname;
-    @NotBlank
-    @Email
-    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = "Invalid Email")
+    @NotBlank(message = "The email field cannot be empty")
+   //@Email
+    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = "Invalid Email , use this format ***@***.***")
     private String email;
 
     @ManyToOne

@@ -2,31 +2,25 @@ package com.sergey.demoprojectspringboot.service;
 
 import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Employee;
-import com.sergey.demoprojectspringboot.entity.GlobalResponce;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
-import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryInterface;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
-import java.util.regex.Pattern;
+
 
 @Service
 @AllArgsConstructor
 
 public class UpdateEmployeeService {
     private EmployeeRepositoryDataBase employeeRepository;
-    private ValidationService validationService;
 
 
     public ResponceEmployeeDTO updateEmployeeNameById(Integer id, String name) {
         Optional<Employee> employeeForUpdate = employeeRepository.findById(id);
         if (employeeForUpdate.isEmpty()) {
-            throw new NotFoundException("Employee not found");
+            throw new NotFoundException(" Employee with this " + id + " id not found ");
         }
 
         Employee employee = employeeForUpdate.get();
@@ -40,7 +34,7 @@ public class UpdateEmployeeService {
     public ResponceEmployeeDTO updateEmployeeSurnameById(Integer id, String surname) {
         Optional<Employee> employeeForUpdate = employeeRepository.findById(id);
         if (employeeForUpdate.isEmpty()) {
-            throw new NotFoundException("Employee not found");
+            throw new NotFoundException(" Employee with this " + id + " id not found ");
         }
 
         Employee employee = employeeForUpdate.get();
@@ -59,7 +53,7 @@ public class UpdateEmployeeService {
         }
 
         if (employeeForUpdate.isEmpty()) {
-            throw new NotFoundException("Employee not found");
+            throw new NotFoundException(" Employee with this " + id + " id not found ");
         }
 
         Employee employee = employeeForUpdate.get();

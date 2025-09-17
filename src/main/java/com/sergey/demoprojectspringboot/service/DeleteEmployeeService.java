@@ -2,12 +2,9 @@ package com.sergey.demoprojectspringboot.service;
 
 import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Employee;
-import com.sergey.demoprojectspringboot.entity.GlobalResponce;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,7 +18,7 @@ public class DeleteEmployeeService {
     public ResponceEmployeeDTO deleteEmployeeById(Integer id) {
         Optional<Employee> employeeOptional = employeeRepository.findById(id);
         if (employeeOptional.isEmpty()) {
-            throw new NotFoundException(" Employee " + " with " + id + " Not Found ");
+            throw new NotFoundException(" Employee " + " with " + id + " id " + " not found ");
         }
 
         Employee employee = employeeOptional.get();

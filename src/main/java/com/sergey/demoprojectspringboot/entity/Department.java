@@ -20,9 +20,9 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotBlank
-    @Size(min = 2, max = 25)
-    @Pattern(regexp = "^[A-Za-z._!-]+$", message = "Department name can contain latin characters only")
+    @NotBlank(message = "The name field cannot be empty")
+    @Size(min = 2, max = 25,message = "Department must be between 2 and 25 characters")
+    @Pattern(regexp = "^[A-Za-z._!-]+$", message = "Use only Latin letters")
     private String name;
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Employee> employees = new ArrayList<>();

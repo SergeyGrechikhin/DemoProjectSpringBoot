@@ -3,12 +3,11 @@ package com.sergey.demoprojectspringboot.service;
 import com.sergey.demoprojectspringboot.dto.ResponceDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
-import com.sergey.demoprojectspringboot.entity.GlobalResponce;
+
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +25,7 @@ public class FindDepartmentService {
         List<Department> list = departmentRepository.findAll();
         List<ResponceDepartmentDTO> listDTO = list.stream().map(department -> new ResponceDepartmentDTO(department.getId(), department.getName())).toList();
         if (list.isEmpty()) {
-            throw new NotFoundException(" Department Not Found ");
+            throw new NotFoundException(" Departments not found ");
         }
         return listDTO;
     }
@@ -34,7 +33,7 @@ public class FindDepartmentService {
     public ResponceDepartmentDTO findById(Integer id) {
         Optional<Department> departmentOptional = departmentRepository.findById(id);
         if (departmentOptional.isEmpty()) {
-            throw new NotFoundException(" Department Not Found ");
+            throw new NotFoundException(" Department with this " + id + " id " + " not found ");
         }
         return ResponceDepartmentDTO.toDto(departmentOptional.get());
     }
@@ -42,7 +41,7 @@ public class FindDepartmentService {
     public ResponceDepartmentDTO findByName(String name) {
         Optional<Department> departmentOptional = departmentRepository.findByName(name);
         if (departmentOptional.isEmpty()) {
-            throw new NotFoundException(" Department Not Found ");
+            throw new NotFoundException(" Department with this name " + name + " not found ");
         }
         return ResponceDepartmentDTO.toDto(departmentOptional.get());
     }
@@ -51,7 +50,7 @@ public class FindDepartmentService {
     public List<ResponceEmployeeDTO> getEmployeesFromDepartment(String departmentName) {
         Optional<Department> departmentOptional = departmentRepository.findByName(departmentName);
         if (departmentOptional.isEmpty()) {
-            throw new NotFoundException(" Department Not Found ");
+            throw new NotFoundException(" Department with this name " + departmentName + " not found ");
         }
         List<ResponceEmployeeDTO> responceEmployeeDTOList = departmentOptional.get().getEmployees().stream().map(employee -> ResponceEmployeeDTO.toDTO(employee)).toList();
         return responceEmployeeDTOList;

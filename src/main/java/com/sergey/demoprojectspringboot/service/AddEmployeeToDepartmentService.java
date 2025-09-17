@@ -1,23 +1,14 @@
 package com.sergey.demoprojectspringboot.service;
 
 
-import com.sergey.demoprojectspringboot.dto.ResponceDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.Employee;
-import com.sergey.demoprojectspringboot.entity.GlobalResponce;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
-import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;
-
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.aspectj.weaver.ast.Not;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.beans.Transient;
 import java.util.Optional;
 
 @Service
@@ -31,7 +22,7 @@ public class AddEmployeeToDepartmentService {
     public ResponceEmployeeDTO addEmployeeToDepartment(Department department, Employee employee) {
         Optional<Department> departmentOptional = departmentFindService.findDepartmentByIdForService(department.getId());
         if (departmentOptional.isEmpty()) {
-            throw new NotFoundException("Department Not Found");
+            throw new NotFoundException("Department with name " + department.getName() + " not found ");
         }
         Department departmentForInvite = departmentOptional.get();
 
@@ -50,10 +41,10 @@ public class AddEmployeeToDepartmentService {
         Optional<Department> departmentOptional = departmentFindService.findDepartmentByIdForService(departmentId);
 
         if (employeeForUpdate.isEmpty()) {
-            throw  new NotFoundException(" Employee " + " with " + employeeId + " Not Found ");
+            throw new NotFoundException(" Employee " + " with " + employeeId + " id " + " not found ");
         }
         if (departmentOptional.isEmpty()) {
-            throw  new NotFoundException(" Department " + " with " + departmentId + " Not Found ");
+            throw new NotFoundException(" Department " + " with " + departmentId + " id " + " not found ");
         }
 
         Employee employee = employeeForUpdate.get();
