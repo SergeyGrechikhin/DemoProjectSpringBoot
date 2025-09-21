@@ -51,11 +51,11 @@ public class FindEmployeeService {
     }
 
     public ResponceEmployeeDTO findByEmail(String email) {
-        Optional<Employee> employeesOptionalList = employeeRepository.findByEmail(email);
-        if(employeesOptionalList.isEmpty()){
+        Optional<Employee> employeesOptional = employeeRepository.findByEmail(email);
+        if(employeesOptional.isEmpty()){
             throw  new NotFoundException(" Employee with this " + email + " email not found ");
         }
-        return ResponceEmployeeDTO.toDTO(employeesOptionalList.get());
+        return ResponceEmployeeDTO.toDTO(employeesOptional.get());
     }
 
 

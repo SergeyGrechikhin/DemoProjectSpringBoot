@@ -1,17 +1,17 @@
 package com.sergey.demoprojectspringboot.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Entity
 @Table(name = "employees")
 public class Employee {
@@ -27,7 +27,6 @@ public class Employee {
     @Pattern(regexp = "^[A-Za-z._!-]+$", message = "Use only Latin letters")
     private String surname;
     @NotBlank(message = "The email field cannot be empty")
-   //@Email
     @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = "Invalid Email , use this format ***@***.***")
     private String email;
 
@@ -41,4 +40,16 @@ public class Employee {
         this.surname = surname;
         this.email = email;
     }
+
+    public Employee(Integer id ,String name, String surname, String email) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+    }
+
+
+
+
+
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DepartmentController {
     private final FindDepartmentService findDepartmentService;
-    private final FindEmployeeService findEmployeeService;
+
     private final AddDepartmentService addDepartmentService;
     private final AddEmployeeToDepartmentService addEmployeeToDepartmentService;
     private final DeleteDepartmentService deleteDepartmentServiceService;
