@@ -88,6 +88,12 @@ public class EmployeeAddTest {
 
         when(employeeRepositoryDataBase.findByEmail(request.getEmail())).thenReturn(Optional.of(new Employee()));
 
+        ResponceEmployeeDTO testResult = addEmployeeService.createEmployee(request);
+
+        System.out.println(
+                testResult
+        );
+
         assertThrows(AlreadyExistException.class, () -> addEmployeeService.createEmployee(request));
 
     }

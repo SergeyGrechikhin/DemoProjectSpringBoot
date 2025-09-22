@@ -44,17 +44,6 @@ public class EmployeeFindServiceTest {
 
 
     @Test
-    void testCreateEmployeeAlreadyExist() {
-
-        RequestAddEmployeeDTO request = new RequestAddEmployeeDTO("Ruslan", "Ivanov", "google5@gmail.com", "IT");
-
-        when(employeeRepository.findByEmail(request.getEmail())).thenReturn(Optional.of(new Employee()));
-
-        assertThrows(AlreadyExistException.class, () -> employeeService.createEmployee(request));
-    }
-
-
-    @Test
     void testGetUserById() {
 
         Integer searchId = 1;
@@ -93,11 +82,12 @@ public class EmployeeFindServiceTest {
         Employee employee2 = new Employee("Ivan", "Ruslanov", "google1@gmail.com");
 
 
-        when(employeeRepository.findBySurname(searchSurname)).thenReturn(List.of(employee1, employee2));
+        when(employeeRepository.findBySurname(searchSurname)).thenReturn(List.of(employee1));
 
         List<ResponceEmployeeDTO> result = findEmployeeService.findBySurname("Ivanov");
 
-        assertNotNull(result);
+        assertEquals("Ivanov", result.get(0).getName());
+        assertEquals("Ivanov", result.get(1).getName());
         assertEquals(1, result.size());
 
 
