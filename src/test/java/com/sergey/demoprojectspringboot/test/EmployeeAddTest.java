@@ -53,7 +53,7 @@ public class EmployeeAddTest {
         MockitoAnnotations.openMocks(this);
     }
 
-   /* @Test
+    @Test
     void createEmployeeSuccessTest() {
         RequestCreateDepartmentDTO requestCreateDepartmentDTO = new RequestCreateDepartmentDTO("IT");
         Department department = new Department("IT");
@@ -78,7 +78,7 @@ public class EmployeeAddTest {
         assertEquals("google@gmail.com", testResult.getEmail());
         assertEquals(1, testResult.getId());
         assertEquals("Ivanov", testResult.getSurname());
-    } */
+    }
 
     @Test
     void createEmployeeAlreadyExistTest() {
