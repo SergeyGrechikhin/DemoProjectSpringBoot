@@ -26,7 +26,7 @@ public class AddEmployeeService {
     public ResponceEmployeeDTO createEmployee(RequestAddEmployeeDTO request) {
         Optional<Employee> emailOptional = employeeRepository.findByEmail(request.getEmail());
         Optional<Department> departmentOptional = findDepartmentService.findDepartmentByName(request.getDepartmentName());
-        System.out.println(emailOptional.get());
+
 
         if (emailOptional.isPresent()) {
             throw  new AlreadyExistException(" Email Already Exist ");
