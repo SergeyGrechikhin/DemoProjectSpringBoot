@@ -5,7 +5,6 @@ import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
-import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -35,6 +34,8 @@ public class AddEmployeeService {
         Department department = departmentOptional.get();
 
         Employee employee = new Employee(request.getName(), request.getSurname(), request.getEmail());
+
+        employee.setRole(Employee.Role.USER);
 
         addEmployeeToDepartmentService.addEmployeeToDepartment(department, employee);
 

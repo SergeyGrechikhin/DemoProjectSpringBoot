@@ -4,15 +4,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "employees")
 public class Employee {
     @Id
@@ -34,6 +32,18 @@ public class Employee {
     @JoinColumn(name = "department_id")
     private Department department;
 
+    public enum Role {
+        ADMIN,
+        USER,
+        MANAGER
+    }
+
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
+
+
+
 
     public Employee(String name, String surname, String email) {
         this.name = name;
@@ -41,12 +51,7 @@ public class Employee {
         this.email = email;
     }
 
-    public Employee(Integer id ,String name, String surname, String email) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-    }
+
 
 
 
