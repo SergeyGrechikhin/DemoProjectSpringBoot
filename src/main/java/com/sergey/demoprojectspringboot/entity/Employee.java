@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,6 +30,8 @@ public class Employee {
     @NotBlank(message = "The email field cannot be empty")
     @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = "Invalid Email , use this format ***@***.***")
     private String email;
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Task> tasks = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "department_id")
@@ -49,6 +54,11 @@ public class Employee {
         this.name = name;
         this.surname = surname;
         this.email = email;
+    }
+
+    public void addTask(Task task) {
+        tasks.add(task);
+        task.setEmployee(this);
     }
 
 

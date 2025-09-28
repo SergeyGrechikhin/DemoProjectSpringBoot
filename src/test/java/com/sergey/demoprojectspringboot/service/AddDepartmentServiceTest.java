@@ -1,6 +1,8 @@
 package com.sergey.demoprojectspringboot.service;
 
+import com.sergey.demoprojectspringboot.dto.RequestAddEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.RequestCreateDepartmentDTO;
+import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,16 @@ class AddDepartmentServiceTest {
 
         addDepartmentService.create(requestCreateDepartmentDTO);
 
+    }
+
+    @Test
+    void testWhenDuplicatedEmail(){
+        RequestCreateDepartmentDTO request = RequestCreateDepartmentDTO.builder()
+                .name("IT")
+                .build();
+
+
+        assertThrows(AlreadyExistException.class, () -> addDepartmentService.create(request));
     }
 
 }

@@ -38,9 +38,9 @@ class AddEmployeeServiceTest {
     void createEmployee() {
 
         RequestAddEmployeeDTO request = RequestAddEmployeeDTO.builder()
-                .name("Oleg")
-                .surname("Olegov")
-                .email("google77@gmail.com")
+                .name("Max")
+                .surname("Lobov")
+                .email("googleforCheck@gmail.com")
                 .departmentName("IT")
                 .build();
 
@@ -54,7 +54,7 @@ class AddEmployeeServiceTest {
         RequestAddEmployeeDTO request = RequestAddEmployeeDTO.builder()
                 .name("user")
                 .surname("user")
-                .email("googlepixel@gmail.com")
+                .email("google77@gmail.com")
                 .departmentName("Department 1")
                 .build();
 
