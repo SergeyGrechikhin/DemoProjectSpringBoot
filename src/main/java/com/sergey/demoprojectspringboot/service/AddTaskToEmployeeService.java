@@ -1,7 +1,7 @@
 package com.sergey.demoprojectspringboot.service;
 
 
-import com.sergey.demoprojectspringboot.dto.ResponseTaskDTO;
+import com.sergey.demoprojectspringboot.dto.ResponceTaskDTO;
 
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.entity.Task;
@@ -19,7 +19,7 @@ public class AddTaskToEmployeeService {
     private FindEmployeeService findEmployeeService;
     private FindTaskService findTaskService;
 
-    public ResponseTaskDTO addTaskToEmployee(Employee employee, Task task) {
+    public ResponceTaskDTO addTaskToEmployee(Employee employee, Task task) {
         Optional<Employee> employeeOptional = findEmployeeService.findByIdForService(employee.getId());
         if (employeeOptional.isEmpty()) {
             throw new NotFoundException("Employee with id " + employee.getId() + " not found ");
@@ -32,7 +32,7 @@ public class AddTaskToEmployeeService {
 
         Task taskforSave = taskRepositoryDataBase.save(task);
 
-        return ResponseTaskDTO.toDTO(taskforSave);
+        return ResponceTaskDTO.toDTO(taskforSave);
 
     }
 }

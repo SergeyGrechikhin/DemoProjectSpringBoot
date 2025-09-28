@@ -1,8 +1,6 @@
 package com.sergey.demoprojectspringboot.service;
 
-import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
-import com.sergey.demoprojectspringboot.dto.ResponseTaskDTO;
-import com.sergey.demoprojectspringboot.entity.Employee;
+import com.sergey.demoprojectspringboot.dto.ResponceTaskDTO;
 import com.sergey.demoprojectspringboot.entity.Task;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.TaskRepositoryDataBase;
@@ -16,7 +14,7 @@ import java.util.Optional;
 public class UpdateTaskService {
     private TaskRepositoryDataBase taskRepositoryDataBase;
 
-    public ResponseTaskDTO updateTaskStatusById(Integer id, Task.Status status) {
+    public ResponceTaskDTO updateTaskStatusById(Integer id, Task.Status status) {
         Optional<Task> taskForUpdate = taskRepositoryDataBase.findById(id);
         if (taskForUpdate.isEmpty()) {
             throw new NotFoundException(" Employee with this " + id + " id not found ");
@@ -29,7 +27,7 @@ public class UpdateTaskService {
 
         taskRepositoryDataBase.save(task);
 
-        return ResponseTaskDTO.toDTO(task);
+        return ResponceTaskDTO.toDTO(task);
     }
 
 

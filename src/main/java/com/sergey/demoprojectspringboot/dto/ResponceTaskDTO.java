@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseTaskDTO {
+public class ResponceTaskDTO {
     private Integer id;
     private String taskName;
     private String description;
@@ -19,8 +19,8 @@ public class ResponseTaskDTO {
     private LocalDate deadline;
     private String status;
 
-    public static ResponseTaskDTO toDTO(Task task){
-        return new ResponseTaskDTO(task.getId(), task.getTaskName(),task.getDescription(),task.getCreateDate(),task.getDeadline(),task.getStatus().toString());
+    public static ResponceTaskDTO toDTO(Task task){
+        return new ResponceTaskDTO(task.getId(), task.getTaskName(),task.getDescription(),task.getCreateDate(),task.getDeadline(),task.getStatus().toString());
     }
 
 

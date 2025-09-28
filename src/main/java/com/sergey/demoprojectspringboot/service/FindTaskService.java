@@ -1,9 +1,8 @@
 package com.sergey.demoprojectspringboot.service;
 
 
-import com.sergey.demoprojectspringboot.dto.ResponseTaskDTO;
+import com.sergey.demoprojectspringboot.dto.ResponceTaskDTO;
 
-import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.entity.Task;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.TaskRepositoryDataBase;
@@ -20,21 +19,21 @@ public class FindTaskService {
     private TaskRepositoryDataBase taskRepositoryDataBase;
     //private TaskConverter taskConverter ;
 
-    public ResponseTaskDTO findById(Integer id) {
+    public ResponceTaskDTO findById(Integer id) {
         Optional<Task> taskOptional = taskRepositoryDataBase.findById(id);
         if (taskOptional.isEmpty()) {
             throw new NotFoundException(" Task with this" + id + " id not found ");
         } else {
-            return ResponseTaskDTO.toDTO(taskOptional.get());
+            return ResponceTaskDTO.toDTO(taskOptional.get());
         }
     }
 
-    public ResponseTaskDTO findByName(String name) {
+    public ResponceTaskDTO findByName(String name) {
         Optional<Task> taskOptional = taskRepositoryDataBase.findTaskByTaskName(name);
         if (taskOptional.isEmpty()) {
             throw new NotFoundException(" Employee with this " + name + " email not found ");
         }
-        return ResponseTaskDTO.toDTO(taskOptional.get());
+        return ResponceTaskDTO.toDTO(taskOptional.get());
     }
 
     public Optional<Task> findByIdForService(Integer id) {

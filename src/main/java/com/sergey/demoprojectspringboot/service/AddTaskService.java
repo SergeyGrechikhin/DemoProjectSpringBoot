@@ -1,20 +1,15 @@
 package com.sergey.demoprojectspringboot.service;
 
-import com.sergey.demoprojectspringboot.dto.RequestAddEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.RequestTaskDTO;
-import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
-import com.sergey.demoprojectspringboot.dto.ResponseTaskDTO;
-import com.sergey.demoprojectspringboot.entity.Department;
+import com.sergey.demoprojectspringboot.dto.ResponceTaskDTO;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.entity.Task;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
-import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import com.sergey.demoprojectspringboot.repository.TaskRepositoryDataBase;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -25,7 +20,7 @@ public class AddTaskService {
     private FindEmployeeService findEmployeeService;
     private AddTaskToEmployeeService addTaskToEmployeeService;
 
-    public ResponseTaskDTO createTask(RequestTaskDTO request) {
+    public ResponceTaskDTO createTask(RequestTaskDTO request) {
         Optional<Task> taskOptional = taskRepositoryDataBase.findTaskByTaskName(request.getTaskName());
         Optional<Employee> employeeOptional = findEmployeeService.findByIdForService(request.getEmployeeId());
 
@@ -45,6 +40,6 @@ public class AddTaskService {
         task.setEmployee(employeeOptional.get());
 
         Task saved = taskRepositoryDataBase.save(task);
-        return ResponseTaskDTO.toDTO(saved);
+        return ResponceTaskDTO.toDTO(saved);
     }
 }
