@@ -1,15 +1,15 @@
 package com.sergey.demoprojectspringboot.controller;
 
-import com.sergey.demoprojectspringboot.dto.RequestAddEmployeeDTO;
-
-import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
-import com.sergey.demoprojectspringboot.entity.GlobalResponce;
-import com.sergey.demoprojectspringboot.service.*;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
+import com.sergey.demoprojectspringboot.service.findService.FindEmployeeService;
+import com.sergey.demoprojectspringboot.service.addService.AddEmployeeService;
+import com.sergey.demoprojectspringboot.service.deleteService.DeleteEmployeeService;
+import com.sergey.demoprojectspringboot.service.updateService.UpdateEmployeeService;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -23,62 +23,61 @@ public class EmployeeController {
 
    @PostMapping
     public ResponseEntity<ResponceEmployeeDTO> add(@RequestBody RequestAddEmployeeDTO request){
-       GlobalResponce<ResponceEmployeeDTO> response = addEmployeeService.createEmployee(request);
-       return new ResponseEntity(response.getObject(), response.getStatus());
+       return new ResponseEntity<>(addEmployeeService.createEmployee(request), HttpStatus.CREATED);
    }
 
    @GetMapping
     public ResponseEntity<List<ResponceEmployeeDTO>> findAll(){
-       GlobalResponce<List<ResponceEmployeeDTO>> responseList = findEmployeeService.findAll();
-       return new ResponseEntity(responseList.getObject(), responseList.getStatus());
+
+       return new ResponseEntity<>(findEmployeeService.findAll(),HttpStatus.OK);
    }
 
    @GetMapping("/{id}")
     public ResponseEntity<ResponceEmployeeDTO> findById(@PathVariable Integer id){
-       GlobalResponce<ResponceEmployeeDTO> response = findEmployeeService.findById(id);
-       return new ResponseEntity(response.getObject(), response.getStatus());
+
+       return new ResponseEntity<>(findEmployeeService.findById(id),HttpStatus.OK);
    }
 
    @GetMapping("/name/{name}")
     public ResponseEntity<List<ResponceEmployeeDTO>> findByName(@PathVariable String name){
-       GlobalResponce<List<ResponceEmployeeDTO>> responce = findEmployeeService.findByName(name);
-       return new ResponseEntity<>(responce.getObject(), responce.getStatus());
+
+       return new ResponseEntity<>(findEmployeeService.findByName(name),HttpStatus.OK);
    }
 
    @GetMapping("/surname/{surname}")
     public ResponseEntity<List<ResponceEmployeeDTO>> findBySurname(@PathVariable String surname){
-       GlobalResponce<List<ResponceEmployeeDTO>> responce = findEmployeeService.findBySurname(surname);
-       return new ResponseEntity<>(responce.getObject(), responce.getStatus());
+
+       return new ResponseEntity<>(findEmployeeService.findBySurname(surname),HttpStatus.OK);
    }
 
    @GetMapping("/email/{email}")
        public ResponseEntity<ResponceEmployeeDTO> findByEmail(@PathVariable String email){
-       GlobalResponce<ResponceEmployeeDTO> response = findEmployeeService.findByEmail(email);
-       return new ResponseEntity(response.getObject(), response.getStatus());
+
+       return new ResponseEntity<>(findEmployeeService.findByEmail(email),HttpStatus.OK);
    }
 
    @DeleteMapping("/{IdForDelete}")
     public ResponseEntity<ResponceEmployeeDTO> deleteById(@PathVariable Integer IdForDelete){
-       GlobalResponce<ResponceEmployeeDTO> responce = deleteEmployeeService.deleteEmployeeById(IdForDelete);
-       return new ResponseEntity<>(responce.getObject(), responce.getStatus());
+
+       return new ResponseEntity<>(deleteEmployeeService.deleteEmployeeById(IdForDelete),HttpStatus.OK);
    }
 
    @PutMapping ("/updateName/{id}/{name}")
     public ResponseEntity<ResponceEmployeeDTO> updateName(@PathVariable Integer id, @PathVariable String name){
-       GlobalResponce<ResponceEmployeeDTO> responce = updateEmployeeService.updateEmployeeNameById(id, name);
-       return new ResponseEntity(responce.getObject(), responce.getStatus());
+
+       return new ResponseEntity<>(updateEmployeeService.updateEmployeeNameById(id, name),HttpStatus.OK);
    }
 
    @PutMapping ("/updateSurname/{id}/{surname}")
     public ResponseEntity<ResponceEmployeeDTO> updateSurname(@PathVariable Integer id, @PathVariable String surname){
-       GlobalResponce<ResponceEmployeeDTO> responce = updateEmployeeService.updateEmployeeSurnameById(id, surname);
-       return new ResponseEntity(responce.getObject(), responce.getStatus());
+
+       return new ResponseEntity<>(updateEmployeeService.updateEmployeeSurnameById(id, surname),HttpStatus.OK);
    }
 
     @PutMapping ("/updateEmail/{id}/{email}")
     public ResponseEntity<ResponceEmployeeDTO> updateEmail(@PathVariable Integer id, @PathVariable String email){
-       GlobalResponce<ResponceEmployeeDTO> responce = updateEmployeeService.updateEmployeeEmailById(id,email);
-       return new ResponseEntity(responce.getObject(), responce.getStatus());
+
+       return new ResponseEntity<>(updateEmployeeService.updateEmployeeEmailById(id,email),HttpStatus.OK);
     }
 
 

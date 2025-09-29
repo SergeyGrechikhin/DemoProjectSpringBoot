@@ -1,0 +1,15 @@
+
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/companytest
+    username: root
+    password: 789456
+
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
