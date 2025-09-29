@@ -1,7 +1,7 @@
-package com.sergey.demoprojectspringboot.service;
+package com.sergey.demoprojectspringboot.service.findService;
 
-import com.sergey.demoprojectspringboot.dto.ResponceDepartmentDTO;
-import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponceDepartmentDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 
 import com.sergey.demoprojectspringboot.exception.NotFoundException;

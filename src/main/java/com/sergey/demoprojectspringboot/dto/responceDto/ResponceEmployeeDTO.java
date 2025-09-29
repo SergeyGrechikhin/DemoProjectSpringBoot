@@ -1,4 +1,4 @@
-package com.sergey.demoprojectspringboot.dto;
+package com.sergey.demoprojectspringboot.dto.responceDto;
 
 import com.sergey.demoprojectspringboot.entity.Employee;
 import lombok.AllArgsConstructor;

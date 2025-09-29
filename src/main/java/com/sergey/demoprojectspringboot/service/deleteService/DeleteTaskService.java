@@ -1,6 +1,6 @@
-package com.sergey.demoprojectspringboot.service;
+package com.sergey.demoprojectspringboot.service.deleteService;
 
-import com.sergey.demoprojectspringboot.dto.ResponceTaskDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponceTaskDTO;
 import com.sergey.demoprojectspringboot.entity.Task;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.TaskRepositoryDataBase;

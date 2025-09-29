@@ -1,6 +1,7 @@
 package com.sergey.demoprojectspringboot.controller;
 
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
+import com.sergey.demoprojectspringboot.exception.BadRequestException;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 
 import jakarta.validation.ConstraintViolationException;
@@ -81,47 +82,99 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(body);
     }
 
-  /*  // Неверный формат JSON/поля (в т.ч. LocalDate)
+//    // Неверный формат JSON/поля (LocalDate)
+//    @ExceptionHandler(HttpMessageNotReadableException.class)
+//    public ResponseEntity<Map<String, Object>> handleNotReadable(HttpMessageNotReadableException ex) {
+//        String msg = "Invalid request body";
+//        Throwable cause = ex.getMostSpecificCause();
+//
+//        if (cause instanceof java.time.format.DateTimeParseException
+//                || (cause instanceof com.fasterxml.jackson.databind.exc.InvalidFormatException ife
+//                && ife.getTargetType() == java.time.LocalDate.class)) {
+//            msg = "Invalid date format. Use yyyy-MM-dd (e.g. 2025-10-08)";
+//        }
+//        return ResponseEntity.badRequest().body(Map.of("message", msg));
+//    }
+
+//    @ExceptionHandler(HttpMessageNotReadableException.class)
+//    public ResponseEntity<Map<String, Object>> handleNotReadable(HttpMessageNotReadableException ex) {
+//        String msg = "Invalid request body";
+//        Throwable cause = ex.getMostSpecificCause();
+//
+//        if (cause instanceof com.fasterxml.jackson.databind.exc.InvalidFormatException ife) {
+//            Class<?> target = ife.getTargetType();
+//
+//            // 1) Подсказка для Enum (например, Task.Status)
+//            if (target.isEnum()) {
+//                String field = ife.getPath().isEmpty() ? "value"
+//                        : ife.getPath().get(0).getFieldName();
+//                String allowed = java.util.Arrays.stream(target.getEnumConstants())
+//                        .map(Object::toString)
+//                        .reduce((a, b) -> a + ", " + b).orElse("");
+//                msg = "Invalid value for '" + field + "'. Use one of: " + allowed;
+//            }
+//
+//            // 2) Подсказка для LocalDate
+//            if (target == java.time.LocalDate.class) {
+//                msg = "Invalid date format. Use yyyy-MM-dd (e.g. 2025-10-08)";
+//            }
+//        }
+//
+//        return ResponseEntity.badRequest().body(java.util.Map.of("message", msg));
+//    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, Object>> handleNotReadable(HttpMessageNotReadableException ex) {
+        Throwable cause = ex.getRootCause() != null ? ex.getRootCause() : ex.getMostSpecificCause();
+        // fallback
         String msg = "Invalid request body";
-        Throwable cause = ex.getMostSpecificCause();
 
-        if (cause instanceof java.time.format.DateTimeParseException
-                || (cause instanceof com.fasterxml.jackson.databind.exc.InvalidFormatException ife
-                && ife.getTargetType() == java.time.LocalDate.class)) {
-            msg = "Invalid date format. Use yyyy-MM-dd (e.g. 2025-10-08)";
-        }
-        return ResponseEntity.badRequest().body(Map.of("message", msg));
-    } */
+        // 1) Json: неверный тип/формат поля (enum и LocalDate)
+        if (cause instanceof com.fasterxml.jackson.databind.exc.InvalidFormatException) {
+            com.fasterxml.jackson.databind.exc.InvalidFormatException ife =
+                    (com.fasterxml.jackson.databind.exc.InvalidFormatException) cause;
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<Map<String, Object>> handleNotReadable(HttpMessageNotReadableException ex) {
-        String msg = "Invalid request body";
-        Throwable cause = ex.getMostSpecificCause();
-
-        if (cause instanceof com.fasterxml.jackson.databind.exc.InvalidFormatException ife) {
             Class<?> target = ife.getTargetType();
+            String field = ife.getPath().isEmpty() ? "value" : ife.getPath().get(0).getFieldName();
 
-            // 1) Подсказка для Enum (например, Task.Status)
+            // LocalDate
+            if (java.time.LocalDate.class.equals(target)) {
+                msg = "Invalid value for '" + field + "'. Use date format yyyy-MM-dd (e.g. 2025-10-08)";
+                return bad(msg);
+            }
+
+            // Enum
             if (target.isEnum()) {
-                String field = ife.getPath().isEmpty() ? "value"
-                        : ife.getPath().get(0).getFieldName();
                 String allowed = java.util.Arrays.stream(target.getEnumConstants())
                         .map(Object::toString)
-                        .reduce((a, b) -> a + ", " + b).orElse("");
-                msg = "Invalid value for '" + field + "'. Use one of: " + allowed;
-            }
-
-            // 2) Подсказка для LocalDate
-            if (target == java.time.LocalDate.class) {
-                msg = "Invalid date format. Use yyyy-MM-dd (e.g. 2025-10-08)";
+                        .collect(java.util.stream.Collectors.joining(", "));
+                msg = "Invalid value for '" + field + "'. Allowed: " + allowed;
+                return bad(msg);
             }
         }
 
-        return ResponseEntity.badRequest().body(java.util.Map.of("message", msg));
+        // 2) Когда первопричина — DateTimeParseException
+        if (cause instanceof java.time.format.DateTimeParseException) {
+            msg = "Invalid date format. Use yyyy-MM-dd (e.g. 2025-10-08)";
+            return bad(msg);
+        }
+
+        // дефолт
+        return bad(msg);
+    }
+
+    private ResponseEntity<Map<String, Object>> bad(String message) {
+        return ResponseEntity.badRequest().body(java.util.Map.of("message", message));
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<Map<String,Object>> handleBadRequest(BadRequestException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("message", ex.getMessage()));
     }
 }
+
+
 
 
 

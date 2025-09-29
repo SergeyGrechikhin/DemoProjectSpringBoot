@@ -1,7 +1,7 @@
-package com.sergey.demoprojectspringboot.service;
+package com.sergey.demoprojectspringboot.service.addService;
 
-import com.sergey.demoprojectspringboot.dto.RequestCreateDepartmentDTO;
-import com.sergey.demoprojectspringboot.dto.ResponceDepartmentDTO;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestCreateDepartmentDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponceDepartmentDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;

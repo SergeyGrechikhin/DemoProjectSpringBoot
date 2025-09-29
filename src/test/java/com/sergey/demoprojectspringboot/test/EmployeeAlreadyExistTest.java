@@ -1,14 +1,14 @@
 package com.sergey.demoprojectspringboot.test;
 
-import com.sergey.demoprojectspringboot.dto.RequestAddEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
-import com.sergey.demoprojectspringboot.service.AddEmployeeService;
-import com.sergey.demoprojectspringboot.service.AddEmployeeToDepartmentService;
-import com.sergey.demoprojectspringboot.service.FindDepartmentService;
-import com.sergey.demoprojectspringboot.service.FindEmployeeService;
+import com.sergey.demoprojectspringboot.service.addService.AddEmployeeService;
+import com.sergey.demoprojectspringboot.service.addService.AddEmployeeToDepartmentService;
+import com.sergey.demoprojectspringboot.service.findService.FindDepartmentService;
+import com.sergey.demoprojectspringboot.service.findService.FindEmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

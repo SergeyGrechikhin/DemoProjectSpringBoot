@@ -1,4 +1,4 @@
-package com.sergey.demoprojectspringboot.dto;
+package com.sergey.demoprojectspringboot.dto.requestDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RequestAddEmployeeDTO {
+public class RequestCreateDepartmentDTO {
     private String name;
-    private String surname;
-    private String email;
-    private String departmentName;
 }

@@ -1,16 +1,11 @@
 package com.sergey.demoprojectspringboot.test;
 
-import com.sergey.demoprojectspringboot.dto.RequestAddEmployeeDTO;
-import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
-import com.sergey.demoprojectspringboot.entity.Department;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Employee;
-import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
-import com.sergey.demoprojectspringboot.service.AddEmployeeService;
-import com.sergey.demoprojectspringboot.service.AddEmployeeToDepartmentService;
-import com.sergey.demoprojectspringboot.service.FindDepartmentService;
-import com.sergey.demoprojectspringboot.service.FindEmployeeService;
+import com.sergey.demoprojectspringboot.service.addService.AddEmployeeService;
+import com.sergey.demoprojectspringboot.service.findService.FindEmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,7 +15,6 @@ import org.mockito.MockitoAnnotations;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.any;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

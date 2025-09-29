@@ -1,12 +1,9 @@
-package com.sergey.demoprojectspringboot.dto;
+package com.sergey.demoprojectspringboot.dto.responceDto;
 
 import com.sergey.demoprojectspringboot.entity.Department;
-import com.sergey.demoprojectspringboot.entity.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor

@@ -1,15 +1,15 @@
 package com.sergey.demoprojectspringboot.test;
 
-import com.sergey.demoprojectspringboot.dto.RequestAddEmployeeDTO;
-import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
-import com.sergey.demoprojectspringboot.service.AddEmployeeService;
-import com.sergey.demoprojectspringboot.service.AddEmployeeToDepartmentService;
-import com.sergey.demoprojectspringboot.service.FindDepartmentService;
-import com.sergey.demoprojectspringboot.service.FindEmployeeService;
+import com.sergey.demoprojectspringboot.service.addService.AddEmployeeService;
+import com.sergey.demoprojectspringboot.service.addService.AddEmployeeToDepartmentService;
+import com.sergey.demoprojectspringboot.service.findService.FindDepartmentService;
+import com.sergey.demoprojectspringboot.service.findService.FindEmployeeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,7 +20,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

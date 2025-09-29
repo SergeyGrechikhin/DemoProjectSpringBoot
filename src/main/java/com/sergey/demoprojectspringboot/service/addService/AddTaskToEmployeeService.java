@@ -1,12 +1,14 @@
-package com.sergey.demoprojectspringboot.service;
+package com.sergey.demoprojectspringboot.service.addService;
 
 
-import com.sergey.demoprojectspringboot.dto.ResponceTaskDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponceTaskDTO;
 
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.entity.Task;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.TaskRepositoryDataBase;
+import com.sergey.demoprojectspringboot.service.findService.FindEmployeeService;
+import com.sergey.demoprojectspringboot.service.findService.FindTaskService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

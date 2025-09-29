@@ -1,4 +1,4 @@
-package com.sergey.demoprojectspringboot.dto;
+package com.sergey.demoprojectspringboot.dto.dtoUpdate;
 
 import com.sergey.demoprojectspringboot.entity.Task;
 import jakarta.validation.constraints.NotNull;

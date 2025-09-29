@@ -1,8 +1,11 @@
 package com.sergey.demoprojectspringboot.controller;
 
-import com.sergey.demoprojectspringboot.dto.RequestAddEmployeeDTO;
-import com.sergey.demoprojectspringboot.dto.ResponceEmployeeDTO;
-import com.sergey.demoprojectspringboot.service.*;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
+import com.sergey.demoprojectspringboot.service.findService.FindEmployeeService;
+import com.sergey.demoprojectspringboot.service.addService.AddEmployeeService;
+import com.sergey.demoprojectspringboot.service.deleteService.DeleteEmployeeService;
+import com.sergey.demoprojectspringboot.service.updateService.UpdateEmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
