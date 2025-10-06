@@ -15,6 +15,11 @@ import java.util.Optional;
 public class AddDepartmentService {
     private DepartmentRepositoryDataBase departmentRepository;
 
+    /**
+     * Create Department
+     * @param request
+     * @return ResponceDepartmentDTO with created department
+     */
     public ResponceDepartmentDTO create(RequestCreateDepartmentDTO request) {
         Optional<Department> isNameTry = departmentRepository.findByName(request.getName());
         if (isNameTry.isPresent()) {

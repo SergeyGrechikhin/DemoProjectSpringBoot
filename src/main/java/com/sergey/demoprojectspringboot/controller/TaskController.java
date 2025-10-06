@@ -52,16 +52,16 @@ public class TaskController {
         return new ResponseEntity<>(deleteTaskService.deleteTaskById(IdForDelete), HttpStatus.OK);
     }
 //Второй метод нo возникает ошибка с выводом информации об ошибки
-//    @PutMapping("/updateDeadline/{id}/{deadline}")
-//    public ResponseEntity<ResponceTaskDTO> updateDeadline(@PathVariable Integer id, @PathVariable LocalDate deadline) {
-//
-//        return new ResponseEntity<>(updateTaskService.updateTaskDeadlineById(id, deadline), HttpStatus.OK);
-//    }
-//
-//    @PutMapping("/updateStatus/{id}/{status}")
-//    public ResponseEntity<ResponceTaskDTO> updateStatus(@PathVariable Integer id, @PathVariable Task.Status status) {
-//
-//        return new ResponseEntity<>(updateTaskService.updateTaskStatusById(id, status), HttpStatus.OK);
-//    }
+    @PutMapping("/updateDeadline/{id}/{deadline}")
+    public ResponseEntity<ResponceTaskDTO> updateDeadline(@PathVariable Integer id, @PathVariable LocalDate deadline) {
+
+        return new ResponseEntity<>(updateTaskService.updateTaskDeadlineById(id, deadline), HttpStatus.OK);
+    }
+
+    @PutMapping("/updateStatus/{id}/{status}")
+    public ResponseEntity<ResponceTaskDTO> updateStatus(@PathVariable Integer id, @PathVariable Task.Status status) {
+
+        return new ResponseEntity<>(updateTaskService.updateTaskStatusById(id, status), HttpStatus.OK);
+    }
 
 }

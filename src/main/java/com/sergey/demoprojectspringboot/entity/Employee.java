@@ -28,8 +28,11 @@ public class Employee {
     @Pattern(regexp = "^[A-Za-z._!-]+$", message = "Use only Latin letters")
     private String surname;
     @NotBlank(message = "The email field cannot be empty")
-    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = "Invalid Email , use this format ***@***.***")
+    @Pattern(regexp ="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$", message = "Invalid Email , use this format ***@***.***")
     private String email;
+    @NotBlank
+    @Size(min = 6, max = 255)
+    private String password;
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Task> tasks = new ArrayList<>();
 
@@ -50,10 +53,11 @@ public class Employee {
 
 
 
-    public Employee(String name, String surname, String email) {
+    public Employee(String name, String surname, String email, String password) {
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.password = password;
     }
 
     public void addTask(Task task) {

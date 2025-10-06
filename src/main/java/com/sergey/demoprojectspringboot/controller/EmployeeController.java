@@ -1,5 +1,6 @@
 package com.sergey.demoprojectspringboot.controller;
 
+import com.sergey.demoprojectspringboot.controller.api.EmployeeApi;
 import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.service.findService.FindEmployeeService;
@@ -15,14 +16,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/employees")
 @RequiredArgsConstructor
-public class EmployeeController {
+public class EmployeeController implements EmployeeApi {
    private final AddEmployeeService addEmployeeService;
    private final FindEmployeeService findEmployeeService;
    private final DeleteEmployeeService deleteEmployeeService;
    private final UpdateEmployeeService updateEmployeeService;
 
    @PostMapping
-    public ResponseEntity<ResponceEmployeeDTO> add(@RequestBody RequestAddEmployeeDTO request){
+    public ResponseEntity<ResponceEmployeeDTO> createEmployee(@RequestBody RequestAddEmployeeDTO request){
        return new ResponseEntity<>(addEmployeeService.createEmployee(request), HttpStatus.CREATED);
    }
 
@@ -35,7 +36,7 @@ public class EmployeeController {
    @GetMapping("/{id}")
     public ResponseEntity<ResponceEmployeeDTO> findById(@PathVariable Integer id){
 
-       return new ResponseEntity<>(findEmployeeService.findById(id),HttpStatus.OK);
+       return new ResponseEntity<>(findEmployeeService.getUserById(id),HttpStatus.OK);
    }
 
    @GetMapping("/name/{name}")
@@ -50,11 +51,11 @@ public class EmployeeController {
        return new ResponseEntity<>(findEmployeeService.findBySurname(surname),HttpStatus.OK);
    }
 
-   @GetMapping("/email/{email}")
-       public ResponseEntity<ResponceEmployeeDTO> findByEmail(@PathVariable String email){
-
-       return new ResponseEntity<>(findEmployeeService.findByEmail(email),HttpStatus.OK);
-   }
+//   @GetMapping("/email/{email}")
+//       public ResponseEntity<ResponceEmployeeDTO> findByEmail(@PathVariable String email){
+//
+//       return new ResponseEntity<>(findEmployeeService.findByEmail(email),HttpStatus.OK);
+//   }
 
    @DeleteMapping("/{IdForDelete}")
     public ResponseEntity<ResponceEmployeeDTO> deleteById(@PathVariable Integer IdForDelete){
@@ -81,6 +82,8 @@ public class EmployeeController {
     }
 
 
-
-
+    @Override
+    public ResponseEntity<ResponceEmployeeDTO> getEmployeeById(int userId) {
+        return ResponseEntity.ok(findEmployeeService.getUserById(userId));
+    }
 }

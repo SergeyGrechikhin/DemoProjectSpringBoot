@@ -33,7 +33,7 @@ public class DepartmentController {
     }
 
    @GetMapping("/set/{departmentId}/{employeeId}")
-    public ResponseEntity<ResponceEmployeeDTO> addEmployeeToDepartment(@PathVariable Integer departmentId, @PathVariable Integer employeeId){
+    public ResponseEntity<ResponceEmployeeDTO> addEmployeeToAnotherDepartment(@PathVariable Integer departmentId, @PathVariable Integer employeeId){
 
         return new ResponseEntity<>(addEmployeeToDepartmentService.addEmployeeToAnotherDepartment(departmentId,employeeId),HttpStatus.OK);
     }

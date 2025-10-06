@@ -7,6 +7,7 @@ import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import com.sergey.demoprojectspringboot.service.findService.FindDepartmentService;
+import com.sergey.demoprojectspringboot.service.util.Converter;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ public class AddEmployeeService {
 
     private FindDepartmentService findDepartmentService;
     private AddEmployeeToDepartmentService addEmployeeToDepartmentService;
+    private Converter converter;
+    private CodeConfirmationService codeConfirmationService;
 
 
     @Transactional
@@ -34,20 +37,44 @@ public class AddEmployeeService {
 
         Department department = departmentOptional.get();
 
-        Employee employee = new Employee(request.getName(), request.getSurname(), request.getEmail());
+        Employee newEmployee = converter.fromDto(request);
 
-        employee.setRole(Employee.Role.USER);
+        newEmployee.setRole(Employee.Role.USER);
 
-        addEmployeeToDepartmentService.addEmployeeToDepartment(department, employee);
+        addEmployeeToDepartmentService.addEmployeeToDepartment(department, newEmployee);
 
-        employee = employeeRepository.save(employee);
+        newEmployee = employeeRepository.save(newEmployee);
 
-       // department.getEmployees().add(employee); Один из вариантов добавление
+        codeConfirmationService.confirmationCodeManager(newEmployee);
 
-        department.addEmployee(employee); //Метод с помощью хелпера
+        return converter.toDto(newEmployee);
 
 
-        return ResponceEmployeeDTO.toDTO(employee);
+
+
+
+
+
+
+
+
+
+//        Department department = departmentOptional.get();
+//
+//        Employee employee = new Employee(request.getName(), request.getSurname(), request.getEmail() , request.getPassword());
+//
+//        employee.setRole(Employee.Role.USER);
+//
+//        addEmployeeToDepartmentService.addEmployeeToDepartment(department, employee);
+//
+//        employee = employeeRepository.save(employee);
+//
+//       // department.getEmployees().add(employee); Один из вариантов добавление
+//
+//        department.addEmployee(employee); //Метод с помощью хелпера
+//
+//
+//        return ResponceEmployeeDTO.toDTO(employee);
 
     }
 

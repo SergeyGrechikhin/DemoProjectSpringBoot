@@ -1,0 +1,111 @@
+databaseChangeLog:
+
+  # 001 — create departments and employees tables
+  - changeSet:
+      id: 001-create-dept-and-emp
+      author: Sergey Grechihkin
+      changes:
+        - createTable:
+            tableName: departments
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: departments
+            columnNames: name
+            constraintName: uq_departments_name
+
+        - createTable:
+            tableName: employees
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(25)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: surname
+                  type: VARCHAR(25)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(150)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: department_id
+                  type: INT
+        - addForeignKeyConstraint:
+            baseTableName: employees
+            baseColumnNames: department_id
+            referencedTableName: departments
+            referencedColumnNames: id
+            onDelete: SET NULL
+            constraintName: fk_employees_department
+
+  # 002 — seed department Main Management
+  - changeSet:
+      id: 002-seed-main-department
+      author: Sergey Grechikhin
+      preConditions:
+        onFail: MARK_RAN
+        onError: MARK_RAN
+        not:
+          sqlCheck:
+            expectedResult: "1"
+            sql: "select count(*) from departments where name = 'Main Management'"
+      changes:
+        - insert:
+            tableName: departments
+            columns:
+              - column:
+                  name: name
+                  value: Main Management
+
+  # 003 — seed Admin in Main Management
+  - changeSet:
+      id: 003-seed-admin-in-main-department
+      author: Sergey Grechikhin
+      preConditions:
+        onFail: MARK_RAN
+        onError: MARK_RAN
+        not:
+          sqlCheck:
+            expectedResult: "1"
+            sql: "select count(*) from employees where name='Admin' and surname='Root'"
+      changes:
+        - insert:
+            tableName: employees
+            columns:
+              - column: { name: name, value: Admin }
+              - column: { name: surname, value: Root }
+              - column: { name: email, value: admin@company.com }
+              - column: { name: role, value: ADMIN }
+              - column: { name: password, value: "123465" }
+              - column:
+                  name: department_id
+                  valueComputed: "(select id from departments where name = 'Main Management')"

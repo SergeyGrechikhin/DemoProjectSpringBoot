@@ -5,6 +5,7 @@ import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
+import com.sergey.demoprojectspringboot.service.util.Converter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 public class UpdateEmployeeService {
     private EmployeeRepositoryDataBase employeeRepository;
+    private Converter converter;
 
 
     public ResponceEmployeeDTO updateEmployeeNameById(Integer id, String name) {
@@ -28,7 +30,7 @@ public class UpdateEmployeeService {
 
         employeeRepository.save(employee);
 
-        return ResponceEmployeeDTO.toDTO(employee);
+        return converter.toDto(employee);
     }
 
     public ResponceEmployeeDTO updateEmployeeSurnameById(Integer id, String surname) {
@@ -42,7 +44,7 @@ public class UpdateEmployeeService {
 
         employeeRepository.save(employee);
 
-        return ResponceEmployeeDTO.toDTO(employee);
+        return converter.toDto(employee);
     }
 
     public ResponceEmployeeDTO updateEmployeeEmailById(Integer id, String email) {
@@ -61,7 +63,7 @@ public class UpdateEmployeeService {
 
         employeeRepository.save(employee);
 
-        return ResponceEmployeeDTO.toDTO(employee);
+        return converter.toDto(employee);
     }
 
     private boolean isEmailAlreadyExist(String email) {
