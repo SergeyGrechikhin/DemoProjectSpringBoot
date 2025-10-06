@@ -25,8 +25,8 @@ public class Converter {
         return ResponceEmployeeDTO.builder()
                 .id(employee.getId())
                 .name(employee.getName())
-                .email(employee.getEmail())
                 .surname(employee.getSurname())
+                .email(employee.getEmail())
                 .role(employee.getRole())
                 .build();
     }

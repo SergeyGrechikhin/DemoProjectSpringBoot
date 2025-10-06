@@ -1,18 +1,18 @@
 package com.sergey.demoprojectspringboot.controller.api;
 
+
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/api/users")
+@RequestMapping("/api/employees")
 public interface EmployeeApi {
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<ResponceEmployeeDTO> getEmployeeById(@PathVariable int userId);
+    @PostMapping
+    ResponseEntity<ResponceEmployeeDTO> employeeRegistration(@RequestBody RequestAddEmployeeDTO request);
 
-    // можно добавить DeleteUser, UpdateUser
-    // @PutMapping("/{userId}")
 
 }

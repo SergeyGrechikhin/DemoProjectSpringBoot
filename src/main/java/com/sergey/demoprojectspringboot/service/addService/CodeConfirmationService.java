@@ -4,6 +4,7 @@ import com.sergey.demoprojectspringboot.entity.ConfirmationCode;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.ConfirmationCodeRepository;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

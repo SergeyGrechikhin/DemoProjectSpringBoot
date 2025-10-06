@@ -11,6 +11,7 @@ import com.sergey.demoprojectspringboot.service.util.Converter;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 
@@ -26,13 +27,13 @@ public class AddEmployeeService {
 
 
     @Transactional
-    public ResponceEmployeeDTO createEmployee(RequestAddEmployeeDTO request) {
+    public ResponceEmployeeDTO employeeRegistration(RequestAddEmployeeDTO request) {
         Optional<Employee> emailOptional = employeeRepository.findByEmail(request.getEmail());
         Optional<Department> departmentOptional = findDepartmentService.findDepartmentByName(request.getDepartmentName());
 
 
         if (emailOptional.isPresent()) {
-            throw  new AlreadyExistException(" Email Already Exist ");
+            throw new AlreadyExistException(" Email Already Exist ");
         }
 
         Department department = departmentOptional.get();
@@ -49,32 +50,6 @@ public class AddEmployeeService {
 
         return converter.toDto(newEmployee);
 
-
-
-
-
-
-
-
-
-
-
-//        Department department = departmentOptional.get();
-//
-//        Employee employee = new Employee(request.getName(), request.getSurname(), request.getEmail() , request.getPassword());
-//
-//        employee.setRole(Employee.Role.USER);
-//
-//        addEmployeeToDepartmentService.addEmployeeToDepartment(department, employee);
-//
-//        employee = employeeRepository.save(employee);
-//
-//       // department.getEmployees().add(employee); Один из вариантов добавление
-//
-//        department.addEmployee(employee); //Метод с помощью хелпера
-//
-//
-//        return ResponceEmployeeDTO.toDTO(employee);
 
     }
 

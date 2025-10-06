@@ -46,7 +46,7 @@ class AddEmployeeServiceTest {
                 .departmentName("IT")
                 .build();
 
-        addEmployeeService.createEmployee(request);
+        addEmployeeService.employeeRegistration(request);
 
     }
 
@@ -60,7 +60,7 @@ class AddEmployeeServiceTest {
                 .departmentName("Department 1")
                 .build();
 
-        assertThrows(AlreadyExistException.class, () -> addEmployeeService.createEmployee(request));
+        assertThrows(AlreadyExistException.class, () -> addEmployeeService.employeeRegistration(request));
     }
 
 }
