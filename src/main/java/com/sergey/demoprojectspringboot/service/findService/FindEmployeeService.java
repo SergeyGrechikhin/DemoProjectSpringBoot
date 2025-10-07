@@ -6,7 +6,7 @@ import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import com.sergey.demoprojectspringboot.service.addService.CodeConfirmationService;
-import com.sergey.demoprojectspringboot.service.util.Converter;
+import com.sergey.demoprojectspringboot.service.util.EmployeeConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import java.util.Optional;
 
 public class FindEmployeeService {
     private EmployeeRepositoryDataBase employeeRepository;
-    private Converter converter;
+    private EmployeeConverter converter;
     private CodeConfirmationService codeConfirmationService;
 
     public List<ResponceEmployeeDTO> findAll() {

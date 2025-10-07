@@ -5,7 +5,7 @@ import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
-import com.sergey.demoprojectspringboot.service.util.Converter;
+import com.sergey.demoprojectspringboot.service.util.EmployeeConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public class UpdateEmployeeService {
     private EmployeeRepositoryDataBase employeeRepository;
-    private Converter converter;
+    private EmployeeConverter converter;
 
 
     public ResponceEmployeeDTO updateEmployeeNameById(Integer id, String name) {

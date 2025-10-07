@@ -8,7 +8,7 @@ import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import com.sergey.demoprojectspringboot.service.findService.FindDepartmentService;
 import com.sergey.demoprojectspringboot.service.findService.FindEmployeeService;
-import com.sergey.demoprojectspringboot.service.util.Converter;
+import com.sergey.demoprojectspringboot.service.util.EmployeeConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class AddEmployeeToDepartmentService {
     private FindEmployeeService employeeFindService;
     private FindDepartmentService departmentFindService;
     private EmployeeRepositoryDataBase employeeRepositoryDataBase;
-    private Converter converter;
+    private EmployeeConverter converter;
 
     public ResponceEmployeeDTO addEmployeeToDepartment(Department department, Employee employee) {
         Optional<Department> departmentOptional = departmentFindService.findDepartmentByIdForService(department.getId());

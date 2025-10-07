@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class Converter {
+public class EmployeeConverter {
     public Employee fromDto(RequestAddEmployeeDTO request){
 
         return Employee.builder()

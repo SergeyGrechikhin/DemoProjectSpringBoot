@@ -4,6 +4,7 @@ import com.sergey.demoprojectspringboot.dto.responceDto.ResponceTaskDTO;
 import com.sergey.demoprojectspringboot.entity.Task;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.TaskRepositoryDataBase;
+import com.sergey.demoprojectspringboot.service.util.TaskConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class DeleteTaskService {
 
     private TaskRepositoryDataBase taskRepositoryDataBase;
+    private TaskConverter taskConverter;
 
     public ResponceTaskDTO deleteTaskById(Integer id) {
         Optional<Task> taskOptional = taskRepositoryDataBase.findById(id);
@@ -24,7 +26,7 @@ public class DeleteTaskService {
         Task task = taskOptional.get();
         taskRepositoryDataBase.delete(task);
 
-        return ResponceTaskDTO.toDTO(task);
+        return taskConverter.toDto(task);
 
     }
 }

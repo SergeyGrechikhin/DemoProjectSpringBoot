@@ -16,16 +16,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
 public class TaskController implements TaskApi {
 
     private final UpdateTaskService updateTaskService;
+    private final FindTaskService findTaskService;
 
     @Override
-    public ResponseEntity<ResponceTaskDTO> updateStatus(Integer id, UpdateStatusDTO status) {
-        return ResponseEntity.ok(updateTaskService.updateTaskStatusById(id, status));
+    public ResponseEntity<ResponceTaskDTO> updateStatusForUser(Integer id, UpdateStatusDTO status) {
+        return ResponseEntity.ok(updateTaskService.updateTaskStatusByIdForUser(id, status));
+    }
+
+    @Override
+    public ResponseEntity<List<ResponceTaskDTO>> getMyTask() {
+        return ResponseEntity.ok(findTaskService.getMyTasks());
     }
 
 

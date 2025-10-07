@@ -6,7 +6,7 @@ import com.sergey.demoprojectspringboot.entity.Department;
 
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;
-import com.sergey.demoprojectspringboot.service.util.Converter;
+import com.sergey.demoprojectspringboot.service.util.EmployeeConverter;
 import lombok.AllArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import java.util.Optional;
 public class FindDepartmentService {
 
     private DepartmentRepositoryDataBase departmentRepository;
-    private Converter converter;
+    private EmployeeConverter converter;
 
 
     public List<ResponceDepartmentDTO> findAll() {

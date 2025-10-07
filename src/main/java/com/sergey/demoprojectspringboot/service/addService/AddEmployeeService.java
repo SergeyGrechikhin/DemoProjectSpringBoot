@@ -7,7 +7,7 @@ import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import com.sergey.demoprojectspringboot.service.findService.FindDepartmentService;
-import com.sergey.demoprojectspringboot.service.util.Converter;
+import com.sergey.demoprojectspringboot.service.util.EmployeeConverter;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class AddEmployeeService {
 
     private FindDepartmentService findDepartmentService;
     private AddEmployeeToDepartmentService addEmployeeToDepartmentService;
-    private Converter converter;
+    private EmployeeConverter converter;
     private CodeConfirmationService codeConfirmationService;
 
 

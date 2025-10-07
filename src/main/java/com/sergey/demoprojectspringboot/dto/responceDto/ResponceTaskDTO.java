@@ -2,6 +2,7 @@ package com.sergey.demoprojectspringboot.dto.responceDto;
 
 import com.sergey.demoprojectspringboot.entity.Task;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ResponceTaskDTO {
     private Integer id;
     private String taskName;
@@ -19,9 +21,7 @@ public class ResponceTaskDTO {
     private LocalDate deadline;
     private String status;
 
-    public static ResponceTaskDTO toDTO(Task task){
-        return new ResponceTaskDTO(task.getId(), task.getTaskName(),task.getDescription(),task.getCreateDate(),task.getDeadline(),task.getStatus().toString());
-    }
+
 
 
 }

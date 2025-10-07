@@ -1,6 +1,7 @@
 package com.sergey.demoprojectspringboot.controller.api;
 
 import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateDeadlineDTO;
+import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateStatusDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponceDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponceTaskDTO;
@@ -29,6 +30,9 @@ public interface AdminUpdateApi {
 
     @PutMapping("/updateDescription/{id}")
     ResponseEntity<ResponceTaskDTO> updateTaskDescriptionById(@PathVariable Integer id, @RequestBody String description);
+
+    @PutMapping("/updateStatusForAdmin/{id}")
+    ResponseEntity<ResponceTaskDTO> updateStatusForAdmin(@PathVariable Integer id, @RequestBody UpdateStatusDTO status);
 
 
 }

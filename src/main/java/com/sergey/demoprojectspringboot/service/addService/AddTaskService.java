@@ -8,6 +8,7 @@ import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.exception.BadRequestException;
 import com.sergey.demoprojectspringboot.repository.TaskRepositoryDataBase;
 import com.sergey.demoprojectspringboot.service.findService.FindEmployeeService;
+import com.sergey.demoprojectspringboot.service.util.TaskConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AddTaskService {
     private TaskRepositoryDataBase taskRepositoryDataBase;
+    private TaskConverter taskConverter;
 
     private FindEmployeeService findEmployeeService;
     private AddTaskToEmployeeService addTaskToEmployeeService;
@@ -49,6 +51,7 @@ public class AddTaskService {
         task.setEmployee(employeeOptional.get());
 
         Task saved = taskRepositoryDataBase.save(task);
-        return ResponceTaskDTO.toDTO(saved);
+
+        return taskConverter.toDto(saved);
     }
 }

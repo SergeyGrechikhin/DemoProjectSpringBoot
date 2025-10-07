@@ -9,6 +9,7 @@ import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.TaskRepositoryDataBase;
 import com.sergey.demoprojectspringboot.service.findService.FindEmployeeService;
 import com.sergey.demoprojectspringboot.service.findService.FindTaskService;
+import com.sergey.demoprojectspringboot.service.util.TaskConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class AddTaskToEmployeeService {
     private TaskRepositoryDataBase taskRepositoryDataBase;
     private FindEmployeeService findEmployeeService;
     private FindTaskService findTaskService;
+    private TaskConverter taskConverter;
 
     public ResponceTaskDTO addTaskToEmployee(Employee employee, Task task) {
         Optional<Employee> employeeOptional = findEmployeeService.findByIdForService(employee.getId());
@@ -34,7 +36,7 @@ public class AddTaskToEmployeeService {
 
         Task taskforSave = taskRepositoryDataBase.save(task);
 
-        return ResponceTaskDTO.toDTO(taskforSave);
+        return taskConverter.toDto(taskforSave);
 
     }
 }
