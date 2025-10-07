@@ -17,7 +17,7 @@ import java.util.Optional;
 public class FindTaskService {
 
     private TaskRepositoryDataBase taskRepositoryDataBase;
-    //private TaskConverter taskConverter ;
+
 
     public ResponceTaskDTO findById(Integer id) {
         Optional<Task> taskOptional = taskRepositoryDataBase.findById(id);
