@@ -1,8 +1,7 @@
 package com.sergey.demoprojectspringboot.controller.api;
 
 import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateStatusDTO;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceTaskDTO;
-import com.sergey.demoprojectspringboot.entity.Task;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +11,10 @@ import java.util.List;
 public interface TaskApi {
 
     @PutMapping("/updateStatusForUser/{id}")
-    ResponseEntity<ResponceTaskDTO> updateStatusForUser(@PathVariable Integer id, @RequestBody UpdateStatusDTO status);
+    ResponseEntity<ResponseTaskDTO> updateStatusForUser(@PathVariable Integer id, @RequestBody UpdateStatusDTO status);
 
     @GetMapping("/getMyTask")
-    ResponseEntity<List<ResponceTaskDTO>> getMyTask();
+    ResponseEntity<List<ResponseTaskDTO>> getMyTask();
 
 
 }

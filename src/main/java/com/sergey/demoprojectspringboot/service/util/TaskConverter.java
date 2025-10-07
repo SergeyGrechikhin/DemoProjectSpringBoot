@@ -1,10 +1,7 @@
 package com.sergey.demoprojectspringboot.service.util;
 
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDTO;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceTaskDTO;
-import com.sergey.demoprojectspringboot.entity.Employee;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
 import com.sergey.demoprojectspringboot.entity.Task;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,8 +20,8 @@ public class TaskConverter {
                 .build();
     }
 
-    public ResponceTaskDTO toDto(Task task){
-        return ResponceTaskDTO.builder()
+    public ResponseTaskDTO toDto(Task task){
+        return ResponseTaskDTO.builder()
                 .id(task.getId())
                 .taskName(task.getTaskName())
                 .description(task.getDescription())
@@ -34,7 +31,7 @@ public class TaskConverter {
                 .build();
     }
 
-    public List<ResponceTaskDTO> fromTasks(List<Task> tasks){
+    public List<ResponseTaskDTO> fromTasks(List<Task> tasks){
         return tasks.stream()
                 .map(task -> toDto(task))
                 .toList();

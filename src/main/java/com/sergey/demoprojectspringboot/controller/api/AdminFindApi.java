@@ -1,8 +1,8 @@
 package com.sergey.demoprojectspringboot.controller.api;
 
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceDepartmentDTO;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceTaskDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseDepartmentDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
 import com.sergey.demoprojectspringboot.entity.ConfirmationCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,45 +15,45 @@ import java.util.List;
 @RequestMapping("/api/admin/find")
 public interface AdminFindApi {
     @GetMapping("/findEmployeeById/{id}")
-    ResponseEntity<ResponceEmployeeDTO> findEmployeeById(@PathVariable Integer id);
+    ResponseEntity<ResponseEmployeeDTO> findEmployeeById(@PathVariable Integer id);
 
 
     @GetMapping("/findEmployeeByName/{name}")
-    ResponseEntity<List<ResponceEmployeeDTO>> findEmployeeByName(@PathVariable String name);
+    ResponseEntity<List<ResponseEmployeeDTO>> findEmployeeByName(@PathVariable String name);
 
 
     @GetMapping("/findEmployeeBySurname/{surname}")
-    ResponseEntity<List<ResponceEmployeeDTO>> findEmployeeBySurname(@PathVariable String surname);
+    ResponseEntity<List<ResponseEmployeeDTO>> findEmployeeBySurname(@PathVariable String surname);
 
 
     @GetMapping("/findEmployeeByEmail/{email}")
-    ResponseEntity<ResponceEmployeeDTO> findEmployeeByEmail(@PathVariable String email);
+    ResponseEntity<ResponseEmployeeDTO> findEmployeeByEmail(@PathVariable String email);
 
 
     @GetMapping("/findDepartmentAll")
-    ResponseEntity<List<ResponceDepartmentDTO>> findDepartmentAll();
+    ResponseEntity<List<ResponseDepartmentDTO>> findDepartmentAll();
 
 
     @GetMapping("/findDepartmentById/{id}")
-    ResponseEntity<ResponceDepartmentDTO> findDepartmentById(@PathVariable Integer id);
+    ResponseEntity<ResponseDepartmentDTO> findDepartmentById(@PathVariable Integer id);
 
 
     @GetMapping("/findDepartmentByName/{name}")
-    ResponseEntity<ResponceDepartmentDTO> findDepartmentByName(@PathVariable String name);
+    ResponseEntity<ResponseDepartmentDTO> findDepartmentByName(@PathVariable String name);
 
 
     @GetMapping("/findEmployeesByDepartmentName/{name}")
-    ResponseEntity<List<ResponceEmployeeDTO>> findEmployeesByDepartmentName(@PathVariable String name);
+    ResponseEntity<List<ResponseEmployeeDTO>> findEmployeesByDepartmentName(@PathVariable String name);
 
     @GetMapping("/employeesAll")
-    ResponseEntity<List<ResponceEmployeeDTO>> findAllEmployees();
+    ResponseEntity<List<ResponseEmployeeDTO>> findAllEmployees();
 
     @GetMapping("/employees/allCodes")
     ResponseEntity<List<ConfirmationCode>> findAllEmployeesCodes(@RequestParam String email);
 
     @GetMapping("/findTaskById/{id}")
-    ResponseEntity<ResponceTaskDTO> findTaskById(@PathVariable Integer id);
+    ResponseEntity<ResponseTaskDTO> findTaskById(@PathVariable Integer id);
 
     @GetMapping("/findTaskByName/{name}")
-    ResponseEntity<ResponceTaskDTO> findTaskByName(@PathVariable String name);
+    ResponseEntity<ResponseTaskDTO> findTaskByName(@PathVariable String name);
 }

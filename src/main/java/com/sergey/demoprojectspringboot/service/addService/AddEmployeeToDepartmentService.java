@@ -1,7 +1,7 @@
 package com.sergey.demoprojectspringboot.service.addService;
 
 
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
@@ -23,7 +23,7 @@ public class AddEmployeeToDepartmentService {
     private EmployeeRepositoryDataBase employeeRepositoryDataBase;
     private EmployeeConverter converter;
 
-    public ResponceEmployeeDTO addEmployeeToDepartment(Department department, Employee employee) {
+    public ResponseEmployeeDTO addEmployeeToDepartment(Department department, Employee employee) {
         Optional<Department> departmentOptional = departmentFindService.findDepartmentByIdForService(department.getId());
         if (departmentOptional.isEmpty()) {
             throw new NotFoundException("Department with name " + department.getName() + " not found ");
@@ -40,7 +40,7 @@ public class AddEmployeeToDepartmentService {
 
     }
 
-    public ResponceEmployeeDTO addEmployeeToAnotherDepartment(Integer departmentId, Integer employeeId) {
+    public ResponseEmployeeDTO addEmployeeToAnotherDepartment(Integer departmentId, Integer employeeId) {
         Optional<Employee> employeeForUpdate = employeeFindService.findByIdForService(employeeId);
         Optional<Department> departmentOptional = departmentFindService.findDepartmentByIdForService(departmentId);
 

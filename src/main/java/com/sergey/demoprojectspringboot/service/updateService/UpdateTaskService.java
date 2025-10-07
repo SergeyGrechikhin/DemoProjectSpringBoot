@@ -1,7 +1,7 @@
 package com.sergey.demoprojectspringboot.service.updateService;
 
 import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateStatusDTO;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceTaskDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
 import com.sergey.demoprojectspringboot.entity.Task;
 import com.sergey.demoprojectspringboot.exception.AccessDeniedException;
 import com.sergey.demoprojectspringboot.exception.BadRequestException;
@@ -22,15 +22,13 @@ public class UpdateTaskService {
     private TaskRepositoryDataBase taskRepositoryDataBase;
     private TaskConverter taskConverter;
 
-    public ResponceTaskDTO updateTaskStatusByIdForAdmin(Integer id, UpdateStatusDTO status) {
+    public ResponseTaskDTO updateTaskStatusByIdForAdmin(Integer id, UpdateStatusDTO status) {
         Optional<Task> taskForUpdate = taskRepositoryDataBase.findById(id);
         if (taskForUpdate.isEmpty()) {
             throw new NotFoundException(" Task with this " + id + " id not found ");
         }
 
         LocalDateTime now = LocalDateTime.now();
-
-
 
 
         Task task = taskForUpdate.get();
@@ -42,7 +40,7 @@ public class UpdateTaskService {
         return taskConverter.toDto(task);
     }
 
-    public ResponceTaskDTO updateTaskDeadlineById(Integer id, LocalDate deadline) {
+    public ResponseTaskDTO updateTaskDeadlineById(Integer id, LocalDate deadline) {
         LocalDateTime now = LocalDateTime.now();
         Optional<Task> taskForUpdate = taskRepositoryDataBase.findById(id);
         if (taskForUpdate.isEmpty()) {
@@ -63,7 +61,7 @@ public class UpdateTaskService {
         return taskConverter.toDto(task);
     }
 
-    public ResponceTaskDTO updateTaskDescriptionById(Integer id, String description) {
+    public ResponseTaskDTO updateTaskDescriptionById(Integer id, String description) {
         Optional<Task> taskForUpdate = taskRepositoryDataBase.findById(id);
         if (taskForUpdate.isEmpty()) {
             throw new NotFoundException(" Task with this " + id + " id not found ");
@@ -79,7 +77,7 @@ public class UpdateTaskService {
         return taskConverter.toDto(task);
     }
 
-    public ResponceTaskDTO updateTaskStatusByIdForUser(Integer id, UpdateStatusDTO status) {
+    public ResponseTaskDTO updateTaskStatusByIdForUser(Integer id, UpdateStatusDTO status) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<Task> taskForUpdate = taskRepositoryDataBase.findById(id);
         if (taskForUpdate.isEmpty()) {

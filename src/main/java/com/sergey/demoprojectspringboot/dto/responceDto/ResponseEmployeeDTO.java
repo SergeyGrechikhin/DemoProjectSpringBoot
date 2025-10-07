@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ResponceEmployeeDTO {
+public class ResponseEmployeeDTO {
     private Integer id;
     private String name;
     private String surname;

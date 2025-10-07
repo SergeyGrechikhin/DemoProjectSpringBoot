@@ -1,6 +1,6 @@
 package com.sergey.demoprojectspringboot.service.updateService;
 
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
@@ -19,7 +19,7 @@ public class UpdateEmployeeService {
     private EmployeeConverter converter;
 
 
-    public ResponceEmployeeDTO updateEmployeeNameById(Integer id, String name) {
+    public ResponseEmployeeDTO updateEmployeeNameById(Integer id, String name) {
         Optional<Employee> employeeForUpdate = employeeRepository.findById(id);
         if (employeeForUpdate.isEmpty()) {
             throw new NotFoundException(" Employee with this " + id + " id not found ");
@@ -33,7 +33,7 @@ public class UpdateEmployeeService {
         return converter.toDto(employee);
     }
 
-    public ResponceEmployeeDTO updateEmployeeSurnameById(Integer id, String surname) {
+    public ResponseEmployeeDTO updateEmployeeSurnameById(Integer id, String surname) {
         Optional<Employee> employeeForUpdate = employeeRepository.findById(id);
         if (employeeForUpdate.isEmpty()) {
             throw new NotFoundException(" Employee with this " + id + " id not found ");
@@ -47,7 +47,7 @@ public class UpdateEmployeeService {
         return converter.toDto(employee);
     }
 
-    public ResponceEmployeeDTO updateEmployeeEmailById(Integer id, String email) {
+    public ResponseEmployeeDTO updateEmployeeEmailById(Integer id, String email) {
         Optional<Employee> employeeForUpdate = employeeRepository.findById(id);
 
         if (!isEmailAlreadyExist(email)) {

@@ -1,9 +1,9 @@
 package com.sergey.demoprojectspringboot.controller;
 
 import com.sergey.demoprojectspringboot.controller.api.AdminFindApi;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceDepartmentDTO;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceTaskDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseDepartmentDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
 import com.sergey.demoprojectspringboot.entity.ConfirmationCode;
 import com.sergey.demoprojectspringboot.service.findService.FindDepartmentService;
 import com.sergey.demoprojectspringboot.service.findService.FindEmployeeService;
@@ -22,47 +22,47 @@ public class AdminFindController implements AdminFindApi {
     private final FindTaskService findTaskService;
 
     @Override
-    public ResponseEntity<ResponceEmployeeDTO> findEmployeeById(Integer id) {
+    public ResponseEntity<ResponseEmployeeDTO> findEmployeeById(Integer id) {
         return ResponseEntity.ok(findEmployeeService.getUserById(id));
     }
 
     @Override
-    public ResponseEntity<List<ResponceEmployeeDTO>> findEmployeeByName(String name) {
+    public ResponseEntity<List<ResponseEmployeeDTO>> findEmployeeByName(String name) {
         return ResponseEntity.ok(findEmployeeService.findByName(name));
     }
 
     @Override
-    public ResponseEntity<List<ResponceEmployeeDTO>> findEmployeeBySurname(String surname) {
+    public ResponseEntity<List<ResponseEmployeeDTO>> findEmployeeBySurname(String surname) {
         return ResponseEntity.ok(findEmployeeService.findBySurname(surname));
     }
 
     @Override
-    public ResponseEntity<ResponceEmployeeDTO> findEmployeeByEmail(String email) {
+    public ResponseEntity<ResponseEmployeeDTO> findEmployeeByEmail(String email) {
         return ResponseEntity.ok(findEmployeeService.findByEmail(email));
     }
 
     @Override
-    public ResponseEntity<List<ResponceDepartmentDTO>> findDepartmentAll() {
+    public ResponseEntity<List<ResponseDepartmentDTO>> findDepartmentAll() {
         return ResponseEntity.ok(findDepartmentService.findAll());
     }
 
     @Override
-    public ResponseEntity<ResponceDepartmentDTO> findDepartmentById(Integer id) {
+    public ResponseEntity<ResponseDepartmentDTO> findDepartmentById(Integer id) {
         return ResponseEntity.ok(findDepartmentService.findById(id));
     }
 
     @Override
-    public ResponseEntity<ResponceDepartmentDTO> findDepartmentByName(String name) {
+    public ResponseEntity<ResponseDepartmentDTO> findDepartmentByName(String name) {
         return ResponseEntity.ok(findDepartmentService.findByName(name));
     }
 
     @Override
-    public ResponseEntity<List<ResponceEmployeeDTO>> findEmployeesByDepartmentName(String name) {
+    public ResponseEntity<List<ResponseEmployeeDTO>> findEmployeesByDepartmentName(String name) {
         return ResponseEntity.ok(findDepartmentService.getEmployeesFromDepartment(name));
     }
 
     @Override
-    public ResponseEntity<List<ResponceEmployeeDTO>> findAllEmployees() {
+    public ResponseEntity<List<ResponseEmployeeDTO>> findAllEmployees() {
         return ResponseEntity.ok(findEmployeeService.findAll());
     }
 
@@ -72,12 +72,12 @@ public class AdminFindController implements AdminFindApi {
     }
 
     @Override
-    public ResponseEntity<ResponceTaskDTO> findTaskById(Integer id) {
+    public ResponseEntity<ResponseTaskDTO> findTaskById(Integer id) {
         return ResponseEntity.ok(findTaskService.findById(id));
     }
 
     @Override
-    public ResponseEntity<ResponceTaskDTO> findTaskByName(String name) {
+    public ResponseEntity<ResponseTaskDTO> findTaskByName(String name) {
         return ResponseEntity.ok(findTaskService.findByName(name));
     }
 }

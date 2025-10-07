@@ -1,6 +1,5 @@
 package com.sergey.demoprojectspringboot.dto.responceDto;
 
-import com.sergey.demoprojectspringboot.entity.Task;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ResponceTaskDTO {
+public class ResponseTaskDTO {
     private Integer id;
     private String taskName;
     private String description;

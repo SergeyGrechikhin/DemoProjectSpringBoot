@@ -1,7 +1,7 @@
 package com.sergey.demoprojectspringboot.service.addService;
 
 import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDTO;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
@@ -27,7 +27,7 @@ public class AddEmployeeService {
 
 
     @Transactional
-    public ResponceEmployeeDTO employeeRegistration(RequestAddEmployeeDTO request) {
+    public ResponseEmployeeDTO employeeRegistration(RequestAddEmployeeDTO request) {
         Optional<Employee> emailOptional = employeeRepository.findByEmail(request.getEmail());
         Optional<Department> departmentOptional = findDepartmentService.findDepartmentByName(request.getDepartmentName());
 

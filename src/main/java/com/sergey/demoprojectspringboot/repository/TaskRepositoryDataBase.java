@@ -1,7 +1,5 @@
 package com.sergey.demoprojectspringboot.repository;
 
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceTaskDTO;
-import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.entity.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 

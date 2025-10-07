@@ -1,7 +1,7 @@
 package com.sergey.demoprojectspringboot.service.util;
 
 import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDTO;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,8 +21,8 @@ public class EmployeeConverter {
                 .build();
     }
 
-    public ResponceEmployeeDTO toDto(Employee employee){
-        return ResponceEmployeeDTO.builder()
+    public ResponseEmployeeDTO toDto(Employee employee){
+        return ResponseEmployeeDTO.builder()
                 .id(employee.getId())
                 .name(employee.getName())
                 .surname(employee.getSurname())
@@ -31,7 +31,7 @@ public class EmployeeConverter {
                 .build();
     }
 
-    public List<ResponceEmployeeDTO> fromEmployees(List<Employee> employees){
+    public List<ResponseEmployeeDTO> fromEmployees(List<Employee> employees){
         return employees.stream()
                 .map(employee -> toDto(employee))
                 .toList();

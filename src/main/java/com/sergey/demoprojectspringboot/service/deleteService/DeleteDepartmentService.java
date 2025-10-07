@@ -1,6 +1,6 @@
 package com.sergey.demoprojectspringboot.service.deleteService;
 
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceDepartmentDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseDepartmentDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.exception.BadRequestException;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
@@ -14,7 +14,7 @@ import java.util.Optional;
 public class DeleteDepartmentService {
     private DepartmentRepositoryDataBase departmentRepository;
 
-    public ResponceDepartmentDTO deleteDepartment(Integer id) {
+    public ResponseDepartmentDTO deleteDepartment(Integer id) {
         Optional<Department> departmentOptional = departmentRepository.findById(id);
 
         if (departmentOptional.isEmpty()) {
@@ -27,7 +27,7 @@ public class DeleteDepartmentService {
         Department department = departmentOptional.get();
         departmentRepository.delete(department);
 
-        return ResponceDepartmentDTO.toDto(department);
+        return ResponseDepartmentDTO.toDto(department);
 
     }
 }

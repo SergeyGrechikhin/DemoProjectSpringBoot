@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponceDepartmentDTO {
+public class ResponseDepartmentDTO {
     private Integer id;
     private String name;
 
 
-    public static ResponceDepartmentDTO toDto(Department department){
-        return new ResponceDepartmentDTO(department.getId(),department.getName());
+    public static ResponseDepartmentDTO toDto(Department department){
+        return new ResponseDepartmentDTO(department.getId(),department.getName());
     }
 }

@@ -1,6 +1,6 @@
 package com.sergey.demoprojectspringboot.service.deleteService;
 
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceTaskDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
 import com.sergey.demoprojectspringboot.entity.Task;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.TaskRepositoryDataBase;
@@ -17,7 +17,7 @@ public class DeleteTaskService {
     private TaskRepositoryDataBase taskRepositoryDataBase;
     private TaskConverter taskConverter;
 
-    public ResponceTaskDTO deleteTaskById(Integer id) {
+    public ResponseTaskDTO deleteTaskById(Integer id) {
         Optional<Task> taskOptional = taskRepositoryDataBase.findById(id);
         if (taskOptional.isEmpty()) {
             throw new NotFoundException(" Task " + " with " + id + " id " + " not found ");

@@ -1,8 +1,7 @@
 package com.sergey.demoprojectspringboot.service.findService;
 
 
-import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateStatusDTO;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceTaskDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
 
 import com.sergey.demoprojectspringboot.entity.Task;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
@@ -24,7 +23,7 @@ public class FindTaskService {
     private TaskConverter taskConverter;
 
 
-    public ResponceTaskDTO findById(Integer id) {
+    public ResponseTaskDTO findById(Integer id) {
         Optional<Task> taskOptional = taskRepositoryDataBase.findById(id);
         if (taskOptional.isEmpty()) {
             throw new NotFoundException(" Task with this" + id + " id not found ");
@@ -33,7 +32,7 @@ public class FindTaskService {
         }
     }
 
-    public ResponceTaskDTO findByName(String name) {
+    public ResponseTaskDTO findByName(String name) {
         Optional<Task> taskOptional = taskRepositoryDataBase.findTaskByTaskName(name);
         if (taskOptional.isEmpty()) {
             throw new NotFoundException(" Employee with this " + name + " email not found ");
@@ -45,7 +44,7 @@ public class FindTaskService {
         return taskRepositoryDataBase.findById(id);
     }
 
-    public List<ResponceTaskDTO> getMyTasks() {
+    public List<ResponseTaskDTO> getMyTasks() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
          return taskRepositoryDataBase.findByEmployee_Email(email)
                  .stream()

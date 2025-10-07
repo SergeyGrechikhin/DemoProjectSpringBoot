@@ -4,9 +4,9 @@ package com.sergey.demoprojectspringboot.controller;
 import com.sergey.demoprojectspringboot.controller.api.AdminAddApi;
 import com.sergey.demoprojectspringboot.dto.requestDto.RequestCreateDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDTO;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceDepartmentDTO;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceTaskDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseDepartmentDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
 import com.sergey.demoprojectspringboot.service.addService.AddDepartmentService;
 import com.sergey.demoprojectspringboot.service.addService.AddEmployeeToDepartmentService;
 import com.sergey.demoprojectspringboot.service.addService.AddTaskService;
@@ -29,17 +29,17 @@ public class AdminAddController implements AdminAddApi {
 
 
     @Override
-    public ResponseEntity<ResponceDepartmentDTO> addNewDepartment(RequestCreateDepartmentDTO request) {
+    public ResponseEntity<ResponseDepartmentDTO> addNewDepartment(RequestCreateDepartmentDTO request) {
         return ResponseEntity.ok(addDepartmentService.create(request));
     }
 
     @Override
-    public ResponseEntity<ResponceEmployeeDTO> addEmployeeToAnotherDepartment(Integer departmentId, Integer employeeId) {
+    public ResponseEntity<ResponseEmployeeDTO> addEmployeeToAnotherDepartment(Integer departmentId, Integer employeeId) {
         return ResponseEntity.ok(addEmployeeToDepartmentService.addEmployeeToAnotherDepartment(departmentId, employeeId));
     }
 
     @Override
-    public ResponseEntity<ResponceTaskDTO> addTask(RequestTaskDTO request) {
+    public ResponseEntity<ResponseTaskDTO> addTask(RequestTaskDTO request) {
         return ResponseEntity.ok(addTaskService.createTask(request));
     }
 

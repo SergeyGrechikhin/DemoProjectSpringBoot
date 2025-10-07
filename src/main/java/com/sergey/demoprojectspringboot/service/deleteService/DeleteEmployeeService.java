@@ -1,6 +1,6 @@
 package com.sergey.demoprojectspringboot.service.deleteService;
 
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.BadRequestException;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
@@ -18,7 +18,7 @@ public class DeleteEmployeeService {
     private EmployeeRepositoryDataBase employeeRepository;
     private EmployeeConverter converter;
 
-    public ResponceEmployeeDTO deleteEmployeeById(Integer id) {
+    public ResponseEmployeeDTO deleteEmployeeById(Integer id) {
         Optional<Employee> employeeOptional = employeeRepository.findById(id);
         if (employeeOptional.isEmpty()) {
             throw new NotFoundException(" Employee " + " with " + id + " id " + " not found ");
