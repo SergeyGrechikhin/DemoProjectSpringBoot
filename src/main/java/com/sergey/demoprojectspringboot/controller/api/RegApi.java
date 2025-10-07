@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/api/employees")
-public interface EmployeeApi {
 
-    @PostMapping
+
+@RequestMapping("/api/public")
+public interface RegApi {
+
+    @PostMapping("/reg")
     ResponseEntity<ResponceEmployeeDTO> employeeRegistration(@RequestBody RequestAddEmployeeDTO request);
 
 

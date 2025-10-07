@@ -1,5 +1,6 @@
 package com.sergey.demoprojectspringboot.service.updateService;
 
+import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateStatusDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponceTaskDTO;
 import com.sergey.demoprojectspringboot.entity.Task;
 import com.sergey.demoprojectspringboot.exception.BadRequestException;
@@ -17,7 +18,7 @@ import java.util.Optional;
 public class UpdateTaskService {
     private TaskRepositoryDataBase taskRepositoryDataBase;
 
-    public ResponceTaskDTO updateTaskStatusById(Integer id, Task.Status status) {
+    public ResponceTaskDTO updateTaskStatusById(Integer id, UpdateStatusDTO status) {
         Optional<Task> taskForUpdate = taskRepositoryDataBase.findById(id);
         if (taskForUpdate.isEmpty()) {
             throw new NotFoundException(" Task with this " + id + " id not found ");
@@ -29,7 +30,7 @@ public class UpdateTaskService {
 
 
         Task task = taskForUpdate.get();
-        task.setStatus(status);
+        task.setStatus(status.getStatus());
         task.setUpdateDate(now);
 
         taskRepositoryDataBase.save(task);

@@ -7,8 +7,6 @@ import com.sergey.demoprojectspringboot.dto.responceDto.ResponceDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponceTaskDTO;
 import com.sergey.demoprojectspringboot.entity.ConfirmationCode;
-import com.sergey.demoprojectspringboot.entity.Employee;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

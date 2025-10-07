@@ -18,14 +18,13 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/tasks")
 @AllArgsConstructor
 public class TaskController implements TaskApi {
 
     private final UpdateTaskService updateTaskService;
 
     @Override
-    public ResponseEntity<ResponceTaskDTO> updateStatus(Integer id, Task.Status status) {
+    public ResponseEntity<ResponceTaskDTO> updateStatus(Integer id, UpdateStatusDTO status) {
         return ResponseEntity.ok(updateTaskService.updateTaskStatusById(id, status));
     }
 

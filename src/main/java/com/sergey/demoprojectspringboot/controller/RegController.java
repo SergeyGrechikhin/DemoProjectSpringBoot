@@ -1,6 +1,6 @@
 package com.sergey.demoprojectspringboot.controller;
 
-import com.sergey.demoprojectspringboot.controller.api.EmployeeApi;
+import com.sergey.demoprojectspringboot.controller.api.RegApi;
 import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponceEmployeeDTO;
 import com.sergey.demoprojectspringboot.service.addService.AddEmployeeService;
@@ -9,10 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+
 @RestController
-@RequestMapping("/employees")
 @RequiredArgsConstructor
-public class EmployeeController implements EmployeeApi {
+public class RegController implements RegApi {
     private final AddEmployeeService addEmployeeService;
 
 

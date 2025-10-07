@@ -5,17 +5,25 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static javax.crypto.Cipher.SECRET_KEY;
 
 @Service
 public class JwtTokenProvider {
 
     private final String jwtSecret = "ksdjbvlerbvleiaurhfliuefgewriu37845ty7cno8734tycn8yfnsirefhkhireufh"; // Must be a minimum 32 bytes
-    private final long jwtLifeTime = 1800000; // 30 minutes
-
+    private final long jwtLifeTime = 1800000; // 30 minutes //1800000
+    private static final String ROLES_CLAIM = "roles";
     /**
      * Create new JWT token for user with username
      * @param username
@@ -25,6 +33,8 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtLifeTime);
         Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
+
+
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(now)
@@ -63,5 +73,7 @@ public class JwtTokenProvider {
         Claims claimsPayload = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
         return claimsPayload.getSubject();
     }
+
+
 
 }

@@ -31,10 +31,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String jwt = getTokenFromRequest(request);
 
             if (jwt != null && jwtTokenProvider.validateToken(jwt)){
-                // получаем из jwt имя пользователя, который прислал запрос (у нас - email)
-                UserDetails userDetails = customUserDetailService.loadUserByUsername(jwt);
                 // создаем объект UserDetail, который понимает Spring Security наполнив его данными нашего пользователя
                 String userName = jwtTokenProvider.getUsernameFromJwt(jwt);
+                // получаем из jwt имя пользователя, который прислал запрос (у нас - email)
+                UserDetails userDetails = customUserDetailService.loadUserByUsername(userName);
+                /// *****
+
                 // создаем необходимые объекты из Spring Security, чтобы наполнить SecurityContext
                 Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
