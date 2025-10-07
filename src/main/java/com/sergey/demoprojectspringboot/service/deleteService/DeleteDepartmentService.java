@@ -2,6 +2,7 @@ package com.sergey.demoprojectspringboot.service.deleteService;
 
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponceDepartmentDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
+import com.sergey.demoprojectspringboot.exception.BadRequestException;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,9 @@ public class DeleteDepartmentService {
 
         if (departmentOptional.isEmpty()) {
             throw new NotFoundException(" Department " + " with " + id + " id " + " not found ");
+        }
+        if (departmentOptional.get().getId() == 1) {
+            throw new BadRequestException("Department " + " with " + id + " id " + " cannot be deleted");
         }
 
         Department department = departmentOptional.get();

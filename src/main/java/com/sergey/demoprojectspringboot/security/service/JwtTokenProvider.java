@@ -22,7 +22,7 @@ import static javax.crypto.Cipher.SECRET_KEY;
 public class JwtTokenProvider {
 
     private final String jwtSecret = "ksdjbvlerbvleiaurhfliuefgewriu37845ty7cno8734tycn8yfnsirefhkhireufh"; // Must be a minimum 32 bytes
-    private final long jwtLifeTime = 1800000; // 30 minutes //1800000
+    private final long jwtLifeTime = 18000000; // 30 minutes //1800000
     private static final String ROLES_CLAIM = "roles";
     /**
      * Create new JWT token for user with username

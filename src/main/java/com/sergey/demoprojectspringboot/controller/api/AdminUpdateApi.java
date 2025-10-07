@@ -20,15 +20,15 @@ public interface AdminUpdateApi {
     @PutMapping("/updateEmail/{id}/{email}")
     ResponseEntity<ResponceEmployeeDTO> updateEmployeeEmailById(@PathVariable Integer id, @PathVariable String email);
 
-    @PutMapping("/updateDepartmentName/name/{name}/{id}")
+    @PutMapping("/updateDepartmentName/{name}/{id}")
     ResponseEntity<ResponceDepartmentDTO> updateDepartmentNameById(@PathVariable String name, @PathVariable Integer id);
 
     @PutMapping("/updateDeadline/{id}/deadline")
     ResponseEntity<ResponceTaskDTO> updateTaskDeadlineById(@PathVariable Integer id, @RequestBody UpdateDeadlineDTO request);
 
 
-    @PutMapping("/updateDescription/{id}/{description}")
-    ResponseEntity<ResponceTaskDTO> updateTaskDescriptionById(@PathVariable Integer id, @PathVariable String description);
+    @PutMapping("/updateDescription/{id}")
+    ResponseEntity<ResponceTaskDTO> updateTaskDescriptionById(@PathVariable Integer id, @RequestBody String description);
 
 
 }

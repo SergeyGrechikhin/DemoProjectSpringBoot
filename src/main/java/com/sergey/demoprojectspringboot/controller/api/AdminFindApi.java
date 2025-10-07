@@ -18,15 +18,15 @@ public interface AdminFindApi {
     ResponseEntity<ResponceEmployeeDTO> findEmployeeById(@PathVariable Integer id);
 
 
-    @GetMapping("/findEmployeeByName/name/{name}")
+    @GetMapping("/findEmployeeByName/{name}")
     ResponseEntity<List<ResponceEmployeeDTO>> findEmployeeByName(@PathVariable String name);
 
 
-    @GetMapping("/findEmployeeBySurname/surname/{surname}")
+    @GetMapping("/findEmployeeBySurname/{surname}")
     ResponseEntity<List<ResponceEmployeeDTO>> findEmployeeBySurname(@PathVariable String surname);
 
 
-    @GetMapping("/findEmployeeByEmail/email/{email}")
+    @GetMapping("/findEmployeeByEmail/{email}")
     ResponseEntity<ResponceEmployeeDTO> findEmployeeByEmail(@PathVariable String email);
 
 
@@ -38,11 +38,11 @@ public interface AdminFindApi {
     ResponseEntity<ResponceDepartmentDTO> findDepartmentById(@PathVariable Integer id);
 
 
-    @GetMapping("/findDepartmentByName/byName/{name}")
+    @GetMapping("/findDepartmentByName/{name}")
     ResponseEntity<ResponceDepartmentDTO> findDepartmentByName(@PathVariable String name);
 
 
-    @GetMapping("/findEmployeesByDepartmentName/employeesFromDepartment/{name}")
+    @GetMapping("/findEmployeesByDepartmentName/{name}")
     ResponseEntity<List<ResponceEmployeeDTO>> findEmployeesByDepartmentName(@PathVariable String name);
 
     @GetMapping("/employeesAll")
