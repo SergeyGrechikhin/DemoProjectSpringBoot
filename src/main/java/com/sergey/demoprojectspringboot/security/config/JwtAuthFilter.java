@@ -1,5 +1,7 @@
 package com.sergey.demoprojectspringboot.security.config;
 
+import com.sergey.demoprojectspringboot.entity.Employee;
+import com.sergey.demoprojectspringboot.security.entity.MyEmployeeToEmployeeDetails;
 import com.sergey.demoprojectspringboot.security.service.CustomUserDetailService;
 import com.sergey.demoprojectspringboot.security.service.InvalidJwtException;
 import com.sergey.demoprojectspringboot.security.service.JwtTokenProvider;
@@ -28,26 +30,43 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         try {
+            final String uri = request.getRequestURI();
+
+            final boolean isReactivateRequest = "PUT".equalsIgnoreCase(request.getMethod())
+                    && "/api/user/reactivateMe".equals(uri);
+
             String jwt = getTokenFromRequest(request);
 
-            if (jwt != null && jwtTokenProvider.validateToken(jwt)){
+
+            if (jwt != null && jwtTokenProvider.validateToken(jwt)) {
                 // создаем объект UserDetail, который понимает Spring Security наполнив его данными нашего пользователя
                 String userName = jwtTokenProvider.getUsernameFromJwt(jwt);
                 // получаем из jwt имя пользователя, который прислал запрос (у нас - email)
                 UserDetails userDetails = customUserDetailService.loadUserByUsername(userName);
                 /// *****
 
+            if (!isReactivateRequest && userDetails instanceof MyEmployeeToEmployeeDetails details) {
+                if(details.getEmployee().getStatus() == Employee.Status.INACTIVE){
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    response.getWriter().write("Account is deactivated");
+                    return;
+                }
+            }
+
+
                 // создаем необходимые объекты из Spring Security, чтобы наполнить SecurityContext
                 Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
+
+
 
         } catch (InvalidJwtException e) {
             System.out.println("ERROR !!! " + e.getMessage());
         }
 
         // обязательно надо в объект со спсиком фильтров применить добавленные изменения
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
 
     }
 
@@ -62,7 +81,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         то есть начинаяч с 7 символа строки и до конца
          */
 
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")){
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
 

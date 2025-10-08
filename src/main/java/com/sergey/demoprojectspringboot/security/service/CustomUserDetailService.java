@@ -1,6 +1,7 @@
 package com.sergey.demoprojectspringboot.security.service;
 
 import com.sergey.demoprojectspringboot.entity.Employee;
+import com.sergey.demoprojectspringboot.exception.BadRequestException;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import com.sergey.demoprojectspringboot.security.entity.MyEmployeeToEmployeeDetails;
@@ -18,10 +19,6 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
         Employee employee = repository.findByEmail(userEmail).orElseThrow(() -> new NotFoundException("Employee not found"));
-
-        if (employee.getStatus().equals(Employee.Status.INACTIVE)) {
-            throw new NotFoundException("Employee with email " + userEmail + " is deactivated ");
-        }
 
 
         return new MyEmployeeToEmployeeDetails(employee);

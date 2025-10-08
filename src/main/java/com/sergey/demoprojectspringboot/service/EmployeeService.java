@@ -89,8 +89,10 @@ public class EmployeeService {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Employee employee = employeeRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Employee Not Found"));
+        Employee takeAdminsEmails = employeeRepository.findById(1).orElseThrow(() -> new NotFoundException("Employee Not Found"));
 
-        if (email.equalsIgnoreCase("admin@company.com")){
+
+        if (email.equalsIgnoreCase(takeAdminsEmails.getEmail())) {
             throw new BadRequestException("Employee with email " + email + " cannot be deactivated ");
         }
 

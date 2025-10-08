@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,24 +18,34 @@ public class AccountCleanupJob {
 
     private final EmployeeRepositoryDataBase employeeRepositoryDataBase;
     private final JdbcTemplate jdbcTemplate;
+    private final CodeConfirmationService codeConfirmationService;
 
     @Scheduled(fixedRate = 30000)     //(cron = "0 0 3 * * *")
     public void deleteInactiveAfter14Days() {
-//        LocalDateTime deleteData = LocalDateTime.now().minusDays(14);
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime startTime = now.minusSeconds(30);
+//        LocalDateTime deleteDate = LocalDateTime.now().minusDays(14);
 
-        String sqlDeleteCodes = """
-                    DELETE cc FROM confirmation_code cc
-                    JOIN employees e ON cc.user_id = e.id
-                    WHERE e.status = 'INACTIVE' AND e.deactivate_at < ?
-                """;
+        LocalDateTime deleteDate = LocalDateTime.now().minusSeconds(30);
+//
+//        String sqlDeleteCodes = """
+//                    DELETE cc FROM confirmation_code cc
+//                    JOIN employees e ON cc.user_id = e.id
+//                    WHERE e.status = 'INACTIVE' AND e.deactivate_at < ?
+//                """;
+//
+//        int deletedCodes = jdbcTemplate.update(sqlDeleteCodes, startTime);
+//        long deletedEmployees = employeeRepositoryDataBase
+//                .deleteByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, startTime);
 
-        int deletedCodes = jdbcTemplate.update(sqlDeleteCodes, startTime);
-        long deletedEmployees = employeeRepositoryDataBase
-                .deleteByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, startTime);
+        List<Employee> inactiveEmployees = employeeRepositoryDataBase.findByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, deleteDate );
 
-        log.info("Deleted {} codes and {} employees", deletedCodes, deletedEmployees);
+        for (Employee employee : inactiveEmployees) {
+
+            codeConfirmationService.deleteConfirmationCode(employee);
+
+            employeeRepositoryDataBase.delete(employee);
+        }
+
+        log.info("Deleted {} codes and {} employees", inactiveEmployees.size());
 
 
     }

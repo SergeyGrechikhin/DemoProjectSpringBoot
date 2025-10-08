@@ -19,7 +19,9 @@ public interface EmployeeRepositoryDataBase extends JpaRepository<Employee, Inte
 
     Optional<Employee> findByEmail(String email);
 
-    List<Employee> findByStatus(Employee.Status status);
+    List<Employee> findByStatusAndDeactivateAtBefore(Employee.Status status, LocalDateTime deactivateAt);
+
+
     @Modifying
     @Transactional
     long deleteByStatusAndDeactivateAtBefore(Employee.Status status, LocalDateTime deactivatedDate);

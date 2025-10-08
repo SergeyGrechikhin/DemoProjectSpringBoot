@@ -50,4 +50,8 @@ public class MyEmployeeToEmployeeDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public Employee getEmployee() {
+        return employee;
+    }
 }
