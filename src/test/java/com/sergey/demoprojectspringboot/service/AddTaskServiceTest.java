@@ -1,7 +1,7 @@
 package com.sergey.demoprojectspringboot.service;
 
 import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDTO;
-import com.sergey.demoprojectspringboot.service.addService.AddTaskService;
+import com.sergey.demoprojectspringboot.service.addService.TaskService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -20,7 +20,7 @@ import java.time.LocalDate;
 class AddTaskServiceTest {
 
     @Autowired
-    private AddTaskService addTaskService;
+    private TaskService addTaskService;
 
     @Test
     void createEmployee() {

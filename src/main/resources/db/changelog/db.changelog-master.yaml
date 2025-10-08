@@ -1,16 +1,16 @@
 databaseChangeLog:
-
-  # 001 — create departments and employees tables
   - changeSet:
       id: 001-create-dept-and-emp
-      author: Sergey Grechihkin
+      author: sergey
       changes:
+        # departments
         - createTable:
             tableName: departments
             columns:
               - column:
                   name: id
-                  type: SERIAL
+                  type: INT
+                  autoIncrement: true
                   constraints:
                     primaryKey: true
               - column:
@@ -23,12 +23,14 @@ databaseChangeLog:
             columnNames: name
             constraintName: uq_departments_name
 
+        # employees
         - createTable:
             tableName: employees
             columns:
               - column:
                   name: id
-                  type: SERIAL
+                  type: INT
+                  autoIncrement: true
                   constraints:
                     primaryKey: true
               - column:
@@ -57,20 +59,30 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: status
+                  type: VARCHAR(20)
+                  defaultValue: ACTIVE
+                  constraints:
+                    nullable: false
+              - column:
                   name: department_id
                   type: INT
+                  constraints:
+                    nullable: true
+
         - addForeignKeyConstraint:
             baseTableName: employees
             baseColumnNames: department_id
             referencedTableName: departments
             referencedColumnNames: id
-            onDelete: SET NULL
             constraintName: fk_employees_department
+            onDelete: SET NULL
+            onUpdate: CASCADE
 
-  # 002 — seed department Main Management
+  # 002 – seed department "Main Management"
   - changeSet:
       id: 002-seed-main-department
-      author: Sergey Grechikhin
+      author: sergey
       preConditions:
         onFail: MARK_RAN
         onError: MARK_RAN
@@ -82,21 +94,19 @@ databaseChangeLog:
         - insert:
             tableName: departments
             columns:
-              - column:
-                  name: name
-                  value: Main Management
+              - column: { name: name, value: Main Management }
 
-  # 003 — seed Admin in Main Management
+  # 003 – seed ADMIN user
   - changeSet:
-      id: 003-seed-admin-in-main-department
-      author: Sergey Grechikhin
+      id: 003-seed-admin
+      author: sergey
       preConditions:
         onFail: MARK_RAN
         onError: MARK_RAN
         not:
           sqlCheck:
             expectedResult: "1"
-            sql: "select count(*) from employees where name='Admin' and surname='Root'"
+            sql: "select count(*) from employees where email = 'admin@company.com'"
       changes:
         - insert:
             tableName: employees
@@ -105,7 +115,8 @@ databaseChangeLog:
               - column: { name: surname, value: Root }
               - column: { name: email, value: admin@company.com }
               - column: { name: role, value: ADMIN }
-              - column: { name: password, value: "123465" }
+              - column: { name: password, value: 123456 }
+              - column: { name: status, value: ACTIVE }
               - column:
                   name: department_id
                   valueComputed: "(select id from departments where name = 'Main Management')"

@@ -1,5 +1,7 @@
 package com.sergey.demoprojectspringboot.security.service;
 
+import com.sergey.demoprojectspringboot.entity.Employee;
+import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import com.sergey.demoprojectspringboot.security.entity.MyEmployeeToEmployeeDetails;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +17,14 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
-        return repository.findByEmail(userEmail)
-                .map(user -> new MyEmployeeToEmployeeDetails(user))
-                .orElseThrow(() -> new UsernameNotFoundException("User with email " + userEmail + " not found"));
+        Employee employee = repository.findByEmail(userEmail).orElseThrow(() -> new NotFoundException("Employee not found"));
+
+        if (employee.getStatus().equals(Employee.Status.INACTIVE)) {
+            throw new NotFoundException("Employee with email " + userEmail + " is deactivated ");
+        }
+
+
+        return new MyEmployeeToEmployeeDetails(employee);
     }
 }
 

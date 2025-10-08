@@ -28,6 +28,7 @@ public class EmployeeConverter {
                 .surname(employee.getSurname())
                 .email(employee.getEmail())
                 .role(employee.getRole())
+                .status(employee.getStatus())
                 .build();
     }
 

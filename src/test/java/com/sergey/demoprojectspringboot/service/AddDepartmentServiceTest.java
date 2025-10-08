@@ -3,7 +3,7 @@ package com.sergey.demoprojectspringboot.service;
 import com.sergey.demoprojectspringboot.dto.requestDto.RequestCreateDepartmentDTO;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;
-import com.sergey.demoprojectspringboot.service.addService.AddDepartmentService;
+import com.sergey.demoprojectspringboot.service.addService.DepartmentService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -25,7 +25,7 @@ class AddDepartmentServiceTest {
     private DepartmentRepositoryDataBase departmentRepository;
 
     @Autowired
-    private AddDepartmentService addDepartmentService;
+    private DepartmentService addDepartmentService;
 
     @Test
     void addDepartmentTest() {

@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +51,17 @@ public class Employee {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+    public enum Status {
+        ACTIVE,
+        INACTIVE
+    }
+
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private Status status;
+
+    private LocalDateTime deactivateAt;
+
 
 
 
@@ -60,10 +72,10 @@ public class Employee {
         this.password = password;
     }
 
-    public void addTask(Task task) {
-        tasks.add(task);
-        task.setEmployee(this);
-    }
+//    public void addTask(Task task) {
+//        tasks.add(task);
+//        task.setEmployee(this);
+//    }
 
 
 

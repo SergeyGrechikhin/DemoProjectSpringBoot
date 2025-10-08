@@ -7,10 +7,9 @@ import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
-import com.sergey.demoprojectspringboot.service.addService.AddDepartmentService;
-import com.sergey.demoprojectspringboot.service.addService.AddEmployeeToDepartmentService;
-import com.sergey.demoprojectspringboot.service.addService.AddTaskService;
-import com.sergey.demoprojectspringboot.service.findService.FindEmployeeService;
+import com.sergey.demoprojectspringboot.service.addService.DepartmentService;
+import com.sergey.demoprojectspringboot.service.addService.EmployeeService;
+import com.sergey.demoprojectspringboot.service.addService.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,22 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 
 public class AdminAddController implements AdminAddApi {
-    private final FindEmployeeService findEmployeeService;
-
-
-    private final AddDepartmentService addDepartmentService;
-    private final AddEmployeeToDepartmentService addEmployeeToDepartmentService;
-    private final AddTaskService addTaskService;
+    private final EmployeeService employeeService;
+    private final DepartmentService departmentService;
+    private final TaskService addTaskService;
 
 
     @Override
     public ResponseEntity<ResponseDepartmentDTO> addNewDepartment(RequestCreateDepartmentDTO request) {
-        return ResponseEntity.ok(addDepartmentService.create(request));
+        return ResponseEntity.ok(departmentService.create(request));
     }
 
     @Override
     public ResponseEntity<ResponseEmployeeDTO> addEmployeeToAnotherDepartment(Integer departmentId, Integer employeeId) {
-        return ResponseEntity.ok(addEmployeeToDepartmentService.addEmployeeToAnotherDepartment(departmentId, employeeId));
+        return ResponseEntity.ok(employeeService.addEmployeeToAnotherDepartment(departmentId, employeeId));
     }
 
     @Override

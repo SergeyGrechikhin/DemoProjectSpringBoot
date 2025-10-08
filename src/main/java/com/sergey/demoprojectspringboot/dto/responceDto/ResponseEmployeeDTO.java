@@ -16,6 +16,7 @@ public class ResponseEmployeeDTO {
     private String surname;
     private String email;
     private Employee.Role role;
+    private Employee.Status status;
 
 
 }
