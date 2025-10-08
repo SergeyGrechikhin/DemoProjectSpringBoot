@@ -1,6 +1,6 @@
 package com.sergey.demoprojectspringboot.service.util;
 
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDTO;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
 import com.sergey.demoprojectspringboot.entity.Task;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TaskConverter {
-    public Task fromDto(RequestTaskDTO request){
+    public Task fromDto(RequestTaskDto request){
 
         return Task.builder()
                 .taskName(request.getTaskName())

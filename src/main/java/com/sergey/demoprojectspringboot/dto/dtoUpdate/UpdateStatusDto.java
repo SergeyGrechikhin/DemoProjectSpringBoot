@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UpdateStatusDTO {
+public class UpdateStatusDto {
     @NotNull(message = "Status is required. One of : TO_DO , FOR_CHECK, COMPLETED, OVERDUE")
     private Task.Status status;
 }

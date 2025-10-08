@@ -10,9 +10,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RequestTaskDTO {
+public class RequestTaskDto {
     private String taskName;
     private String description;
     private LocalDate deadline;
-    private Integer employeeId;
+
 }

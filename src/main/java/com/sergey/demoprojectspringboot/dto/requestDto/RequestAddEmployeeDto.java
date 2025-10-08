@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RequestAddEmployeeDTO {
+public class RequestAddEmployeeDto {
     private String name;
     private String surname;
     private String email;
     private String password;
-    private String departmentName;
+
 }

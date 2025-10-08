@@ -1,6 +1,6 @@
 package com.sergey.demoprojectspringboot.service.util;
 
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class EmployeeConverter {
-    public Employee fromDto(RequestAddEmployeeDTO request){
+    public Employee fromDto(RequestAddEmployeeDto request){
 
         return Employee.builder()
                 .name(request.getName())

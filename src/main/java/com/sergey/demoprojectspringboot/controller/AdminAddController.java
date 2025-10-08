@@ -2,8 +2,10 @@ package com.sergey.demoprojectspringboot.controller;
 
 
 import com.sergey.demoprojectspringboot.controller.api.AdminAddApi;
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestCreateDepartmentDTO;
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDTO;
+import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateEmployeeOwnerDto;
+import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateTaskOwnerDto;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestCreateDepartmentDto;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
@@ -21,22 +23,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminAddController implements AdminAddApi {
     private final EmployeeService employeeService;
     private final DepartmentService departmentService;
-    private final TaskService addTaskService;
+    private final TaskService taskService;
 
 
     @Override
-    public ResponseEntity<ResponseDepartmentDTO> addNewDepartment(RequestCreateDepartmentDTO request) {
+    public ResponseEntity<ResponseDepartmentDTO> addNewDepartment(RequestCreateDepartmentDto request) {
         return ResponseEntity.ok(departmentService.create(request));
     }
 
     @Override
-    public ResponseEntity<ResponseEmployeeDTO> addEmployeeToAnotherDepartment(Integer departmentId, Integer employeeId) {
-        return ResponseEntity.ok(employeeService.addEmployeeToAnotherDepartment(departmentId, employeeId));
+    public ResponseEntity<ResponseEmployeeDTO> addEmployeeDepartment(UpdateEmployeeOwnerDto request) {
+        return ResponseEntity.ok(employeeService.addEmployeeToDepartment(request));
     }
 
     @Override
-    public ResponseEntity<ResponseTaskDTO> addTask(RequestTaskDTO request) {
-        return ResponseEntity.ok(addTaskService.createTask(request));
+    public ResponseEntity<ResponseTaskDTO> addTask(RequestTaskDto request) {
+        return ResponseEntity.ok(taskService.createTask(request));
+    }
+
+    @Override
+    public ResponseEntity<ResponseTaskDTO> addTaskForUser(UpdateTaskOwnerDto request) {
+        return ResponseEntity.ok(taskService.addTaskToEmployee(request));
     }
 
 

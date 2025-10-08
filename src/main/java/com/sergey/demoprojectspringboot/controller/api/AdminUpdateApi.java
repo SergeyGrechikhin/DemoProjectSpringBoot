@@ -1,7 +1,7 @@
 package com.sergey.demoprojectspringboot.controller.api;
 
-import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateDeadlineDTO;
-import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateStatusDTO;
+import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateDeadlineDto;
+import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateStatusDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
@@ -25,14 +25,14 @@ public interface AdminUpdateApi {
     ResponseEntity<ResponseDepartmentDTO> updateDepartmentNameById(@PathVariable String name, @PathVariable Integer id);
 
     @PutMapping("/updateDeadline/{id}/deadline")
-    ResponseEntity<ResponseTaskDTO> updateTaskDeadlineById(@PathVariable Integer id, @RequestBody UpdateDeadlineDTO request);
+    ResponseEntity<ResponseTaskDTO> updateTaskDeadlineById(@PathVariable Integer id, @RequestBody UpdateDeadlineDto request);
 
 
     @PutMapping("/updateDescription/{id}")
     ResponseEntity<ResponseTaskDTO> updateTaskDescriptionById(@PathVariable Integer id, @RequestBody String description);
 
     @PutMapping("/updateStatusForAdmin/{id}")
-    ResponseEntity<ResponseTaskDTO> updateStatusForAdmin(@PathVariable Integer id, @RequestBody UpdateStatusDTO status);
+    ResponseEntity<ResponseTaskDTO> updateStatusForAdmin(@PathVariable Integer id, @RequestBody UpdateStatusDto status);
 
 
 }

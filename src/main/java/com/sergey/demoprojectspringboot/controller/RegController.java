@@ -1,7 +1,7 @@
 package com.sergey.demoprojectspringboot.controller;
 
 import com.sergey.demoprojectspringboot.controller.api.RegApi;
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class RegController implements RegApi {
 
 
     @Override
-    public ResponseEntity<ResponseEmployeeDTO> employeeRegistration(RequestAddEmployeeDTO request) {
+    public ResponseEntity<ResponseEmployeeDTO> employeeRegistration(RequestAddEmployeeDto request) {
         return ResponseEntity.ok(addEmployeeService.employeeRegistration(request));
     }
 

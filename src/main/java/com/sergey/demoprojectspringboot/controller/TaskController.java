@@ -1,7 +1,7 @@
 package com.sergey.demoprojectspringboot.controller;
 
 import com.sergey.demoprojectspringboot.controller.api.TaskApi;
-import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateStatusDTO;
+import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateStatusDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
 import com.sergey.demoprojectspringboot.service.TaskService;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ public class TaskController implements TaskApi {
 
 
     @Override
-    public ResponseEntity<ResponseTaskDTO> updateStatusForUser(Integer id, UpdateStatusDTO status) {
+    public ResponseEntity<ResponseTaskDTO> updateStatusForUser(Integer id, UpdateStatusDto status) {
         return ResponseEntity.ok(taskService.updateTaskStatusByIdForUser(id, status));
     }
 

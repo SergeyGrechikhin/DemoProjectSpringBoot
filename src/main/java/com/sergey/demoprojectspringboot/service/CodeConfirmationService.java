@@ -4,6 +4,7 @@ import com.sergey.demoprojectspringboot.entity.ConfirmationCode;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.ConfirmationCodeRepository;
+import jakarta.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -78,6 +79,11 @@ public class CodeConfirmationService {
 
     public List<ConfirmationCode> findCodesByUser(Employee employee) {
         return repository.findByEmployee(employee);
+    }
+
+    @Transactional
+    public void deleteConfirmationCode(Employee employee) {
+        repository.deleteAll(repository.findByEmployee(employee));
     }
 
 

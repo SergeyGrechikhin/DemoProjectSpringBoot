@@ -1,10 +1,15 @@
 package com.sergey.demoprojectspringboot.service;
 
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateEmployeeOwnerDto;
+import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateTaskOwnerDto;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDto;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
+import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
 import com.sergey.demoprojectspringboot.entity.ConfirmationCode;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.Employee;
+import com.sergey.demoprojectspringboot.entity.Task;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.exception.BadRequestException;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
@@ -15,6 +20,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -30,33 +36,53 @@ public class EmployeeService {
 
 
     @Transactional
-    public ResponseEmployeeDTO employeeRegistration(RequestAddEmployeeDTO request) {
+    public ResponseEmployeeDTO employeeRegistration(RequestAddEmployeeDto request) {
         Optional<Employee> emailOptional = employeeRepository.findByEmail(request.getEmail());
-        Optional<Department> departmentOptional = departmentService.findDepartmentByName(request.getDepartmentName());
-
 
         if (emailOptional.isPresent()) {
             throw new AlreadyExistException(" Email Already Exist ");
         }
 
-        Department department = departmentOptional.get();
+        Employee employee = Employee.builder()
+                .name(request.getName())
+                .surname(request.getSurname())
+                .email(request.getEmail())
+                .role(Employee.Role.USER)
+                .password(request.getPassword())
+                .status(Employee.Status.ACTIVE)
+                .department(null)
+                .build();
 
-        Employee newEmployee = converter.fromDto(request);
+        Employee employeeSaved = employeeRepository.save(employee);
 
-        newEmployee.setRole(Employee.Role.USER);
-
-        newEmployee.setStatus(Employee.Status.ACTIVE);
-
-        addEmployeeToDepartment(department, newEmployee);
-
-        newEmployee = employeeRepository.save(newEmployee);
-
-        codeConfirmationService.confirmationCodeManager(newEmployee);
-
-        return converter.toDto(newEmployee);
+        return converter.toDto(employeeSaved);
 
 
     }
+
+
+    public ResponseEmployeeDTO addEmployeeToDepartment(UpdateEmployeeOwnerDto request) {
+        Optional<Department> departmentOptional = departmentService.findDepartmentByName(request.getDepartmentName());
+        Optional<Employee> employeeOptional = employeeRepository.findById(request.getEmployeeId());
+        if (departmentOptional.isEmpty()) {
+            throw new NotFoundException("Department with name " + request.getDepartmentName() + " not found ");
+        }
+        if (employeeOptional.isEmpty()) {
+            throw new NotFoundException("Employee with name " + request.getEmployeeId() + " not found ");
+        }
+        Department departmentForInvite = departmentOptional.get();
+
+        Employee employeeForInvite = employeeOptional.get();
+
+        employeeForInvite.setDepartment(departmentForInvite);
+
+        Employee employeeSaved = employeeRepository.save(employeeForInvite);
+
+
+        return converter.toDto(employeeSaved);
+
+    }
+
 
     public void deactivateEmployee() {
 
@@ -89,11 +115,17 @@ public class EmployeeService {
         if (employeeOptional.isEmpty()) {
             throw new NotFoundException(" Employee " + " with " + id + " id " + " not found ");
         }
+
+        Employee employee = employeeOptional.get();
+
         if (employeeOptional.get().getId() == 1) {
             throw new BadRequestException("Employee " + " with " + id + " id " + " cannot be deleted");
         }
 
-        Employee employee = employeeOptional.get();
+        for (Task task : employee.getTasks()) {
+            task.setEmployee(null);
+        }
+
         employeeRepository.delete(employee);
 
         return converter.toDto(employee);
@@ -109,13 +141,7 @@ public class EmployeeService {
         return responceEmployeeDTOList;
     }
 
-//    public ResponseEmployeeDTO findById(Integer id) {
-//        Optional<Employee> employeeOptional = employeeRepository.findById(id);
-//        if(employeeOptional.isEmpty()){
-//            throw  new NotFoundException(" Employee with this" + id + " id not found ");
-//        }
-//        return converter.toDto(employeeOptional.get());
-//    }
+
 
     public ResponseEmployeeDTO getUserById(Integer id) {
         Employee employee = employeeRepository.findById(id)
@@ -215,43 +241,6 @@ public class EmployeeService {
 
     private boolean isEmailAlreadyExist(String email) {
         return employeeRepository.findByEmail(email).isEmpty();
-    }
-
-    public ResponseEmployeeDTO addEmployeeToDepartment(Department department, Employee employee) {
-        Optional<Department> departmentOptional = departmentService.findDepartmentByIdForService(department.getId());
-        if (departmentOptional.isEmpty()) {
-            throw new NotFoundException("Department with name " + department.getName() + " not found ");
-        }
-        Department departmentForInvite = departmentOptional.get();
-
-        employee.setDepartment(departmentForInvite);
-
-        departmentForInvite.getEmployees().add(employee);
-
-        Employee employeeSave = employeeRepository.save(employee);
-
-        return converter.toDto(employeeSave);
-
-    }
-
-    public ResponseEmployeeDTO addEmployeeToAnotherDepartment(Integer departmentId, Integer employeeId) {
-        Optional<Employee> employeeForUpdate = findByIdForService(employeeId);
-        Optional<Department> departmentOptional = departmentService.findDepartmentByIdForService(departmentId);
-
-        if (employeeForUpdate.isEmpty()) {
-            throw new NotFoundException(" Employee " + " with " + employeeId + " id " + " not found ");
-        }
-        if (departmentOptional.isEmpty()) {
-            throw new NotFoundException(" Department " + " with " + departmentId + " id " + " not found ");
-        }
-
-        Employee employee = employeeForUpdate.get();
-
-        employee.setDepartment(departmentOptional.get());
-
-        employeeRepository.save(employee);
-
-        return converter.toDto(employee);
     }
 
 

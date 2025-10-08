@@ -1,7 +1,8 @@
 package com.sergey.demoprojectspringboot.service;
 
-import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateStatusDTO;
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDTO;
+import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateStatusDto;
+import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateTaskOwnerDto;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.entity.Task;
@@ -29,15 +30,12 @@ public class TaskService {
     private EmployeeService employeeService;
 
 
-    public ResponseTaskDTO createTask(RequestTaskDTO request) {
+    public ResponseTaskDTO createTask(RequestTaskDto request) {
         Optional<Task> taskOptional = taskRepositoryDataBase.findTaskByTaskName(request.getTaskName());
-        Optional<Employee> employeeOptional = employeeService.findByIdForService(request.getEmployeeId());
-
 
         if (taskOptional.isPresent()) {
             throw new AlreadyExistException(" Task with this name Already Exist ");
         }
-
 
         Task task = Task.builder()
                 .taskName(request.getTaskName())
@@ -46,17 +44,37 @@ public class TaskService {
                 .status(Task.Status.TO_DO)
                 .createDate(LocalDate.now())
                 .updateDate(LocalDateTime.now())
+                .employee(null)
                 .build();
 
         if (task.getDeadline().isBefore(LocalDate.now())) {
             throw new BadRequestException("The deadline date cannot be in the past ");
         }
 
-        task.setEmployee(employeeOptional.get());
-
         Task saved = taskRepositoryDataBase.save(task);
 
         return taskConverter.toDto(saved);
+    }
+
+    public ResponseTaskDTO addTaskToEmployee(UpdateTaskOwnerDto request) {
+        Optional<Employee> employeeOptional = employeeService.findByIdForService(request.getEmployeeId());
+        Optional<Task> taskOptional = taskRepositoryDataBase.findById(request.getTaskId());
+        if (employeeOptional.isEmpty()) {
+            throw new NotFoundException("Employee with id " + request.getEmployeeId() + " not found ");
+        }
+        if (taskOptional.isEmpty()) {
+            throw new NotFoundException("Task with id " + request.getTaskId() + " not found ");
+        }
+        Employee employeeForInvite = employeeOptional.get();
+
+        Task taskForInvite = taskOptional.get();
+
+        taskForInvite.setEmployee(employeeForInvite);
+
+        Task taskforSave = taskRepositoryDataBase.save(taskForInvite);
+
+        return taskConverter.toDto(taskforSave);
+
     }
 
     public ResponseTaskDTO deleteTaskById(Integer id) {
@@ -101,7 +119,7 @@ public class TaskService {
                 .toList();
     }
 
-    public ResponseTaskDTO updateTaskStatusByIdForAdmin(Integer id, UpdateStatusDTO status) {
+    public ResponseTaskDTO updateTaskStatusByIdForAdmin(Integer id, UpdateStatusDto status) {
         Optional<Task> taskForUpdate = taskRepositoryDataBase.findById(id);
         if (taskForUpdate.isEmpty()) {
             throw new NotFoundException(" Task with this " + id + " id not found ");
@@ -155,7 +173,7 @@ public class TaskService {
         return taskConverter.toDto(task);
     }
 
-    public ResponseTaskDTO updateTaskStatusByIdForUser(Integer id, UpdateStatusDTO status) {
+    public ResponseTaskDTO updateTaskStatusByIdForUser(Integer id, UpdateStatusDto status) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<Task> taskForUpdate = taskRepositoryDataBase.findById(id);
         if (taskForUpdate.isEmpty()) {
@@ -177,20 +195,5 @@ public class TaskService {
 
     }
 
-    public ResponseTaskDTO addTaskToEmployee(Employee employee, Task task) {
-        Optional<Employee> employeeOptional = employeeService.findByIdForService(employee.getId());
-        if (employeeOptional.isEmpty()) {
-            throw new NotFoundException("Employee with id " + employee.getId() + " not found ");
-        }
-        Employee employeeForInvite = employeeOptional.get();
 
-        task.setEmployee(employeeForInvite);
-
-        employeeForInvite.getTasks().add(task);
-
-        Task taskforSave = taskRepositoryDataBase.save(task);
-
-        return taskConverter.toDto(taskforSave);
-
-    }
 }

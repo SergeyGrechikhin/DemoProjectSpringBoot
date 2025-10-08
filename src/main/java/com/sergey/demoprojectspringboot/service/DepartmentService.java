@@ -1,6 +1,6 @@
 package com.sergey.demoprojectspringboot.service;
 
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestCreateDepartmentDTO;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestCreateDepartmentDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
@@ -28,7 +28,7 @@ public class DepartmentService {
      * @param request
      * @return ResponceDepartmentDTO with created department
      */
-    public ResponseDepartmentDTO create(RequestCreateDepartmentDTO request) {
+    public ResponseDepartmentDTO create(RequestCreateDepartmentDto request) {
         Optional<Department> isNameTry = departmentRepository.findByName(request.getName());
         if (isNameTry.isPresent()) {
             throw new AlreadyExistException("Department with name " + request.getName() + " already exists");
@@ -47,6 +47,14 @@ public class DepartmentService {
         }
         if (departmentOptional.get().getId() == 1) {
             throw new BadRequestException("Department " + " with " + id + " id " + " cannot be deleted");
+        }
+        if (departmentOptional.get().getEmployees() != null) {
+            Department department = departmentOptional.get();
+            department.setEmployees(null);
+            departmentRepository.delete(department);
+
+            return ResponseDepartmentDTO.toDto(department);
+
         }
 
         Department department = departmentOptional.get();

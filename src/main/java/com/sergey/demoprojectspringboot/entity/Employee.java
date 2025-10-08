@@ -34,7 +34,7 @@ public class Employee {
     @NotBlank
     @Size(min = 6, max = 255)
     private String password;
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "employee", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = false, fetch = FetchType.LAZY)
     private List<Task> tasks = new ArrayList<>();
 
     @ManyToOne

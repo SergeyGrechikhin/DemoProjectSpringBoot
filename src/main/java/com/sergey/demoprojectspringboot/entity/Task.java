@@ -34,7 +34,7 @@ public class Task {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "employee_id")
+    @JoinColumn(name = "employee_id",nullable = true)
     private Employee employee;
 
     public enum Status {

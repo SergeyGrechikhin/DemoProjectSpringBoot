@@ -1,6 +1,6 @@
 package com.sergey.demoprojectspringboot.service;
 
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDTO;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -26,7 +26,7 @@ class AddTaskServiceTest {
 
         LocalDate now = LocalDate.now();
 
-        RequestTaskDTO request = RequestTaskDTO.builder()
+        RequestTaskDto request = RequestTaskDto.builder()
                 .taskName("Task")
                 .description("change code")
                 .deadline(now)

@@ -1,8 +1,8 @@
 package com.sergey.demoprojectspringboot.controller;
 
 import com.sergey.demoprojectspringboot.controller.api.AdminUpdateApi;
-import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateDeadlineDTO;
-import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateStatusDTO;
+import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateDeadlineDto;
+import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateStatusDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
@@ -42,7 +42,7 @@ public class AdminUpdateController implements AdminUpdateApi {
     }
 
     @Override
-    public ResponseEntity<ResponseTaskDTO> updateTaskDeadlineById(Integer id, UpdateDeadlineDTO request) {
+    public ResponseEntity<ResponseTaskDTO> updateTaskDeadlineById(Integer id, UpdateDeadlineDto request) {
         return ResponseEntity.ok(taskService.updateTaskDeadlineById(id,request.getDeadline()));
     }
 
@@ -52,7 +52,7 @@ public class AdminUpdateController implements AdminUpdateApi {
     }
 
     @Override
-    public ResponseEntity<ResponseTaskDTO> updateStatusForAdmin(Integer id, UpdateStatusDTO status) {
+    public ResponseEntity<ResponseTaskDTO> updateStatusForAdmin(Integer id, UpdateStatusDto status) {
         return ResponseEntity.ok(taskService.updateTaskStatusByIdForAdmin(id, status));
     }
 
