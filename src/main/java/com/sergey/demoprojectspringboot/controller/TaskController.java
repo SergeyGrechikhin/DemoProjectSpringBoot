@@ -3,7 +3,7 @@ package com.sergey.demoprojectspringboot.controller;
 import com.sergey.demoprojectspringboot.controller.api.TaskApi;
 import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateStatusDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
-import com.sergey.demoprojectspringboot.service.addService.TaskService;
+import com.sergey.demoprojectspringboot.service.TaskService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;

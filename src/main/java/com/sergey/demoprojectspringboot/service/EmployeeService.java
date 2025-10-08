@@ -1,4 +1,4 @@
-package com.sergey.demoprojectspringboot.service.addService;
+package com.sergey.demoprojectspringboot.service;
 
 import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
@@ -89,7 +89,7 @@ public class EmployeeService {
         if (employeeOptional.isEmpty()) {
             throw new NotFoundException(" Employee " + " with " + id + " id " + " not found ");
         }
-        if(employeeOptional.get().getId() == 1){
+        if (employeeOptional.get().getId() == 1) {
             throw new BadRequestException("Employee " + " with " + id + " id " + " cannot be deleted");
         }
 
@@ -102,7 +102,7 @@ public class EmployeeService {
 
     public List<ResponseEmployeeDTO> findAll() {
         List<Employee> employees = employeeRepository.findAll();
-        List<ResponseEmployeeDTO> responceEmployeeDTOList = employees.stream().map(employee -> new ResponseEmployeeDTO(employee.getId(), employee.getName(), employee.getSurname(), employee.getEmail(), employee.getRole(),employee.getStatus())).toList();
+        List<ResponseEmployeeDTO> responceEmployeeDTOList = employees.stream().map(employee -> new ResponseEmployeeDTO(employee.getId(), employee.getName(), employee.getSurname(), employee.getEmail(), employee.getRole(), employee.getStatus())).toList();
         if (responceEmployeeDTOList.isEmpty()) {
             throw new NotFoundException(" Employees not found ");
         }
@@ -150,13 +150,13 @@ public class EmployeeService {
         return converter.toDto(employeesOptional.get());
     }
 
-    public List<ConfirmationCode> findCodesByEmployee(String email){
+    public List<ConfirmationCode> findCodesByEmployee(String email) {
         Employee employee = getUserByEmailOrThrow(email);
         return codeConfirmationService.findCodesByUser(employee);
 
     }
 
-    private Employee getUserByEmailOrThrow(String email){
+    private Employee getUserByEmailOrThrow(String email) {
         return employeeRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User with email: " + email + " not found"));
     }
@@ -253,7 +253,6 @@ public class EmployeeService {
 
         return converter.toDto(employee);
     }
-
 
 
 }

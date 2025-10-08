@@ -1,4 +1,4 @@
-package com.sergey.demoprojectspringboot.service.addService;
+package com.sergey.demoprojectspringboot.service;
 
 import com.sergey.demoprojectspringboot.dto.requestDto.RequestCreateDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseDepartmentDTO;
@@ -99,12 +99,12 @@ public class DepartmentService {
         return departmentRepository.findByName(name);
     }
 
-    public ResponseDepartmentDTO updateDepartmentNameById(String name, Integer id){
+    public ResponseDepartmentDTO updateDepartmentNameById(String name, Integer id) {
         Optional<Department> departmentOptional = departmentRepository.findById(id);
-        if(departmentOptional.isEmpty()) {
+        if (departmentOptional.isEmpty()) {
             throw new NotFoundException(" Department with this " + id + "id" + " not found ");
         }
-        if(!isNameAlreadyExist(name)) {
+        if (!isNameAlreadyExist(name)) {
             throw new AlreadyExistException("Department with this name " + name + " already exist");
         }
 
@@ -119,7 +119,6 @@ public class DepartmentService {
     private boolean isNameAlreadyExist(String name) {
         return departmentRepository.findByName(name).isEmpty();
     }
-
 
 
 }

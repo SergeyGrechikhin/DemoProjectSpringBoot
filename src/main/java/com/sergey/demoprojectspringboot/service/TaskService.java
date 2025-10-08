@@ -1,4 +1,4 @@
-package com.sergey.demoprojectspringboot.service.addService;
+package com.sergey.demoprojectspringboot.service;
 
 import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateStatusDTO;
 import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDTO;

@@ -1,10 +1,9 @@
-package com.sergey.demoprojectspringboot.service.addService;
+package com.sergey.demoprojectspringboot.service;
 
 import com.sergey.demoprojectspringboot.entity.ConfirmationCode;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.ConfirmationCodeRepository;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -64,7 +63,7 @@ public class CodeConfirmationService {
 
     }
 
-    public Employee changeConfirmationStatusByCode(String code){
+    public Employee changeConfirmationStatusByCode(String code) {
         ConfirmationCode confirmationCode = repository.findByCode(code)
                 .orElseThrow(() -> new NotFoundException("Confirmation code: " + code + " not found"));
 

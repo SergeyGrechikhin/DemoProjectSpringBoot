@@ -3,7 +3,7 @@ package com.sergey.demoprojectspringboot.controller;
 import com.sergey.demoprojectspringboot.controller.api.RegApi;
 import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
-import com.sergey.demoprojectspringboot.service.addService.EmployeeService;
+import com.sergey.demoprojectspringboot.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
