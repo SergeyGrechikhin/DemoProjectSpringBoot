@@ -25,18 +25,9 @@ public class AccountCleanupJob {
 //        LocalDateTime deleteDate = LocalDateTime.now().minusDays(14);
 
         LocalDateTime deleteDate = LocalDateTime.now().minusSeconds(30);
-//
-//        String sqlDeleteCodes = """
-//                    DELETE cc FROM confirmation_code cc
-//                    JOIN employees e ON cc.user_id = e.id
-//                    WHERE e.status = 'INACTIVE' AND e.deactivate_at < ?
-//                """;
-//
-//        int deletedCodes = jdbcTemplate.update(sqlDeleteCodes, startTime);
-//        long deletedEmployees = employeeRepositoryDataBase
-//                .deleteByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, startTime);
 
-        List<Employee> inactiveEmployees = employeeRepositoryDataBase.findByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, deleteDate );
+
+        List<Employee> inactiveEmployees = employeeRepositoryDataBase.findByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, deleteDate);
 
         for (Employee employee : inactiveEmployees) {
 
@@ -50,3 +41,16 @@ public class AccountCleanupJob {
 
     }
 }
+
+
+//old info
+//
+//        String sqlDeleteCodes = """
+//                    DELETE cc FROM confirmation_code cc
+//                    JOIN employees e ON cc.user_id = e.id
+//                    WHERE e.status = 'INACTIVE' AND e.deactivate_at < ?
+//                """;
+//
+//        int deletedCodes = jdbcTemplate.update(sqlDeleteCodes, startTime);
+//        long deletedEmployees = employeeRepositoryDataBase
+//                .deleteByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, startTime);
