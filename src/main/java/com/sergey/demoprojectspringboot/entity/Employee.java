@@ -38,7 +38,7 @@ public class Employee {
     private List<Task> tasks = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "department_id")
+    @JoinColumn(name = "department_id" , nullable = true)
     private Department department;
 
     public enum Role {

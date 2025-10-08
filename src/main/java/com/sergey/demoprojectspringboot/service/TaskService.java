@@ -41,7 +41,7 @@ public class TaskService {
                 .taskName(request.getTaskName())
                 .description(request.getDescription())
                 .deadline(request.getDeadline())
-                .status(Task.Status.TO_DO)
+                .status(Task.Status.UNASSIGNED)
                 .createDate(LocalDate.now())
                 .updateDate(LocalDateTime.now())
                 .employee(null)
@@ -71,9 +71,13 @@ public class TaskService {
 
         taskForInvite.setEmployee(employeeForInvite);
 
-        Task taskforSave = taskRepositoryDataBase.save(taskForInvite);
+        taskForInvite.setStatus(Task.Status.TO_DO);
 
-        return taskConverter.toDto(taskforSave);
+        taskForInvite.setUpdateDate(LocalDateTime.now());
+
+        Task taskForSave = taskRepositoryDataBase.save(taskForInvite);
+
+        return taskConverter.toDto(taskForSave);
 
     }
 

@@ -23,7 +23,7 @@ public class AdminFindController implements AdminFindApi {
 
     @Override
     public ResponseEntity<ResponseEmployeeDTO> findEmployeeById(Integer id) {
-        return ResponseEntity.ok(employeeService.getUserById(id));
+        return ResponseEntity.ok(employeeService.findById(id));
     }
 
     @Override

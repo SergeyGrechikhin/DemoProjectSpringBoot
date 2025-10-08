@@ -26,7 +26,7 @@ public class Department {
     @Size(min = 2, max = 25,message = "Department must be between 2 and 25 characters")
     @Pattern(regexp = "^[A-Za-z._!-]+$", message = "Use only Latin letters")
     private String name;
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "department", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = false, fetch = FetchType.LAZY)
     private List<Employee> employees = new ArrayList<>();
 
     public Department(String name) {

@@ -4,6 +4,8 @@ import com.sergey.demoprojectspringboot.dto.requestDto.RequestCreateDepartmentDt
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
+import com.sergey.demoprojectspringboot.entity.Employee;
+import com.sergey.demoprojectspringboot.entity.Task;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.exception.BadRequestException;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
@@ -45,19 +47,18 @@ public class DepartmentService {
         if (departmentOptional.isEmpty()) {
             throw new NotFoundException(" Department " + " with " + id + " id " + " not found ");
         }
+
+        Department department = departmentOptional.get();
+
         if (departmentOptional.get().getId() == 1) {
             throw new BadRequestException("Department " + " with " + id + " id " + " cannot be deleted");
         }
-        if (departmentOptional.get().getEmployees() != null) {
-            Department department = departmentOptional.get();
-            department.setEmployees(null);
-            departmentRepository.delete(department);
 
-            return ResponseDepartmentDTO.toDto(department);
-
+        for (Employee employee : department.getEmployees()) {
+            employee.setDepartment(null);
         }
 
-        Department department = departmentOptional.get();
+
         departmentRepository.delete(department);
 
         return ResponseDepartmentDTO.toDto(department);

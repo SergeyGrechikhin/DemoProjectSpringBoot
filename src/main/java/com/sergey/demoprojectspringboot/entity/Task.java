@@ -41,6 +41,7 @@ public class Task {
         TO_DO,
         COMPLETED,
         FOR_CHECK,
+        UNASSIGNED,
         OVERDUE
     }
     @Column(nullable = false)

@@ -90,6 +90,16 @@ public class EmployeeService {
 
         Employee employee = employeeRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Employee Not Found"));
 
+        if (email.equalsIgnoreCase("admin@company.com")){
+            throw new BadRequestException("Employee with email " + email + " cannot be deactivated ");
+        }
+
+        for (Task task : employee.getTasks()) {
+            task.setEmployee(null);
+            task.setStatus(Task.Status.UNASSIGNED);
+            task.setUpdateDate(LocalDateTime.now());
+        }
+
         employee.setStatus(Employee.Status.INACTIVE);
         employee.setDeactivateAt(LocalDateTime.now());
 
@@ -124,7 +134,11 @@ public class EmployeeService {
 
         for (Task task : employee.getTasks()) {
             task.setEmployee(null);
+            task.setStatus(Task.Status.UNASSIGNED);
+            task.setUpdateDate(LocalDateTime.now());
+
         }
+
 
         employeeRepository.delete(employee);
 
@@ -142,8 +156,7 @@ public class EmployeeService {
     }
 
 
-
-    public ResponseEmployeeDTO getUserById(Integer id) {
+    public ResponseEmployeeDTO findById(Integer id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Employee with id = " + id + " not found"));
 
