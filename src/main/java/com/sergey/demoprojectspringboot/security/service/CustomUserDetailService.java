@@ -1,7 +1,6 @@
 package com.sergey.demoprojectspringboot.security.service;
 
 import com.sergey.demoprojectspringboot.entity.Employee;
-import com.sergey.demoprojectspringboot.exception.BadRequestException;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import com.sergey.demoprojectspringboot.security.entity.MyEmployeeToEmployeeDetails;

@@ -30,10 +30,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         try {
-            final String uri = request.getRequestURI();
 
-            final boolean isReactivateRequest = "PUT".equalsIgnoreCase(request.getMethod())
-                    && "/api/user/reactivateMe".equals(uri);
 
             String jwt = getTokenFromRequest(request);
 
@@ -44,21 +41,34 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 // получаем из jwt имя пользователя, который прислал запрос (у нас - email)
                 UserDetails userDetails = customUserDetailService.loadUserByUsername(userName);
                 /// *****
+                Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(auth);
+                String uri = request.getRequestURI();
 
-            if (!isReactivateRequest && userDetails instanceof MyEmployeeToEmployeeDetails details) {
-                if(details.getEmployee().getStatus() == Employee.Status.INACTIVE){
-                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                    response.getWriter().write("Account is deactivated");
-                    return;
+                String ctx = request.getContextPath();
+
+                String reactivate = (ctx == null ? "/" : ctx) + "/api/user/reactivateMe";
+
+                boolean isReactivateRequest = "PUT".equalsIgnoreCase(request.getMethod())
+                        && "/api/user/reactivateMe".equals(uri);
+                if (userDetails instanceof MyEmployeeToEmployeeDetails details) {
+                    var employee = details.getEmployee();
+                    boolean isAdmin = employee.getRole() == Employee.Role.ADMIN;
+                    boolean isInactive = employee.getStatus() == Employee.Status.INACTIVE;
+
+                    if (!isReactivateRequest && !isAdmin && isInactive) {
+                        SecurityContextHolder.clearContext();
+                        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                        response.getWriter().write("Inactive");
+                        return;
+                    }
                 }
-            }
 
 
                 // создаем необходимые объекты из Spring Security, чтобы наполнить SecurityContext
                 Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-
 
 
         } catch (InvalidJwtException e) {
