@@ -43,19 +43,27 @@ public class EmployeeService {
             throw new AlreadyExistException(" Email Already Exist ");
         }
 
-        Employee employee = Employee.builder()
-                .name(request.getName())
-                .surname(request.getSurname())
-                .email(request.getEmail())
-                .role(Employee.Role.USER)
-                .password(request.getPassword())
-                .status(Employee.Status.ACTIVE)
-                .department(null)
-                .build();
+//        Employee employee = Employee.builder()
+//                .name(request.getName())
+//                .surname(request.getSurname())
+//                .email(request.getEmail())
+//                .role(Employee.Role.USER)
+//                .password(request.getPassword())
+//                .status(Employee.Status.ACTIVE)
+//                .department(null)
+//                .build();
+//
+//        Employee employeeSaved = employeeRepository.save(employee);
 
-        Employee employeeSaved = employeeRepository.save(employee);
+        Employee newEmployee = converter.fromDto(request);
+        newEmployee.setStatus(Employee.Status.ACTIVE);
+        newEmployee.setRole(Employee.Role.USER);
 
-        return converter.toDto(employeeSaved);
+        employeeRepository.save(newEmployee);
+
+        codeConfirmationService.confirmationCodeManager(newEmployee);
+
+        return converter.toDto(newEmployee);
 
 
     }
@@ -134,12 +142,18 @@ public class EmployeeService {
             throw new BadRequestException("Employee " + " with " + id + " id " + " cannot be deleted");
         }
 
+
+
         for (Task task : employee.getTasks()) {
             task.setEmployee(null);
             task.setStatus(Task.Status.UNASSIGNED);
             task.setUpdateDate(LocalDateTime.now());
 
         }
+
+        codeConfirmationService.deleteConfirmationCode(employee);
+
+
 
 
         employeeRepository.delete(employee);
@@ -191,15 +205,31 @@ public class EmployeeService {
         return converter.toDto(employeesOptional.get());
     }
 
+
+
     public List<ConfirmationCode> findCodesByEmployee(String email) {
         Employee employee = getUserByEmailOrThrow(email);
         return codeConfirmationService.findCodesByUser(employee);
 
     }
 
-    private Employee getUserByEmailOrThrow(String email) {
+    public Employee getUserByEmailOrThrow(String email) {
         return employeeRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User with email: " + email + " not found"));
+    }
+
+    public Employee getCurrentUser() {
+        return getUserByEmailOrThrow(getCurrentUserEmail());
+    }
+
+    public String getCurrentUserEmail() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    public void setConfirmedAdmin(Employee employee) {
+        employee.setStatus(Employee.Status.ACTIVE);
+        employee.setRole(Employee.Role.ADMIN);
+        employeeRepository.save(employee);
     }
 
 

@@ -50,9 +50,7 @@ public class DepartmentService {
 
         Department department = departmentOptional.get();
 
-        if (departmentOptional.get().getId() == 1) {
-            throw new BadRequestException("Department " + " with " + id + " id " + " cannot be deleted");
-        }
+
 
         for (Employee employee : department.getEmployees()) {
             employee.setDepartment(null);

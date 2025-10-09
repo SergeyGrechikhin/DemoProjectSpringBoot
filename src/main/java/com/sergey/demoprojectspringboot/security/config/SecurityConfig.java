@@ -28,8 +28,8 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance(); // шифрование паролей не делваем
-//        return new BCryptPasswordEncoder();
+//        return NoOpPasswordEncoder.getInstance(); // шифрование паролей не делваем
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

@@ -4,6 +4,7 @@ import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,13 +12,18 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class EmployeeConverter {
+
+    private final PasswordEncoder passwordEncoder;
+
     public Employee fromDto(RequestAddEmployeeDto request){
+
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
 
         return Employee.builder()
                 .name(request.getName())
                 .surname(request.getSurname())
                 .email(request.getEmail())
-                .password(request.getPassword())
+                .password(encodedPassword)
                 .build();
     }
 

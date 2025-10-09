@@ -47,7 +47,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
                 String ctx = request.getContextPath();
 
-                String reactivate = (ctx == null ? "/" : ctx) + "/api/user/reactivateMe";
+//                String reactivate = (ctx == null ? "/" : ctx) + "/api/user/reactivateMe";
 
                 boolean isReactivateRequest = "PUT".equalsIgnoreCase(request.getMethod())
                         && "/api/user/reactivateMe".equals(uri);

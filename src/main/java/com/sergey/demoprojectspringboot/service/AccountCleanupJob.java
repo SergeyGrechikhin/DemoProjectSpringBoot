@@ -27,27 +27,27 @@ public class AccountCleanupJob {
         LocalDateTime deleteDate = LocalDateTime.now().minusSeconds(30);
 
 
-//        List<Employee> inactiveEmployees = employeeRepositoryDataBase.findByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, deleteDate);
+        List<Employee> inactiveEmployees = employeeRepositoryDataBase.findByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, deleteDate);
+
+        for (Employee employee : inactiveEmployees) {
+
+            codeConfirmationService.deleteConfirmationCode(employee);
+
+            employeeRepositoryDataBase.delete(employee);
+        }
+
 //
-//        for (Employee employee : inactiveEmployees) {
+//        String sqlDeleteCodes = """
+//                    DELETE cc FROM confirmation_code cc
+//                    JOIN employees e ON cc.user_id = e.id
+//                    WHERE e.status = 'INACTIVE' AND e.deactivate_at < ?
+//                """;
 //
-//            codeConfirmationService.deleteConfirmationCode(employee);
+//        int deletedCodes = jdbcTemplate.update(sqlDeleteCodes, deleteDate);
+//        long deletedEmployees = employeeRepositoryDataBase
+//                .deleteByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, deleteDate);
 //
-//            employeeRepositoryDataBase.delete(employee);
-//        }
-
-
-        String sqlDeleteCodes = """
-                    DELETE cc FROM confirmation_code cc
-                    JOIN employees e ON cc.user_id = e.id
-                    WHERE e.status = 'INACTIVE' AND e.deactivate_at < ?
-                """;
-
-        int deletedCodes = jdbcTemplate.update(sqlDeleteCodes, deleteDate);
-        long deletedEmployees = employeeRepositoryDataBase
-                .deleteByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, deleteDate);
-
-        log.info("Deleted {} codes and {} employees", deletedEmployees, deletedCodes);
+//        log.info("Deleted {} codes and {} employees", deletedEmployees, deletedCodes);
 
 
     }
