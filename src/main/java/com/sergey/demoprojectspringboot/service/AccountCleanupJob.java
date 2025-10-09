@@ -36,6 +36,14 @@ public class AccountCleanupJob {
             employeeRepositoryDataBase.delete(employee);
         }
 
+
+
+
+    }
+}
+
+
+//old info
 //
 //        String sqlDeleteCodes = """
 //                    DELETE cc FROM confirmation_code cc
@@ -48,11 +56,4 @@ public class AccountCleanupJob {
 //                .deleteByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, deleteDate);
 //
 //        log.info("Deleted {} codes and {} employees", deletedEmployees, deletedCodes);
-
-
-    }
-}
-
-
-//old info
 
