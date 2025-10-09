@@ -27,16 +27,27 @@ public class AccountCleanupJob {
         LocalDateTime deleteDate = LocalDateTime.now().minusSeconds(30);
 
 
-        List<Employee> inactiveEmployees = employeeRepositoryDataBase.findByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, deleteDate);
+//        List<Employee> inactiveEmployees = employeeRepositoryDataBase.findByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, deleteDate);
+//
+//        for (Employee employee : inactiveEmployees) {
+//
+//            codeConfirmationService.deleteConfirmationCode(employee);
+//
+//            employeeRepositoryDataBase.delete(employee);
+//        }
 
-        for (Employee employee : inactiveEmployees) {
 
-            codeConfirmationService.deleteConfirmationCode(employee);
+        String sqlDeleteCodes = """
+                    DELETE cc FROM confirmation_code cc
+                    JOIN employees e ON cc.user_id = e.id
+                    WHERE e.status = 'INACTIVE' AND e.deactivate_at < ?
+                """;
 
-            employeeRepositoryDataBase.delete(employee);
-        }
+        int deletedCodes = jdbcTemplate.update(sqlDeleteCodes, deleteDate);
+        long deletedEmployees = employeeRepositoryDataBase
+                .deleteByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, deleteDate);
 
-        log.info("Deleted {} codes and {} employees", inactiveEmployees.size());
+        log.info("Deleted {} codes and {} employees", deletedEmployees, deletedCodes);
 
 
     }
@@ -44,13 +55,4 @@ public class AccountCleanupJob {
 
 
 //old info
-//
-//        String sqlDeleteCodes = """
-//                    DELETE cc FROM confirmation_code cc
-//                    JOIN employees e ON cc.user_id = e.id
-//                    WHERE e.status = 'INACTIVE' AND e.deactivate_at < ?
-//                """;
-//
-//        int deletedCodes = jdbcTemplate.update(sqlDeleteCodes, startTime);
-//        long deletedEmployees = employeeRepositoryDataBase
-//                .deleteByStatusAndDeactivateAtBefore(Employee.Status.INACTIVE, startTime);
+
