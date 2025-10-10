@@ -9,7 +9,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class DemoProjectSpringBootApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(DemoProjectSpringBootApplication.class, args);
+
     }
 
 }
