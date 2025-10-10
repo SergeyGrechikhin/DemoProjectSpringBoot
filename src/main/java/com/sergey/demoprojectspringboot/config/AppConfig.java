@@ -1,6 +1,6 @@
 package com.sergey.demoprojectspringboot.config;
 
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDto;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestEmployeeDto;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.service.EmployeeService;
@@ -28,7 +28,7 @@ public class AppConfig {
                 try {
                     employeeService.getUserByEmailOrThrow(ADMIN_EMAIL);
                 } catch (NotFoundException e) {
-                    employeeService.employeeRegistration(new RequestAddEmployeeDto(ADMIN_USERNAME, ADMIN_SURNAME, ADMIN_EMAIL, ADMIN_PASSWORD));
+                    employeeService.employeeRegistration(new RequestEmployeeDto(ADMIN_USERNAME, ADMIN_SURNAME, ADMIN_EMAIL, ADMIN_PASSWORD));
                     Employee employeeAdmin = employeeService.getUserByEmailOrThrow(ADMIN_EMAIL);
                     employeeService.setConfirmedAdmin(employeeAdmin);
 

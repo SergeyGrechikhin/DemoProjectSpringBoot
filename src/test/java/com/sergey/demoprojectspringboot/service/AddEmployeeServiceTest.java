@@ -1,6 +1,6 @@
 package com.sergey.demoprojectspringboot.service;
 
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDto;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestEmployeeDto;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
 import com.sergey.demoprojectspringboot.repository.EmployeeRepositoryDataBase;
 import com.sergey.demoprojectspringboot.service.findService.FindDepartmentService;
@@ -38,7 +38,7 @@ class AddEmployeeServiceTest {
     @Test
     void createEmployee() {
 
-        RequestAddEmployeeDto request = RequestAddEmployeeDto.builder()
+        RequestEmployeeDto request = RequestEmployeeDto.builder()
                 .name("Max")
                 .surname("Lobov")
                 .email("googleforCheck@gmail.com")
@@ -52,7 +52,7 @@ class AddEmployeeServiceTest {
 
     @Test
     void testWhenDuplicatedEmail(){
-        RequestAddEmployeeDto request = RequestAddEmployeeDto.builder()
+        RequestEmployeeDto request = RequestEmployeeDto.builder()
                 .name("user")
                 .surname("user")
                 .email("google77@gmail.com")

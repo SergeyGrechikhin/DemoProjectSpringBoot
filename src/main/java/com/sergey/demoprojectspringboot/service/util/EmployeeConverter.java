@@ -1,6 +1,6 @@
 package com.sergey.demoprojectspringboot.service.util;
 
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDto;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestEmployeeDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Employee;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ public class EmployeeConverter {
 
     private final PasswordEncoder passwordEncoder;
 
-    public Employee fromDto(RequestAddEmployeeDto request){
+    public Employee fromDto(RequestEmployeeDto request){
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());
 

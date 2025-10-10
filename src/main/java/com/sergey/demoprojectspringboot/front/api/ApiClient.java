@@ -1,22 +1,28 @@
 package com.sergey.demoprojectspringboot.front.api;
 
-import ch.qos.logback.core.pattern.util.IEscapeUtil;
+import lombok.Getter;
 
-import javax.xml.xpath.XPath;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class ApiClient {
 
     private String baseUrl;
+    @Getter
     private String bearerToken;
 
     public ApiClient(String baseUrl) {
         this.baseUrl = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl;
     }
+
+    public boolean isAuthorized() {
+        return bearerToken != null && !bearerToken.isBlank();
+    }
+
+
+
 
     public LoginResult login(String username, String password) throws IOException {
         String endPoint = baseUrl + "/api/auth";
@@ -51,41 +57,72 @@ public class ApiClient {
         }
     }
 
+    //info about me
+    public static class UserInfo {
+        public final String email;
+        public final String role;
+        public final String status;
 
-    public String get(String path) throws IOException {
-        requireAuth();
-        HttpURLConnection conn = (HttpURLConnection) new URL(baseUrl + path).openConnection();
-        conn.setRequestMethod("GET");
-        conn.setConnectTimeout(10000);
-        conn.setReadTimeout(10000);
-        conn.setRequestProperty("Authorization", bearerToken);
+        public UserInfo(String email, String role, String status) {
+            this.email = email;
+            this.role = role;
+            this.status = status;
+        }
+    }
 
-        int code = conn.getResponseCode();
-        String body = readBody(code < 400 ? conn.getInputStream() : conn.getErrorStream());
-        if (code >= 200 && code < 300) return body;
-        throw new IOException("GET " + path + " -> " + code + ": " + body);
+    public UserInfo infoAboutMe() throws IOException {
+        String json = getJson("/api/auth/me");
+        String name = extractJson(json, "name");
+        String role = extractJson(json, "role");
+        String status = extractJson(json, "status");
+        return new UserInfo(name, role, status);
     }
 
 
-    public String post(String path, String jsonBody) throws IOException {
-        requireAuth();
-        HttpURLConnection conn = (HttpURLConnection) new URL(baseUrl + path).openConnection();
-        conn.setRequestMethod("POST");
-        conn.setConnectTimeout(10000);
-        conn.setReadTimeout(10000);
-        conn.setDoOutput(true);
-        conn.setRequestProperty("Content-Type", "application/json");
-        conn.setRequestProperty("Authorization", bearerToken);
+    public String postJson(String path, String json) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) new URL(baseUrl + path).openConnection();
+        connection.setRequestMethod("POST");
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Content-Type", "application/json");
+        if (bearerToken != null) connection.setRequestProperty("Authorization", bearerToken);
 
-        try (OutputStream os = conn.getOutputStream()) {
-            os.write(jsonBody.getBytes(StandardCharsets.UTF_8));
+        try (OutputStream os = connection.getOutputStream()) {
+            os.write(json.getBytes(StandardCharsets.UTF_8));
         }
 
-        int code = conn.getResponseCode();
-        String body = readBody(code < 400 ? conn.getInputStream() : conn.getErrorStream());
-        if (code >= 200 && code < 300) return body;
-        throw new IOException("POST " + path + " -> " + code + ": " + body);
+        int responseCode = connection.getResponseCode();
+        String body = readBody(responseCode < 400 ? connection.getInputStream() : connection.getErrorStream());
+
+        if (responseCode >= 200 && responseCode < 300) {
+            return body;
+        } else {
+            throw new IOException("HTTP " + responseCode + ": " + body);
+        }
     }
+
+
+
+    public String getJson(String path) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) new URL(baseUrl + path).openConnection();
+        connection.setRequestMethod("GET");
+        connection.setConnectTimeout(10000);
+        connection.setReadTimeout(10000);
+        if (bearerToken != null) {
+            connection.setRequestProperty("Authorization", bearerToken);
+        }
+
+        int responseCode = connection.getResponseCode();
+        String body = readBody(responseCode < 400 ? connection.getInputStream() : connection.getErrorStream());
+
+        if (responseCode >= 200 && responseCode < 300) {
+            return body;
+        } else {
+            throw new IOException("HTTP " + responseCode + " GET " + path + ": " + body);
+        }
+    }
+
+
+
 
 
 
@@ -138,6 +175,9 @@ public class ApiClient {
         public static LoginResult success(String token) {
             return new LoginResult(true, token,null);
         }
+
+
+
 
         public static LoginResult notSuccess(String errorMessage) {
             return new LoginResult(false, null, errorMessage);

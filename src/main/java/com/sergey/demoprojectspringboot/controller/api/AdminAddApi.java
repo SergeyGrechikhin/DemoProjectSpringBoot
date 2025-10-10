@@ -2,7 +2,7 @@ package com.sergey.demoprojectspringboot.controller.api;
 
 import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateEmployeeOwnerDto;
 import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateTaskOwnerDto;
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestCreateDepartmentDto;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequesDepartmentDto;
 import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
@@ -15,7 +15,7 @@ public interface AdminAddApi {
 
 
     @PostMapping("/addNewDepartment")
-    ResponseEntity<ResponseDepartmentDTO> addNewDepartment(@RequestBody RequestCreateDepartmentDto request);
+    ResponseEntity<ResponseDepartmentDTO> addNewDepartment(@RequestBody RequesDepartmentDto request);
 
 
     @GetMapping("/addEmployeeToDepartment")

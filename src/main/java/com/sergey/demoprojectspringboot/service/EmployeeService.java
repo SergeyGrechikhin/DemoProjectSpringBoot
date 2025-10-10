@@ -1,11 +1,8 @@
 package com.sergey.demoprojectspringboot.service;
 
 import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateEmployeeOwnerDto;
-import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateTaskOwnerDto;
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestAddEmployeeDto;
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDto;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequestEmployeeDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
-import com.sergey.demoprojectspringboot.dto.responceDto.ResponseTaskDTO;
 import com.sergey.demoprojectspringboot.entity.ConfirmationCode;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.Employee;
@@ -20,7 +17,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +32,7 @@ public class EmployeeService {
 
 
     @Transactional
-    public ResponseEmployeeDTO employeeRegistration(RequestAddEmployeeDto request) {
+    public ResponseEmployeeDTO employeeRegistration(RequestEmployeeDto request) {
         Optional<Employee> emailOptional = employeeRepository.findByEmail(request.getEmail());
 
         if (emailOptional.isPresent()) {

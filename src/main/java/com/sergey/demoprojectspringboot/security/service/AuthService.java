@@ -1,7 +1,10 @@
 package com.sergey.demoprojectspringboot.security.service;
 
+import com.sergey.demoprojectspringboot.entity.Employee;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
+import com.sergey.demoprojectspringboot.security.dto.AuthMeResponse;
 import com.sergey.demoprojectspringboot.security.dto.AuthRequest;
+import com.sergey.demoprojectspringboot.security.entity.MyEmployeeToEmployeeDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,6 +45,21 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return jwtTokenProvider.createToken(request.getUsername());
+    }
+
+    public AuthMeResponse getUserInfo(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if(authentication == null || !(authentication.getPrincipal() instanceof MyEmployeeToEmployeeDetails details)){
+            throw new RuntimeException("User not authenticated");
+        }
+
+        Employee employee = details.getEmployee();
+        return new AuthMeResponse(
+                employee.getEmail(),
+                employee.getRole().name(),
+                employee.getStatus().name()
+        );
     }
 
 }

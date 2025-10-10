@@ -9,10 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RequestAddEmployeeDto {
+public class RequesDepartmentDto {
     private String name;
-    private String surname;
-    private String email;
-    private String password;
-
 }

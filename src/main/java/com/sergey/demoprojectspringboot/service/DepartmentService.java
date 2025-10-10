@@ -1,13 +1,11 @@
 package com.sergey.demoprojectspringboot.service;
 
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestCreateDepartmentDto;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequesDepartmentDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
 import com.sergey.demoprojectspringboot.entity.Department;
 import com.sergey.demoprojectspringboot.entity.Employee;
-import com.sergey.demoprojectspringboot.entity.Task;
 import com.sergey.demoprojectspringboot.exception.AlreadyExistException;
-import com.sergey.demoprojectspringboot.exception.BadRequestException;
 import com.sergey.demoprojectspringboot.exception.NotFoundException;
 import com.sergey.demoprojectspringboot.repository.DepartmentRepositoryDataBase;
 import com.sergey.demoprojectspringboot.service.util.EmployeeConverter;
@@ -30,7 +28,7 @@ public class DepartmentService {
      * @param request
      * @return ResponceDepartmentDTO with created department
      */
-    public ResponseDepartmentDTO create(RequestCreateDepartmentDto request) {
+    public ResponseDepartmentDTO create(RequesDepartmentDto request) {
         Optional<Department> isNameTry = departmentRepository.findByName(request.getName());
         if (isNameTry.isPresent()) {
             throw new AlreadyExistException("Department with name " + request.getName() + " already exists");

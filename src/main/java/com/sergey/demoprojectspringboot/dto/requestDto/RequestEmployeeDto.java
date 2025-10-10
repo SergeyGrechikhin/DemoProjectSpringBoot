@@ -9,6 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RequestCreateDepartmentDto {
+public class RequestEmployeeDto {
     private String name;
+    private String surname;
+    private String email;
+    private String password;
+
 }

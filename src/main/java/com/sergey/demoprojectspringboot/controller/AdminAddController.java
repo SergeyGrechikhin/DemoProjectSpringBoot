@@ -4,7 +4,7 @@ package com.sergey.demoprojectspringboot.controller;
 import com.sergey.demoprojectspringboot.controller.api.AdminAddApi;
 import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateEmployeeOwnerDto;
 import com.sergey.demoprojectspringboot.dto.dtoUpdate.UpdateTaskOwnerDto;
-import com.sergey.demoprojectspringboot.dto.requestDto.RequestCreateDepartmentDto;
+import com.sergey.demoprojectspringboot.dto.requestDto.RequesDepartmentDto;
 import com.sergey.demoprojectspringboot.dto.requestDto.RequestTaskDto;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseDepartmentDTO;
 import com.sergey.demoprojectspringboot.dto.responceDto.ResponseEmployeeDTO;
@@ -27,7 +27,7 @@ public class AdminAddController implements AdminAddApi {
 
 
     @Override
-    public ResponseEntity<ResponseDepartmentDTO> addNewDepartment(RequestCreateDepartmentDto request) {
+    public ResponseEntity<ResponseDepartmentDTO> addNewDepartment(RequesDepartmentDto request) {
         return ResponseEntity.ok(departmentService.create(request));
     }
 

@@ -1,6 +1,7 @@
 package com.sergey.demoprojectspringboot.controller;
 
 import com.sergey.demoprojectspringboot.controller.api.AuthApi;
+import com.sergey.demoprojectspringboot.security.dto.AuthMeResponse;
 import com.sergey.demoprojectspringboot.security.dto.AuthRequest;
 import com.sergey.demoprojectspringboot.security.dto.AuthResponse;
 import com.sergey.demoprojectspringboot.security.service.AuthService;
@@ -21,5 +22,10 @@ public class AuthController implements AuthApi {
         String jwt = authService.generateJwt(request);
 
         return new ResponseEntity<>(new AuthResponse(jwt), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<AuthMeResponse> getAuth() {
+       return ResponseEntity.ok(authService.getUserInfo());
     }
 }
